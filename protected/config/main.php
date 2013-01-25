@@ -120,14 +120,11 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			//'connectionString' => 'mysql:host=200.6.117.145;dbname=trotws_aplibre',
 			'connectionString' => 'mysql:host=localhost;dbname=trotws_aplibre',
 			'tablePrefix' => '',
 			'emulatePrepare' => true,
 			'username' => 'trotws_aplibre',
 			'password' => '123456',		
-			//'username' => 'gore2',
-			//'password' => 'Algo',
 			'charset' => 'utf8',
 		),
 		'authManager'=>array(
@@ -137,14 +134,7 @@ return array(
             //'itemChildTable'=>'AuthItemChild', // Tabla que contiene los elementos padre-hijo
             //'assignmentTable'=>'AuthAssignment', // Tabla que contiene la signacion usuario-autorizacion            
         ),
-		/*	'db'=>array(
-					'connectionString' => 'mysql:host=localhost;dbname=goreLosLagos',
-					'emulatePrepare' => true,
-					'username' => 'root',
-					'password' => 'moroni',
-					'charset' => 'utf8',
-			),
-		*/
+
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
