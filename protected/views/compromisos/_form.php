@@ -64,7 +64,7 @@
 		<?php //echo $form->dropDownList($model, 'proceso_periodo_id', GxHtml::listDataEx(ProcesosPeriodos::model()->findAll(array('condition'=>'estado=1'))));
 			echo $form->hiddenField($model, 'proceso_periodo_id');	
 		  //echo $form->hiddenField($model, 'proceso_periodo_id',array('value'=>''));
-			if(isset($model->proceso_periodo_id)){
+			/*if(isset($model->proceso_periodo_id)){
 				$pp= ProcesosPeriodos::model()->find(array('condition'=>'estado=1 AND id='.$model->proceso_periodo_id));
 				$alumno = Alumnos::model()->find(array('condition'=>'rut='.$pp->alumno_rut));
 				$concatenado = "";
@@ -72,9 +72,9 @@
 					$concatenado =	$alumno['nombre'].' '.$alumno['apellido_paterno'].' '.$alumno['apellido_materno'];
 				}
 				echo $pp->alumno_rut.'  -  ' .$concatenado;
-			}else{
+			}else{*/
 				echo '<input id="compromisoRut" type="text"  onkeypress="bucarCompromiso(event,this.value,\'nombreAlumnoMatriculado\')" onkeydown="validarNumeros(event)" size="10" maxlength="8">';
-			}
+			//}
 			
 			?>
 			
@@ -187,13 +187,13 @@
 		<?php 
 			echo $form->labelEx($model,'evidencia_pdf'); 
 			
-			if (isset($model->evidencia_pdf)){
+			/*if (isset($model->evidencia_pdf)){
 				echo "  :   <a target='_blank' href='".Yii::app()->request->baseUrl.'/upload/doc/'.$model->evidencia_pdf."'>".$model->evidencia_pdf."</a>";
 				$model->documento = $model->evidencia_pdf;
-			}else{
+			}else{*/
 		 		echo $form->fileField($model, 'documento');
 		 		echo $form->error($model,'documento'); 
-			}
+			//}
 		?>
 		
 		

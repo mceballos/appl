@@ -100,6 +100,7 @@ $('.search-form form').submit(function(){
 		
 		'numero_cuotas',
 		'monto_total',
+		//'proceso_periodo_id',
 		array(
             'class' => 'CButtonColumn',
             'template'=>'{view}{delete}',
