@@ -123,6 +123,8 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=trotws_aplibre',
 			'tablePrefix' => '',
 			'emulatePrepare' => true,
+//			'username' => 'root',
+	//		'password' => 'moroni',	
 			'username' => 'trotws_aplibre',
 			'password' => '123456',		
 			'charset' => 'utf8',
