@@ -9,6 +9,7 @@ $(document).ready(function() {
 	asignacionModals();
 	changeImageDependingAccess();
 	validarAnchoTabla();
+	$('.search-form').hide();
 });
 
 

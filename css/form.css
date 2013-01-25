@@ -134,10 +134,7 @@ div.form .errorSummary ul
 	margin: 0;
 	padding: 0 0 0 20px;
 }
-div.wide.form
-{
-    width: 800px;    
-}
+
 div.wide.form label
 {
 	float: left;
@@ -174,6 +171,8 @@ h3{
     margin: 0 0 5px;
     text-transform: uppercase;
 }
+
+
 
 div.row.buttons{margin-top: 20px;text-align: right;margin-right: 15px;}
 
@@ -222,4 +221,9 @@ a.update.boton{color: #FFFFFF;  display: inline-block;  font-weight: bold;   pad
     float: left;
     margin-right: 4px;
     width: 65%;
+}
+
+div.wide.form
+{
+    width: 800px;    
 }

@@ -67,7 +67,7 @@ abstract class BasePagos extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'responsable' => array(self::BELONGS_TO, 'Users', 'responsable_id'),
+			'responsable' => array(self::BELONGS_TO, 'User', 'responsable_id'),
 			'chequeBanco' => array(self::BELONGS_TO, 'Bancos', 'cheque_banco_id'),
 			'compromisoDetalle' => array(self::BELONGS_TO, 'DetallesCompromisos', 'compromiso_detalle_id'),
 			'tipoPago' => array(self::BELONGS_TO, 'TiposPagos', 'tipo_pago_id'),
@@ -85,6 +85,7 @@ abstract class BasePagos extends GxActiveRecord {
 			'id' => Yii::t('app', 'ID'),
 			'compromiso_detalle_id' => null,
 			'tipo_pago_id' => null,
+			'User'=>'Usuario',
 			'cheque_numero' => Yii::t('app', 'Cheque Numero'),
 			'cheque_rut' => Yii::t('app', 'Cheque Rut'),
 			'cheque_plaza' => Yii::t('app', 'Cheque Plaza'),
@@ -93,14 +94,14 @@ abstract class BasePagos extends GxActiveRecord {
 			'tasa_interes_id' => null,
 			'interes_cobrado' => Yii::t('app', 'Interes Cobrado'),
 			'fecha_pago' => Yii::t('app', 'Fecha Pago'),
-			'responsable_id' => null,
+			'responsable_id' => 'Responsable',
 			'cheque_fecha' => Yii::t('app', 'Cheque Fecha'),
 			'valor_cuota' => Yii::t('app', 'Valor Cuota'),
 			'pago_total' => Yii::t('app', 'Pago Total'),
 			'cheque_serie' => Yii::t('app', 'Cheque Serie'),
 			'cheque_rut_serie' => Yii::t('app', 'Cheque Rut Serie'),
 			'estado' => Yii::t('app', 'Estado'),
-			'responsable' => null,
+			'responsable' => 'Responsable',
 			'chequeBanco' => null,
 			'compromisoDetalle' => null,
 			'tipoPago' => null,
