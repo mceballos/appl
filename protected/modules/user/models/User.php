@@ -1,0 +1,266 @@
+<?php
+
+class User extends CActiveRecord
+{
+	const STATUS_NOACTIVE=0;
+	const STATUS_ACTIVE=1;
+	const STATUS_BANNED=-1;
+
+	
+	//TODO: Delete for next version (backward compatibility)
+	const STATUS_BANED=-1;
+	
+	/**
+	 * The followings are the available columns in table 'users':
+	 * @var integer $id
+	 * @var string $username
+	 * @var string $password
+	 * @var string $email
+	 * @var string $activkey
+     * @var string $nombres
+	 * @var integer $createtime
+	 * @var integer $lastvisit
+	 * @var integer $superuser
+	 * @var integer $status
+     * @var timestamp $create_at
+     * @var timestamp $lastvisit_at
+	 */
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return CActiveRecord the static model class
+	 */
+    
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return Yii::app()->getModule('user')->tableUsers;
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.CConsoleApplication
+		return ((get_class(Yii::app())=='CConsoleApplication' || (get_class(Yii::app())!='CConsoleApplication' && Yii::app()->getModule('user')->isAdmin()))?array(
+			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
+			array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
+			array('email', 'email','message'=>UserModule::t('Correo electrónico no es una dirección válida.')),
+			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
+			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
+			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
+			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
+			array('superuser', 'in', 'range'=>array(0,1)),
+            array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
+            array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
+			array('username, email, superuser, status,cargo_id,nombres, ape_paterno, authItems,password', 'required'),
+			array('rut', 'length', 'max'=>10),
+			array('nombres, ape_paterno, ape_materno', 'length', 'max'=>200),
+			array('superuser, status,cargo_id','numerical', 'integerOnly'=>true),
+			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,cargo_id', 'safe', 'on'=>'search'),
+		):((Yii::app()->user->id==$this->id)?array(
+			array('username, email,cargo_id,nombres, ape_paterno, authItems,password', 'required'),
+			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
+			array('email', 'email'),
+			array('rut', 'length', 'max'=>10),
+            array('nombres, ape_paterno, ape_materno', 'length', 'max'=>200),
+			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
+			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
+			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
+		):array()));
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+        $relations = Yii::app()->getModule('user')->relations;
+        if (!isset($relations['profile']))
+            $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');        
+        
+        $relations['authItems'] = array(self::MANY_MANY, 'AuthItem', 'AuthAssignment(userid, itemname)');
+        $relations['cargo'] = array(self::BELONGS_TO, 'Cargos', 'cargo_id');
+        
+        
+        $relations['indicadores'] = array(self::HAS_MANY, 'Indicadores', 'responsable_id');
+         
+         $relations['lineasAccions'] = array(self::MANY_MANY, 'LineasAccion', 'la_actores(id_usuario, id_la)');
+         $relations['lineasAccions1'] = array(self::HAS_MANY, 'LineasAccion', 'id_responsable_implementacion');
+         $relations['lineasAccions2'] = array(self::HAS_MANY, 'LineasAccion', 'id_responsable_mantencion');
+        $relations['cierresInternoses'] = array(self::HAS_MANY, 'CierresInternos', 'id_usuario');
+        $relations['indicadoresObservaciones']=array(self::HAS_MANY, 'IndicadoresObservaciones', 'id_usuario');
+        
+        return $relations;
+	}
+    
+    
+    public function pivotModels() {
+        return array(
+            'authItems' => 'AuthAssignment',
+        );
+    } 
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => UserModule::t("Id"),
+			'username'=>UserModule::t("username"),
+			'password'=>UserModule::t("password"),
+			'verifyPassword'=>UserModule::t("Retype Password"),
+			'email'=>UserModule::t("E-mail"),
+			'verifyCode'=>UserModule::t("Verification Code"),
+			'activkey' => UserModule::t("activation key"),
+			'createtime' => UserModule::t("Registration date"),
+			'create_at' => UserModule::t("Registration date"),			
+			'lastvisit_at' => UserModule::t("Last visit"),
+			'superuser' => UserModule::t("Superuser"),
+			'status' => UserModule::t("Status"),
+			'authItems' => "Perfiles",
+            'rut' => "Rut",
+            'nombres' => "Nombres",
+            'ape_paterno' => "Ap. Paterno",
+            'ape_materno' => 'Ap. Materno',
+            'cargo_id' => 'Cargo',
+            'cierresInternoses' => null,
+            'indicadores' => null,
+            'lineasAccions' => null,
+            'lineasAccions1' => null,
+            'lineasAccions2' => null,
+		);
+	}
+	
+	public function scopes()
+    {
+        return array(
+            'active'=>array(
+                'condition'=>'status='.self::STATUS_ACTIVE,
+            ),
+            'notactive'=>array(
+                'condition'=>'status='.self::STATUS_NOACTIVE,
+            ),
+            'banned'=>array(
+                'condition'=>'status='.self::STATUS_BANNED,
+            ),
+            'superuser'=>array(
+                'condition'=>'superuser=1',
+            ),
+            'notsafe'=>array(
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,nombres,rut,ape_paterno,ape_materno,cargo_id',
+            ),
+        );
+    }
+	
+	public function defaultScope()
+    {
+        return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
+            'alias'=>'user',
+            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status,user.nombres,user.rut,user.ape_paterno,user.ape_materno,user.cargo_id',
+        ));
+    }
+	
+	public static function itemAlias($type,$code=NULL) {
+		$_items = array(
+			'UserStatus' => array(
+				self::STATUS_NOACTIVE => UserModule::t('Not active'),
+				self::STATUS_ACTIVE => UserModule::t('Active'),
+				self::STATUS_BANNED => UserModule::t('Banned'),
+			),
+			'AdminStatus' => array(
+				'0' => UserModule::t('No'),
+				'1' => UserModule::t('Yes'),
+			),
+		);
+		if (isset($code))
+			return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+		else
+			return isset($_items[$type]) ? $_items[$type] : false;
+	}
+	
+/**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+        $criteria=new CDbCriteria;
+        
+        $criteria->compare('id',$this->id);
+        $criteria->compare('username',$this->username,true);
+        $criteria->compare('password',$this->password);
+        $criteria->compare('email',$this->email,true);
+        $criteria->compare('activkey',$this->activkey);
+        $criteria->compare('create_at',$this->create_at);
+        $criteria->compare('lastvisit_at',$this->lastvisit_at);
+        $criteria->compare('superuser',$this->superuser);
+        $criteria->compare('status',$this->status);
+        $criteria->compare('cargo_id', $this->cargo_id);
+
+        return new CActiveDataProvider(get_class($this), array(
+            'criteria'=>$criteria,
+        	'pagination'=>array(
+				'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+			),
+        ));
+    }
+
+    public function getCreatetime() {
+        return strtotime($this->create_at);
+    }
+
+    public function setCreatetime($value) {
+        $this->create_at=date('Y-m-d H:i:s',$value);
+    }
+
+    public function getLastvisit() {
+        return strtotime($this->lastvisit_at);
+    }
+
+    public function setLastvisit($value) {
+        $this->lastvisit_at=date('Y-m-d H:i:s',$value);
+    }
+    
+    public function getNombrecompleto(){
+        return $this->ape_paterno.' '.$this->ape_materno.' '.$this->nombres.' - '.$this->rut;   
+    }
+    
+    public function getNombreycargo(){
+        return array($this->ape_paterno.' '.$this->ape_materno.' '.$this->nombres,$this->cargo);   
+    }
+    
+	public function getRutcompleto(){
+        return $this->nombres.' '.$this->ape_paterno.' '.$this->ape_materno.' - '.$this->rut;   
+    }
+    
+    public static function responsablesPorCentroCosto($id){
+    	
+    	$criteria = new CDbCriteria;
+        $criteria->select = '*';
+        $criteria->join ='INNER JOIN users_centros uc ON id=uc.user_id INNER JOIN centros_costos cc ON cc.id = uc.centro_id 
+        INNER JOIN divisiones d ON d.id = cc.division_id INNER JOIN productos_estrategicos pe ON pe.division_id = d.id
+        INNER JOIN subproductos sb ON sb.producto_estrategico_id = pe.id  INNER JOIN productos_especificos pes ON pes.subproducto_id = sb.id INNER JOIN indicadores i ON i.producto_especifico_id = pes.id';
+        $criteria->addCondition('i.estado = 1 AND pes.estado = 1 AND sb.estado = 1 AND pe.estado = 1 
+        AND d.estado = 1 AND cc.estado = 1 AND status = 1 AND cc.id ='.$id);
+
+        
+        $responsables = User::model()->findAll($criteria);
+        
+        return $responsables;
+    	
+    	
+    }
+}
