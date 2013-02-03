@@ -22,7 +22,7 @@
  * @property SeccionesGrados $seccionGrado
  */
 abstract class BaseProcesosPeriodos extends GxActiveRecord {
-
+	public $nombreCurso,$nombreCompleto;
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
 	}
@@ -93,5 +93,28 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
 		));
+	}
+	public function searchCursos() {
+			$criteria = new CDbCriteria;
+			//$criteria->compare('seccion_grado_id', $this->seccion_grado_id,true);
+			$criteria->compare('nombreCurso', $this->nombreCurso,true);
+			$criteria->compare('alumno_rut', 22);
+			
+			$criteria->join = 'INNER JOIN alumnos ON (t.alumno_rut = alumnos.rut)
+								INNER JOIN secciones_grados ON (t.seccion_grado_id = secciones_grados.id)
+								INNER JOIN secciones ON ( secciones_grados.seccion_id = secciones.id)
+								INNER JOIN grados ON(secciones_grados.grado_id = grados.id)';
+			$criteria->distinct =true;
+			$criteria->condition = "t.periodo_id =".Yii::app()->session['idPeriodo']." AND 
+									t.estado = 1 AND secciones_grados.estado = 1";
+			$criteria->order = "alumnos.apellido_paterno, alumnos.apellido_materno,alumnos.nombre";
+			$criteria->select= "t.seccion_grado_id,t.id,
+								secciones_grados.id,
+								concat (secciones.nombre,'-',grados.nombre) as nombreCurso,
+								t.alumno_rut,
+								concat(alumnos.apellido_paterno,' ',alumnos.apellido_materno,' ',alumnos.nombre) as nombreCompleto";
+			return new CActiveDataProvider($this, array(
+			'criteria' => $criteria,
+			));
 	}
 }

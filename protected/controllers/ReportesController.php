@@ -42,7 +42,19 @@ public function filters() {
 		$this->render('index');
 	}
 	
-	
+	public function actionAlumnosCurso()
+	{
+		$model = new ProcesosPeriodos('searchCursos');
+		$model->unsetAttributes();
+		
+		if (isset($_GET['ProcesosPeriodos']))
+			$model->setAttributes($_GET['ProcesosPeriodos']);
+			
+		
+		$this->render('alumnosCurso', array(
+			'model' => $model,
+		));
+	}	
     
 
 }
