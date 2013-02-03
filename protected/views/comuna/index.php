@@ -1,15 +1,16 @@
 <?php
 
 $this->breadcrumbs = array(
-	Comuna::label(2),
-	Yii::t('app', 'Index'),
+	Yii::t('ui','Preferencias')=>array('/site/preferencias'),	
+	Yii::t('app',Comuna::label(2)),
 );
 
 $this->menu = array(
-	array('label'=>Yii::t('app', 'Create') . ' ' . Comuna::label(), 'url' => array('create')),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . Comuna::label(2), 'url' => array('admin')),
+	array('label'=>Yii::t('app', 'Create'), 'url' => array('create')),
+	array('label'=>Yii::t('app', 'Manage'), 'url' => array('admin')),
 );
 ?>
+<div class="limpia"></div>
 <div class="form">
 <h3><?php echo GxHtml::encode(Comuna::label(2)); ?></h3>
 

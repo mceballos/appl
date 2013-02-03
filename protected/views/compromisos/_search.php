@@ -3,7 +3,8 @@
 <?php $form = $this->beginWidget('GxActiveForm', array(
 	'action' => Yii::app()->createUrl($this->route),
 	'method' => 'get',
-)); ?>
+)); 
+?>
 
 	<div class="row">
 		<?php //echo $form->label($model, 'id'); ?>

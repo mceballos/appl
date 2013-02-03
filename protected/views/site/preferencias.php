@@ -25,7 +25,7 @@ $this->breadcrumbs = array(
 	<h2>Mantenedor de Cursos </h2>
 		<div class="verde" id="cursos">
 			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/secciones">Secciones</a>
-			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/secciones">Grados Para Secciones</a>
+			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/grados">Grados Para Secciones</a>
 			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/seccionesGrados">Gestor de Cursos</a>
 		</div>
 </div>

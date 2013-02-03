@@ -43,7 +43,8 @@ if (Yii::app()->user->id == '0'){
 		{
 		    $selected='';            
 		    if(isset($_GET['periodo'])){
-		        if($_GET['periodo']==$value || $anio==$value)
+		    	if($_GET['periodo']==$value)
+		       // if($_GET['periodo']==$value || $anio==$value)
                       $selected='selected="selected"'; 
 		    }else{
 		        if($anio==$value)

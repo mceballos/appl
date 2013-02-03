@@ -52,7 +52,7 @@ $('.search-form form').submit(function(){
 				'value'=>'GxHtml::valueEx($data->grado)',
 				'filter'=>GxHtml::listDataEx(Grados::model()->findAllAttributes(null, true)),
 				),
-		'id',
+		//'id',
 		//'estado',
 		'alum_max_grado',
 		array(

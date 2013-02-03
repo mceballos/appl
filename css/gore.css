@@ -133,10 +133,11 @@ table.tabla-basica tr.clara td{ background-color:#f7f9fb;}
     text-align: left;
     width: 23%;}
 #content .MenuOperations{
-    float: inherit; font-weight: bold; list-style-type: none;
+    float: right; 
+    font-weight: bold; list-style-type: none;
     margin-bottom: 3px;
     margin-top: 6px;
-    width: 618px;
+    /*width: 618px;*/
     /*font-weight: bold; list-style-type: none; padding: 10px;  position: absolute;  right: 20px;  top: 36px;*/
    }
 /*.row .MenuOperations{font-weight: bold; list-style-type: none; padding: 0;  position: absolute;  right: 0;  top: 0px;}*/
@@ -264,11 +265,27 @@ div.grid-view .button-column {
  }
  
 .fieldset {
-    background: none repeat scroll 0 0 #FFFFFF;    
+    
+    padding: 10px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
     margin-top: 10px;
     position: relative;
+    width: 100px;
+    height: 50px;
+    float: right;
+    
     
 }
+.fieldset.parametros{  
+    float: left;
+    height: 250px;
+    margin: 10px;
+    padding-top: 0;
+    width: 50%;
+    -webkit-border-radius: 8px; border-radius: 8px; border:1px solid #ccc;}
+
+.fieldset.parametros a{margin-top:10px;}
 
 
 
@@ -530,7 +547,7 @@ letraSubTitulos{font-family:helvetica, sans-serif;font-size:13px;font-weight:bol
  
 .fieldset2.parametros{  
     float: left;
-    height: 500px;
+    height: 360px;
     margin: 10px;
     padding-top: 0;
     width: 20%;

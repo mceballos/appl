@@ -1,8 +1,10 @@
 <?php
 
 $this->breadcrumbs = array(
-	Parentescos::label(2),
-	Yii::t('app', 'Index'),
+	
+	Yii::t('ui','Preferencias')=>array('/site/preferencias'),	
+	Yii::t('app',Parentescos::label(2)),
+	
 );
 
 $this->menu = array(

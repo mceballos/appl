@@ -44,7 +44,7 @@ abstract class BaseEncargados extends GxActiveRecord {
 	}
 
 	public static function label($n = 1) {
-		return Yii::t('app', 'Encargado  | Encargados', $n);
+		return Yii::t('app', 'Padres y Apoderados  | Padres y Apoderados', $n);
 	}
 
 	public static function representingColumn() {

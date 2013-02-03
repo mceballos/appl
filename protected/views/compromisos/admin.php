@@ -1,8 +1,8 @@
 <?php
 
 $this->breadcrumbs = array(
-	$model->label(2) => array('index'),
-	Yii::t('app', 'Index'),
+	//$model->label(2) => array('index'),
+	Yii::t('app', 'Compromisos'),
 );
 
 $this->menu = array(
@@ -15,6 +15,8 @@ $('.search-button').click(function(){
 	$('.search-form').toggle();
 	return false;
 });
+
+			
 $('.search-form form').submit(function(){
 	$.fn.yiiGridView.update('compromisos-grid', {
 		data: $(this).serialize()
@@ -22,6 +24,9 @@ $('.search-form form').submit(function(){
 	return false;
 });
 ");
+
+
+
 ?>
 <div class="form">
 <h3><?php echo Yii::t('app', 'Manage') . ' ' . GxHtml::encode($model->label(2)); ?></h3>

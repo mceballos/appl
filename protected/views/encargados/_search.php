@@ -28,7 +28,7 @@
 	</div>
 	<div class="row">
 		<?php echo $form->label($model, 'comuna_id'); ?>
-		<?php echo $form->dropDownList($model, 'comuna_id', GxHtml::listDataEx(Comuna::model()->findAll(array('order'=>'nombre'),array('condition'=>'estado=1'))), array('prompt' => Yii::t('app', 'All'))); ?>
+		<?php echo $form->dropDownList($model, 'comuna_id', GxHtml::listDataEx(Comuna::model()->findAll(array('order'=>'nombre'),array('condition'=>'estado=1'))), array('prompt' => Yii::t('app', 'Todas'))); ?>
 	</div>
 	
 	<div class="row">
