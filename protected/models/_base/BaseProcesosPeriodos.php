@@ -113,10 +113,6 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 								t.alumno_rut,
 								concat(alumnos.apellido_paterno,' ',alumnos.apellido_materno,' ',alumnos.nombre) as nombreCompleto";
 			
-			/*$criteria->select= "t.seccion_grado_id,t.id,
-								secciones_grados.id,
-								t.alumno_rut";
-			*/
 			$criteria->condition = "t.periodo_id =".Yii::app()->session['idPeriodo']." AND 
 									t.estado = 1 AND secciones_grados.estado = 1";
 			
