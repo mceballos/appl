@@ -40,11 +40,13 @@ $this->breadcrumbs = array(
 			'name'=>'seccion_grado_id',
 			'type'=>'raw',
 			'value'=>'$data->nombreCurso',
-			'filter'=>CHtml::listData(SeccionesGrados::model()->findAll(
+			/*'filter'=>CHtml::listData(SeccionesGrados::model()->findAll(
                   array(
                   // 'select'=>array('name'),
                    'distinct'=>true
                   )),"id","grado_id")//this is the focus of your code
+                  */
+			'filter'=>GxHtml::listDataEx(SeccionesGrados::model()->findAll(array('condition'=>'estado=1'))),
 		),
 		array(
 			'header'=>'RUT ALUMNO',
