@@ -46,6 +46,7 @@ abstract class BaseSeccionesGrados extends GxActiveRecord {
 		$resultado= $nombre_seccion." - ".$nombre_grado; 
 		return $resultado;
 	}
+	
 	public function rules() {
 		return array(
 			array('seccion_id, grado_id, alum_max_grado', 'required'),

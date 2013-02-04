@@ -252,7 +252,7 @@ div.grid-view .button-column {
 }
 .grid-view .filters input, .grid-view .filters select {
     border: 1px solid #CCCCCC;
-    width: 100%;
+    width: 90%;
 }
 
 .items label{font-weight: normal;}
@@ -680,3 +680,4 @@ table.detail-view tbody tr.header { background:#95C8D5; }
 table.detail-view tbody tr.header th { text-align:left; min-width:20%; }
 
 .deleteRecord{display: none;}
+

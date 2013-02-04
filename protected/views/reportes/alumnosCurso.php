@@ -11,9 +11,9 @@ $this->breadcrumbs = array(
 ?>
 <div class="form">
 <h3>Alumnos Por Curso</h3>
+<p id='reportarerror' style='color: red;'></p>
 
-
-
+<div id="grillaDatos" style='display: block;'>
 <?php 
 
 /*
@@ -35,20 +35,21 @@ $this->breadcrumbs = array(
       		'header'=>'Nº',
       		'type'=>'raw',
       		'value'=>'$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',//this for the auto page number of cgridview
-      		//'filter'=>''//without filtering
    		),
-		//'seccion_grado_id',
 		array(
-			'name'=>'nombreCurso',
+			'name'=>'seccion_grado_id',
 			'type'=>'raw',
 			'value'=>'$data->nombreCurso',
-			//'filter'=>'aa'
+			'filter'=>CHtml::listData(SeccionesGrados::model()->findAll(
+                  array(
+                  // 'select'=>array('name'),
+                   'distinct'=>true
+                  )),"id","grado_id")//this is the focus of your code
 		),
 		array(
 			'header'=>'RUT ALUMNO',
 			'type'=>'raw',
 			'value'=>'$data->alumno_rut',
-			//'filter'=>''//without filtering
 		),
 		array(
 			'header'=>'NOMBRE COMPLETO',

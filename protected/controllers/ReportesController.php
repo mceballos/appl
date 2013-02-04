@@ -15,7 +15,7 @@ public function filters() {
 	public function accessRules() {
 		return array(
 				array('allow',
-					'actions'=>array('index'),
+					'actions'=>array('index,alumnosCurso'),
 					'users'=>array('*'),
 					),
 				array('allow', 
@@ -48,7 +48,8 @@ public function filters() {
 		$model->unsetAttributes();
 		
 		if (isset($_GET['ProcesosPeriodos']))
-			$model->setAttributes($_GET['ProcesosPeriodos']);
+			//$model->setAttributes($_GET['ProcesosPeriodos']);
+			$model->attributes = $_GET['ProcesosPeriodos'];
 			
 		
 		$this->render('alumnosCurso', array(
