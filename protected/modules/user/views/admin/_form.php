@@ -19,19 +19,13 @@
         <tr>
             <td align="right" width="150px"><?php echo $form->labelEx($model,'username'); ?></td>
             <td><?php echo $form->textField($model,'username',array('style'=>'width: 250px;','maxlength'=>20)); ?>
-                <?php echo $form->error($model,'username'); ?></td>
+                <?php echo $form->error($model,'username'); ?>
+            </td>
             <td align="right" width="150px"><?php echo $form->labelEx($model,'password'); ?></td>
             <td><?php echo $form->passwordField($model,'password',array('maxlength'=>128,'style'=>'width: 250px;')); ?>
                 <?php echo $form->error($model,'password'); ?></td>            
         </tr>
-        <tr>
-            <td align="right"><?php echo $form->labelEx($model,'email'); ?></td>
-            <td><?php echo $form->textField($model,'email',array('style'=>'width: 250px;','maxlength'=>128)); ?>
-        <?php echo $form->error($model,'email'); ?></td>
-            <td align="right"> <?php echo $form->labelEx($model,'cargo_id'); ?></td>
-            <td><?php echo $form->dropDownList($model,'cargo_id',CHtml::listData(Cargos::model()->findAll(array('condition'=>'t.estado=1')), 'id', 'nombre'),array('style'=>'width: 266px;')); ?>
-            <?php echo $form->error($model,'cargo_id'); ?>  </td>
-        </tr>
+
         <tr>
             <td align="right"> <?php echo $form->labelEx($model,'superuser'); ?></td>
             <td><?php echo $form->dropDownList($model,'superuser',User::itemAlias('AdminStatus'),array('style'=>'width: 266px;')); ?>
@@ -41,6 +35,12 @@
             <?php echo $form->error($model,'status'); ?>
             </td>
         </tr>
+        
+         <td align="right" width="150px"><?php echo $form->labelEx($model,'email'); ?></td>
+         <td><?php echo $form->textField($model,'email',array('style'=>'width: 250px;','maxlength'=>20)); ?>
+                <?php echo $form->error($model,'email'); ?>
+          </td>
+        
         <tr>
             <td align="right"><?php echo $form->labelEx($model,'nombres'); ?></td>
             <td><?php echo $form->textField($model,'nombres',array('style'=>'width: 252px;','maxlength'=>128)); ?>
@@ -60,21 +60,7 @@
     </table>   
     
  </div><!-- form -->   
-	<div class="box rowleft47">
-             
-            <div class="grid-view overflow"> 
-            <table class="items">
-            <thead>
-              <tr><th width="70%">Centros de costo</th><th>Acción</th></tr>
-            </thead>
-            <tbody>
-               
-                
-            </tbody>
-     
-            </table>
-            </div>
-    </div>
+
 	<div class="box rowright47">
               <h3><?php echo $form->labelEx($model,'authItems'); ?></h3>
               <?php echo $form->error($model,'authItems'); ?>

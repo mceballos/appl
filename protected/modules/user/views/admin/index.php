@@ -47,6 +47,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array(
 			'class'=>'CButtonColumn',
+			 'template'=>'{update}{delete}',
 			'header'=>'Acciones',
 			'afterDelete'=>'function(link,success,data){if(success)mostrarMensajes(data); }',
 			'buttons'=>array(

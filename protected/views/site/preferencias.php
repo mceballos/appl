@@ -5,11 +5,11 @@ $this->breadcrumbs = array(
 );
 ?>
 <div class="fieldset2 amarilloClaro parametros left" >
-	<h2>Gestion de Matrículas</h2>
+	<h2>Gestión</h2>
 		<div class="amarilloClaro" id="parametros">
 			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/periodos">Periodos</a>
 			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/procesosPeriodos">Matrícula</a>
-		
+			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/user/admin">Usuarios</a>
 		</div>	
 </div>
 <div class="fieldset2 amarillo parametros left" >
