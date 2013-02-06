@@ -1,8 +1,8 @@
 <?php
 
 $this->breadcrumbs = array(
-	$model->label(2) => array('index'),
-	Yii::t('app', 'Index'),
+	//$model->label(2) => array('index'),
+	Yii::t('app', 'Matriculas'),
 );
 
 $this->menu = array(
@@ -70,7 +70,7 @@ $('.search-form form').submit(function(){
 					),			
 		array(
             'class' => 'CButtonColumn',
-            'template'=>'{view}{update}{delete}',
+            'template'=>'{view}{delete}',
             'header' => 'Acción',
             'buttons'=>array(                  
 

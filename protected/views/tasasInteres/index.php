@@ -1,8 +1,9 @@
 <?php
 
 $this->breadcrumbs = array(
-	TasasInteres::label(2),
-	Yii::t('app', 'Index'),
+	Yii::t('ui','Preferencias')=>array('/site/preferencias'),	
+	Yii::t('app',TasasInteres::label(2)),
+	
 );
 
 $this->menu = array(

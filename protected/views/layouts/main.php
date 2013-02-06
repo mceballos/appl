@@ -26,7 +26,7 @@
     
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/gore.css" /> 
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/app.css" /> 
     <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.alerts.css" rel="stylesheet" type="text/css" /> 
      <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 
@@ -53,16 +53,10 @@
             <div class="menu"> 
             <ul class="left">               
                    <li class="first">
-                        <a href="<?php if(isset(Yii::app()->session['idPeriodoSelecionado'])) echo Yii::app()->request->baseUrl."/site?periodo=".Yii::app()->session['idPeriodoSelecionado']."&lvl1=etapasPlanificacion"; else echo "#";?>" <?php if(!isset(Yii::app()->session['idPeriodoSelecionado'])) echo "onclick=\"activarProceso2('etapasPlanificacion'); return false;\""; ?>>Link Uno</a>
+                        <a href="<?php if(isset(Yii::app()->session['idPeriodoSelecionado'])) echo Yii::app()->request->baseUrl."/site?periodo=".Yii::app()->session['idPeriodoSelecionado']; else echo "#";?>" >Inicio</a>
                     </li>
                     <li>
-                        <a href="<?php if(isset(Yii::app()->session['idPeriodoSelecionado'])) echo Yii::app()->request->baseUrl."/site?periodo=".Yii::app()->session['idPeriodoSelecionado']."&lvl1=etapasControl"; else echo "#";?>" <?php if(!isset(Yii::app()->session['idPeriodoSelecionado'])) echo "onclick=\"activarProceso2('etapasControl'); return false;\""; ?>>Link Dos</a>
-                    </li>
-                    <li>
-                        <a href="<?php if(isset(Yii::app()->session['idPeriodoSelecionado'])) echo Yii::app()->request->baseUrl."/site?periodo=".Yii::app()->session['idPeriodoSelecionado']."&lvl1=etapasEvaluacion"; else echo "#";?>" <?php if(!isset(Yii::app()->session['idPeriodoSelecionado'])) echo "onclick=\"activarProceso2('etapasEvaluacion'); return false;\""; ?>>Link Tres</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo Yii::app()->request->baseUrl;?>/reportes" >Link Cuatro</a>
+                        <a href="<?php echo Yii::app()->request->baseUrl;?>/reportes" >Reportes</a>
                     </li>
                     <li>
                         <a href="<?php echo Yii::app()->request->baseUrl;?>/site/preferencias">Preferencias</a>

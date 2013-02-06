@@ -2,7 +2,7 @@
 
 $this->breadcrumbs = array(
 	$model->label(2) => array('index'),
-	GxHtml::valueEx($model),
+	//GxHtml::valueEx($model),
 );
 
 $this->menu=array(

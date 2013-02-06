@@ -62,13 +62,13 @@ class User extends CActiveRecord
 			array('superuser', 'in', 'range'=>array(0,1)),
             array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
-			array('username, email, superuser, status,cargo_id,nombres, ape_paterno, authItems,password', 'required'),
+			array('username, email, superuser, status,nombres, ape_paterno, authItems,password', 'required'),
 			array('rut', 'length', 'max'=>10),
 			array('nombres, ape_paterno, ape_materno', 'length', 'max'=>200),
-			array('superuser, status,cargo_id','numerical', 'integerOnly'=>true),
-			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,cargo_id', 'safe', 'on'=>'search'),
+			array('superuser, status','numerical', 'integerOnly'=>true),
+			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('username, email,cargo_id,nombres, ape_paterno, authItems,password', 'required'),
+			array('username, email,nombres, ape_paterno, authItems,password', 'required'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('email', 'email'),
 			array('rut', 'length', 'max'=>10),
@@ -89,17 +89,15 @@ class User extends CActiveRecord
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');        
         
         $relations['authItems'] = array(self::MANY_MANY, 'AuthItem', 'AuthAssignment(userid, itemname)');
-        $relations['cargo'] = array(self::BELONGS_TO, 'Cargos', 'cargo_id');
         
-        
-        $relations['indicadores'] = array(self::HAS_MANY, 'Indicadores', 'responsable_id');
-         
+        /*
+         $relations['indicadores'] = array(self::HAS_MANY, 'Indicadores', 'responsable_id');
          $relations['lineasAccions'] = array(self::MANY_MANY, 'LineasAccion', 'la_actores(id_usuario, id_la)');
          $relations['lineasAccions1'] = array(self::HAS_MANY, 'LineasAccion', 'id_responsable_implementacion');
          $relations['lineasAccions2'] = array(self::HAS_MANY, 'LineasAccion', 'id_responsable_mantencion');
-        $relations['cierresInternoses'] = array(self::HAS_MANY, 'CierresInternos', 'id_usuario');
-        $relations['indicadoresObservaciones']=array(self::HAS_MANY, 'IndicadoresObservaciones', 'id_usuario');
-        
+         $relations['cierresInternoses'] = array(self::HAS_MANY, 'CierresInternos', 'id_usuario');
+         $relations['indicadoresObservaciones']=array(self::HAS_MANY, 'IndicadoresObservaciones', 'id_usuario');
+        */
         return $relations;
 	}
     
@@ -132,7 +130,6 @@ class User extends CActiveRecord
             'nombres' => "Nombres",
             'ape_paterno' => "Ap. Paterno",
             'ape_materno' => 'Ap. Materno',
-            'cargo_id' => 'Cargo',
             'cierresInternoses' => null,
             'indicadores' => null,
             'lineasAccions' => null,
@@ -157,7 +154,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,nombres,rut,ape_paterno,ape_materno,cargo_id',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,nombres,rut,ape_paterno,ape_materno',
             ),
         );
     }
@@ -166,7 +163,7 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status,user.nombres,user.rut,user.ape_paterno,user.ape_materno,user.cargo_id',
+            'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status,user.nombres,user.rut,user.ape_paterno,user.ape_materno',
         ));
     }
 	
@@ -208,7 +205,6 @@ class User extends CActiveRecord
         $criteria->compare('lastvisit_at',$this->lastvisit_at);
         $criteria->compare('superuser',$this->superuser);
         $criteria->compare('status',$this->status);
-        $criteria->compare('cargo_id', $this->cargo_id);
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -246,21 +242,4 @@ class User extends CActiveRecord
         return $this->nombres.' '.$this->ape_paterno.' '.$this->ape_materno.' - '.$this->rut;   
     }
     
-    public static function responsablesPorCentroCosto($id){
-    	
-    	$criteria = new CDbCriteria;
-        $criteria->select = '*';
-        $criteria->join ='INNER JOIN users_centros uc ON id=uc.user_id INNER JOIN centros_costos cc ON cc.id = uc.centro_id 
-        INNER JOIN divisiones d ON d.id = cc.division_id INNER JOIN productos_estrategicos pe ON pe.division_id = d.id
-        INNER JOIN subproductos sb ON sb.producto_estrategico_id = pe.id  INNER JOIN productos_especificos pes ON pes.subproducto_id = sb.id INNER JOIN indicadores i ON i.producto_especifico_id = pes.id';
-        $criteria->addCondition('i.estado = 1 AND pes.estado = 1 AND sb.estado = 1 AND pe.estado = 1 
-        AND d.estado = 1 AND cc.estado = 1 AND status = 1 AND cc.id ='.$id);
-
-        
-        $responsables = User::model()->findAll($criteria);
-        
-        return $responsables;
-    	
-    	
-    }
 }

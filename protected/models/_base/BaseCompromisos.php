@@ -61,6 +61,7 @@ abstract class BaseCompromisos extends GxActiveRecord {
 			array('observaciones, fecha_primera_cuota', 'safe'),
 			array('observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, fecha_primera_cuota, estado', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('id, fecha_actual, tipo_compromiso_id, observaciones, responsable_id, evidencia_pdf, tasa_interes_id, numero_cuotas, monto_sin_interes, fecha_primera_cuota, monto_total, medio_pago_id, proceso_periodo_id, estado', 'safe', 'on'=>'search'),
+			array('proceso_periodo_id','unique','message'=>'{attribute} : {value}  se encuentra registrado en la base de datos !!!'),
 		);
 	}
 
@@ -128,7 +129,7 @@ abstract class BaseCompromisos extends GxActiveRecord {
 			$criteria->join='INNER JOIN procesos_periodos pp on 	t.proceso_periodo_id=pp.id';
 			$criteria->distinct =true;
             $criteria->select='t.*';	
-            $criteria->condition='pp.periodo_id = '.Yii::app()->session['idPeriodo'];
+            $criteria->condition='t.estado = 1 AND pp.periodo_id = '.Yii::app()->session['idPeriodo'];
 		}
 		
 		

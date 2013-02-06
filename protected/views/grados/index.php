@@ -1,13 +1,13 @@
 <?php
 
 $this->breadcrumbs = array(
-	Grados::label(2),
-	Yii::t('app', 'Index'),
+	Yii::t('ui','Preferencias')=>array('/site/preferencias'),	
+	Yii::t('app',Grados::label(2)),
 );
 
 $this->menu = array(
-	array('label'=>Yii::t('app', 'Create') . ' ' . Grados::label(), 'url' => array('create')),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . Grados::label(2), 'url' => array('admin')),
+	array('label'=>Yii::t('app', 'Create'), 'url' => array('create')),
+	array('label'=>Yii::t('app', 'Manage'), 'url' => array('admin')),
 );
 ?>
 <div class="form">

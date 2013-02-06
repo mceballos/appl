@@ -1,13 +1,13 @@
 <?php
 
 $this->breadcrumbs = array(
-	Periodos::label(2),
-	Yii::t('app', 'Index'),
+	Yii::t('ui','Preferencias')=>array('/site/preferencias'),	
+	Yii::t('app',Periodos::label(2)),
 );
 
 $this->menu = array(
-	array('label'=>Yii::t('app', 'Create') . ' ' . Periodos::label(), 'url' => array('create')),
-	array('label'=>Yii::t('app', 'Manage') . ' ' . Periodos::label(2), 'url' => array('admin')),
+	array('label'=>Yii::t('app', 'Create'), 'url' => array('create')),
+	array('label'=>Yii::t('app', 'Manage'), 'url' => array('admin')),
 );
 ?>
 <div class="form">

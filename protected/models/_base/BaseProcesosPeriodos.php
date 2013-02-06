@@ -22,7 +22,7 @@
  * @property SeccionesGrados $seccionGrado
  */
 abstract class BaseProcesosPeriodos extends GxActiveRecord {
-
+	public $nombreCurso,$nombreCompleto;
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
 	}
@@ -93,5 +93,38 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
 		));
+	}
+	public function searchCursos() {
+			$criteria = new CDbCriteria;
+			//$criteria->compare('nombreCurso', $this->nombreCurso);
+			//$criteria->compare('seccion_grado_id', $this->seccion_grado_id, true);
+			//$criteria->compare('secciones_grados.id', $this->secciones_grados.id);
+			//$criteria->compare('alumno_rut', $this->alumno_rut);
+			//$criteria->compare('nombreCompleto', $this->nombreCompleto);
+
+			$criteria->join = ' INNER JOIN alumnos ON (t.alumno_rut = alumnos.rut)
+								INNER JOIN secciones_grados ON (t.seccion_grado_id = secciones_grados.id)
+								INNER JOIN secciones ON ( secciones_grados.seccion_id = secciones.id)
+								INNER JOIN grados ON(secciones_grados.grado_id = grados.id)';
+			$criteria->distinct =true;
+			$criteria->select= "t.seccion_grado_id,t.id,
+								secciones_grados.id,
+								concat (secciones.nombre,'-',grados.nombre) as nombreCurso,
+								t.alumno_rut,
+								concat(alumnos.apellido_paterno,' ',alumnos.apellido_materno,' ',alumnos.nombre) as nombreCompleto";
+			
+			$criteria->condition = "t.periodo_id =".Yii::app()->session['idPeriodo']." AND 
+									t.estado = 1 AND secciones_grados.estado = 1";
+			
+			$criteria->addCondition('t.seccion_grado_id = :seccion_grado_id'); // add your sql WHERE condition
+			$criteria->params[':seccion_grado_id'] = $this->seccion_grado_id; // bind your parameter
+			
+			return new CActiveDataProvider(get_class($this), array(
+			'criteria' => $criteria,
+			'sort'=>array(
+                'defaultOrder'=>'alumnos.apellido_paterno ASC,alumnos.apellido_materno ASC,alumnos.nombre ASC',
+            ),
+            'pagination' => array('pageSize' => 60,)
+			));
 	}
 }
