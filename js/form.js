@@ -196,10 +196,10 @@ function sumarMetasParciales(objeto)
 function borrarArchivo(id){
 	
 	var action = 'http://'+dominio+baseURL + '/cierresInternos/borrar/?id='+id;
-	console.log(action);
+	
 	var mensajeError = "Archivo No Encontrado!!";
 	$.getJSON(action, function(data) {
-		console.log(data);
+		
 		if(data){
 			$('#urlPDF').hide('slow');
 			$('#uploadPDF').show('slow');
@@ -209,7 +209,7 @@ function borrarArchivo(id){
 		
 		
 	}).error(function(e){ 
-		console.log(e.responseText);
+		
 		//mensajeParaMantenedor(e.responseText);
 		//mensajeParaFormulario(e.responseText)
 		mensajeParaFormulario(mensajeError);
@@ -433,11 +433,11 @@ function calcularFormulaRegistroAvances()
 		$("#conceptoc").css("display", "none");
 	}
 	
-	//console.log(valorA);console.log(valorB);console.log(valorC);console.log(formula);console.log (faltanParametros);
+	
 	$("#inputResultadoCalculoFormula").val('');
 	if (faltanParametros != true){
     	with(Math) x=eval(formula);
-    	console.log(x);
+    	
         if (x!="Infinity"){
         if (x=="NaN" ) {
             formula="Expresión con problemas";
@@ -451,7 +451,7 @@ function calcularFormulaRegistroAvances()
         	formula="Expresión con problemas";
         	$("#resultadoCalculoFormula").html(formula);
         }
-        console.log(formula);
+        
     }else{
         formula="Expresión con problemas";
         //Pegando el resultado
@@ -465,10 +465,10 @@ function calcularFormulaRegistroAvances()
 function borrarArchivoRegistroAvance(id,campo,objeto){
 	mensajeParaFormulario('Solicitando...');
 	var action = 'http://'+dominio+baseURL + '/panelAvances/borrar/?id='+id+'&campo='+campo;
-	console.log(action);
+	
 	var mensajeError = "Archivo No Encontrado!!";
 	$.getJSON(action, function(data) {
-		console.log(data);
+		
 		if(data){
 			$('#'+objeto+'Link').hide('slow');
 			$('#'+objeto+'Borrar').hide('slow');
@@ -480,7 +480,7 @@ function borrarArchivoRegistroAvance(id,campo,objeto){
 		
 		
 	}).error(function(e){ 
-		console.log(e.responseText);
+		
 		//mensajeParaMantenedor(e.responseText);
 		//mensajeParaFormulario(e.responseText)
 		mensajeParaFormulario(mensajeError);
@@ -557,7 +557,7 @@ function mostrarComentarios(bandera, id, b)
 	function obtenerNombreEncargado(rut,visualizar){
 	
 		var action = baseURL + '/alumnos/obtenerNombreEncargado/'+rut;
-		console.log(action);
+		
 		// se pide al action la lista de productos de la categoria seleccionada
 		$.getJSON(action, function(data) {
 			// limpiar 
@@ -565,7 +565,7 @@ function mostrarComentarios(bandera, id, b)
 		
 			
 			if(data!="null"){
-				console.log(data);
+				
 				$('#'+visualizar).html(data);
 			
 			}else{
@@ -573,7 +573,7 @@ function mostrarComentarios(bandera, id, b)
 				$('#'+visualizar).html("No se encuentran Datos para esté RUT");
 			}		
 		}).error(function(e){ 
-				console.log(e.responseText);
+				
 			});
 		
 		return false;
@@ -582,7 +582,7 @@ function mostrarComentarios(bandera, id, b)
 	function obtenerNombreAlumno(rut,visualizar){
 	
 		var action = baseURL + '/alumnos/obtenerNombreAlumno/'+rut;
-		console.log(action);
+		
 		// se pide al action la lista de productos de la categoria seleccionada
 		$.getJSON(action, function(data) {
 			// limpiar 
@@ -590,7 +590,7 @@ function mostrarComentarios(bandera, id, b)
 		
 			
 			if(data!="null"){
-				console.log(data);
+				
 				$('#'+visualizar).html(data);
 			
 			}else{
@@ -598,7 +598,7 @@ function mostrarComentarios(bandera, id, b)
 				$('#'+visualizar).html("No se encuentran Datos para esté RUT");
 			}		
 		}).error(function(e){ 
-				console.log(e.responseText);
+				
 			});
 		
 		return false;
@@ -647,7 +647,7 @@ function mostrarComentarios(bandera, id, b)
 	{
 	
 		var action = baseURL + '/procesosPeriodos/obtenerMatriculaAlumno/'+rut;
-		console.log(action);
+		
 		// se pide al action la lista de productos de la categoria seleccionada
 		$.getJSON(action, function(data) {
 			// limpiar 
@@ -656,7 +656,7 @@ function mostrarComentarios(bandera, id, b)
 			
 			
 			if(data.nombre!=""){
-				console.log(data);
+				
 				$('#'+visualizar).html(data.nombre);
 				$('#Compromisos_proceso_periodo_id').val(data.matricula);
 			}else{
@@ -664,7 +664,7 @@ function mostrarComentarios(bandera, id, b)
 				$('#'+visualizar).html("El rut no contiene matricula para esté periodo.");
 			}		
 		}).error(function(e){ 
-				console.log(e.responseText);
+				
 			});
 		
 		return false;

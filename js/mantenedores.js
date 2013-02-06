@@ -160,7 +160,7 @@ function mostrarElementosDeGestion(id){
 
 function agregarElementodeGestion(periodoActual, idElementoGestion){
 	
-	//console.log(periodoActual);
+	
 	
 	
 	if(!periodoActual)
@@ -168,7 +168,7 @@ function agregarElementodeGestion(periodoActual, idElementoGestion){
 		mensajeParaMantenedor("Periodo actual no está definido, No es realizar la operación.");
 		return false;
 	}else if(idElementoGestion == 0){
-		console.log(idElementoGestion);
+		
 		mensajeParaMantenedor("Selector de elemento de gestión, Se encuentra vacio");
 		return false;
 	}else{
@@ -176,7 +176,7 @@ function agregarElementodeGestion(periodoActual, idElementoGestion){
 		var action = baseURL + '/elementosGestionPriorizados/create/'+idElementoGestion;
 		$.getJSON(action, function(listaJson) {
 		if(listaJson ==true){
-			console.log(listaJson);
+			
 			mensajeParaMantenedor("Registros Guardados!!!");
 			$.fn.yiiGridView.update("elementos-gestion-priorizados-grid");
 		}else{
@@ -243,7 +243,7 @@ function mostrarSubProductos(id)
 	
 
 	$.getJSON(action, function(listaJson) {
-		console.log(listaJson);
+		
 		
 		// limpiar el combo de  subproductos
 		$('#subProducto').find('option').each(function(){ $(this).remove(); });
@@ -307,7 +307,7 @@ function mostrarIndicadores(id)
 		
 		//Mostramos la grilla y el boton guardar
 		$('#grillaDatos').show('slow');
-	 	console.log(id);
+	 	
 		return;
 	}else{
 		$('#grillaDatos').hide('slow');
@@ -380,7 +380,7 @@ function mostrarSubcriterios2(id)
 		//Mostramos la grilla y el boton guardar
 		$('#botonGuardar').show();
 		$('#grillaDatos').show();
-	 	console.log(id);
+	 	
 		return;
 	}else{
 		$('#yw0').hide();
@@ -406,7 +406,7 @@ function mostrarElementosdeGestion2(idc, id)
 		//Mostramos la grilla y el boton guardar
 		$('#botonGuardar').show();
 		$('#grillaDatos').show();
-	 	console.log(id);
+	 	
 		return;
 	}else{
 		$('#yw0').hide();
@@ -758,7 +758,7 @@ function maskInputFloat(event) {
 
 function  resumenIndicadoresAsignadosInstrumentos(desdeDonde)
 {
-	 //console.log("RESUMEN");
+	 
        var obj= new Array();
        $("#indicadores-instrumentos-grid input[type='text']:visible").each(function(){
        		var className=$(this).attr('class');
@@ -803,7 +803,7 @@ function  resumenIndicadoresAsignadosInstrumentos(desdeDonde)
 	       		//msg += nombreObjeto +" = "+obj[x]+"\n";
 	       		msg += nombreObjeto +" = "+ (Math.round(obj[x]*100)/100) +"\n";
 	       }
-	       		//console.log(msg);
+	       		
 	       		return msg;
 	       
       	  }else{ 	
@@ -1086,11 +1086,11 @@ function calcularFormulaRegistroAvancesPanelGeneralAvance(a, b, c, formula)
 		//$("#conceptoc").css("display", "none");
 	}
 	
-	//console.log(valorA);console.log(valorB);console.log(valorC);console.log(formula);console.log (faltanParametros);
+	
 	$("#inputResultadoCalculoFormula").val('');
 	if (faltanParametros != true){
     	with(Math) x=eval(formula);
-    	console.log(x);
+    	
         if (x!="Infinity"){
         if (x=="NaN" ) {
             formula="Expresión con problemas";
@@ -1104,7 +1104,7 @@ function calcularFormulaRegistroAvancesPanelGeneralAvance(a, b, c, formula)
         	formula="Expresión con problemas";
         	$("#resultadoCalculoFormula").html(formula);
         }
-        console.log(formula);
+        
     }else{
         formula="Expresión con problemas";
         //Pegando el resultado

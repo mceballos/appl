@@ -11,7 +11,6 @@ function paramPeriodo()
   if($("#selectPeriodo").val() !=''){
 	
 	$("#loadingProcesos").show();
-	console.log("PERIODO")
 	$.ajax({
 		url: 'site/menuJson/'+$("#selectPeriodo").val(),
  		dataType:"json",
@@ -20,7 +19,6 @@ function paramPeriodo()
  		{	
  		$("#contenidoProcesosPrincipal").show();
  			
-		console.log(data);
  			$(".breadcrumbs a").eq(0).html(data.anio);
  			
  			$("#loadingProcesos").hide();
