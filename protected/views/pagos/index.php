@@ -42,7 +42,11 @@ $('.search-form form').submit(function(){
 	'dataProvider' => $model->search(),
 	//'filter' => $model,
 	'columns' => array(
-		'id',
+		array(
+			'header'=>'N°',
+			'htmlOptions'=>array('width'=>'30'),
+			'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+		),
 		array(
 				'name'=>'compromiso_detalle_id',
 				'value'=>'GxHtml::valueEx($data->compromisoDetalle)',

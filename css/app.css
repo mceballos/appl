@@ -82,7 +82,7 @@ a.boton2{background: url("imag/bt2.png") repeat scroll 0 0 transparent;
 
 /*INICIO*/
 .sidebar{width:280px; height:auto;}
-.graficos-inicio{width:590px; height:auto; background: transparent url(imag/bg-box.jpg) repeat-x bottom left;padding:10px;}
+.graficos-inicio{width:590px; height:auto; /*background: transparent url(imag/bg-box.jpg) repeat-x bottom left;*/padding:10px;}
 .grafico{ width:290px;}
 .login-inicio{width:260px; height:auto; background: transparent url(imag/bg-box.jpg) repeat-x bottom left; padding:10px;}
 table.login {margin-top:10px;}

@@ -7,7 +7,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/FusionChar
     <div class="graficos-inicio left">
         <h3> Desarrollado con el potencial de:</h3>
         
-       <center><img border="0" class="left" src="<?php echo Yii::app()->request->baseUrl;?>/images/lenguajes.jpg" /></center>
+       <center><img border="0"  src="<?php echo Yii::app()->request->baseUrl;?>/images/lenguajes.jpg" /></center>
         
     </div><!-- graficos-inicio -->
     

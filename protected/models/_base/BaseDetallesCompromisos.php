@@ -31,7 +31,7 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 	}
 
 	public static function label($n = 1) {
-		return Yii::t('app', 'DetallesCompromisos|DetallesCompromisoses', $n);
+		return Yii::t('app', 'Detalle Compromiso|Detalles Compromisos', $n);
 	}
 
 	public static function representingColumn() {

@@ -26,7 +26,7 @@ abstract class BaseTiposPagos extends GxActiveRecord {
 	}
 
 	public static function label($n = 1) {
-		return Yii::t('app', 'TiposPagos|TiposPagoses', $n);
+		return Yii::t('app', 'Tipo de Pago|Tipos de Pagos', $n);
 	}
 
 	public static function representingColumn() {

@@ -1,5 +1,6 @@
 <?php
 return array (
+   'All'=>'Todos',
   'List'=>'Listado ',
   'Create'=>'Crear ',
   'Update'=>'Modificar',
