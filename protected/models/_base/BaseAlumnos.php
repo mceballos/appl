@@ -55,7 +55,7 @@ abstract class BaseAlumnos extends GxActiveRecord {
 	}
 
 	public static function label($n = 1) {
-		return Yii::t('app', 'Alumno|Alumnos', $n);
+		return Yii::t('app', 'Postulante|Postulantes', $n);
 	}
 
 	public static function representingColumn() {

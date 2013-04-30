@@ -61,7 +61,7 @@ public function accessRules() {
 			}
 		}
 		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
+		//$this->layout = '//layouts/iframe';
 		$this->render('create', array( 'model' => $model));
 	}
 

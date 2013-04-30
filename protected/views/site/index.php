@@ -32,7 +32,7 @@ if (Yii::app()->user->id == '0'){
 		
 		
 	
-		$periodosEncontrados =  (GxHtml::encodeEx(GxHtml::listDataEx(Periodos::model()->findAllAttributes(null,true))));
+		$periodosEncontrados =  (GxHtml::encodeEx(GxHtml::listDataEx(Periodos::model()->findAll(array('condition'=>'estado=1')))));
 		
 		//Yii::app()->session['idPeriodoSelecionado'] = '2012';
 		//Año actual
