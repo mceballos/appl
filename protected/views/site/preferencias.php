@@ -13,11 +13,11 @@ $this->breadcrumbs = array(
 		</div>	
 </div>
 <div class="fieldset2 amarillo parametros left" >
-	<h2>Mantenedor de Alumnos</h2>
+	<h2>POSTULANTES</h2>
 		<div class="amarillo" id="gore">
 			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/parentescos">Parentescos</a>
 			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/encargados">Padres y Apoderados </a>
-			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/alumnos">Alumnos</a>
+			<a class="etapa2 blanco left"href="<?php echo Yii::app()->request->baseUrl;?>/alumnos">Postulante</a>
 		</div>	
 </div>
 
