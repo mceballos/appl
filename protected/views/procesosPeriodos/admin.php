@@ -69,16 +69,28 @@ $('.search-form form').submit(function(){
 					//'filter' => array('0' => Yii::t('app', 'No'), '1' => Yii::t('app', 'Si')),
 					),			
 		array(
-            'class' => 'CButtonColumn',
-            'template'=>'{view}{delete}',
-            'header' => 'Acción',
-            'buttons'=>array(                  
-
-                'view'=>
-                        array(    
-                            'url'=>'$this->grid->controller->createUrl("ver", array("id"=>$data->id))',                              
-                        ),          
-            ),   
+            'class'=>'bootstrap.widgets.TbButtonColumn',
+            'header'=>'Opciones',
+            'template' => '{view}{update}{delete}',
+            'afterDelete'=>'function(link,success,data){if(success)mostrarMensajes(data); }',
+            'buttons' => array(
+                'view' => array(                    
+                    'options'=>array(
+                        'class'=>'btn-small view'
+                    )
+                ),
+                'update' => array(                    
+                    'options'=>array(
+                        'class'=>'btn-small update'
+                    )
+                ),
+                'delete' => array(                    
+                    'options'=>array(
+                        'class'=>'btn-small delete'
+                    )
+                )
+            ),
+            'htmlOptions'=>array('style'=>'width: 80px'),
         ),
 	),
 )); ?>

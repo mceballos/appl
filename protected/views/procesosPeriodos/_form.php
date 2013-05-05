@@ -15,6 +15,12 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
+<table width="100%" border="0" cellspacing="5" cellpadding="5">
+        <tr>
+            <td align="right"></td>
+            <td></td>
+        </tr>
+</table>
 		<div class="row">
 		<?php echo $form->labelEx($model,'alumno_rut'); ?>
 		<?php //echo $form->dropDownList($model, 'alumno_rut', GxHtml::listDataEx(Alumnos::model()->findAllAttributes(null, true))); 

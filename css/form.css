@@ -137,11 +137,11 @@ div.form .errorSummary ul
 
 div.wide.form label
 {
-	float: left;
+	
 	margin-right: 10px;
-	position: relative;
+	margin-left: 10px;
 	text-align: right;
-	width: 100px;
+	
 }
 
 div.wide.form .row
@@ -225,5 +225,5 @@ a.update.boton{color: #FFFFFF;  display: inline-block;  font-weight: bold;   pad
 
 div.wide.form
 {
-    width: 800px;    
+    width: 875px; 
 }

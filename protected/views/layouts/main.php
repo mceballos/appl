@@ -50,19 +50,59 @@
     </div>
 	<div id="main">	    
             <?php if(!Yii::app()->user->isGuest){?>
-            <div class="menu"> 
-            <ul class="left">               
-                   <li class="first">
-                        <a href="<?php if(isset(Yii::app()->session['idPeriodoSelecionado'])) echo Yii::app()->request->baseUrl."/site?periodo=".Yii::app()->session['idPeriodoSelecionado']; else echo "#";?>" >Inicio</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo Yii::app()->request->baseUrl;?>/reportes" >Reportes</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo Yii::app()->request->baseUrl;?>/site/preferencias">Preferencias</a>
-                    </li>
-                   
-             </ul> 
+            <div id="MenuPrincipal">  
+                <?php
+                $this->widget('bootstrap.widgets.TbNavbar', array(
+                                'type'=>'null', // null or 'inverse'
+                                'brand'=>'',
+                                'brandUrl'=>'#',
+                                'collapse'=>false, // requires bootstrap-responsive.css
+                                'items'=>array(
+                                    array(
+                                        'class'=>'bootstrap.widgets.TbMenu',
+                                        'items'=>array(
+                                            array('label'=>'INICIO', 'url'=>'/'),
+                                            array('label'=>'REPORTES', 'url'=>'#', 'items'=>array(
+                                                array('label'=>'Reporte 1', 'url'=>'/gastos/'),                                    
+                                            )),
+                                            array('label'=>'ADMINISTRACIÓN', 'url'=>'#', 'items'=>array(
+                                                array('label'=>'Gestión'),
+                                                array('label'=>'Usuarios', 'url'=>Yii::app()->request->baseUrl.'/user/admin/'), 
+                                                array('label'=>'Periodos', 'url'=>Yii::app()->request->baseUrl.'/periodos/'),
+                                                array('label'=>'Matrícula', 'url'=>Yii::app()->request->baseUrl.'/procesosPeriodos'),
+                                                '---',
+                                                array('label'=>'Mantenedor de Alumnos'),
+                                                array('label'=>'Parentescos', 'url'=>Yii::app()->request->baseUrl.'/parentescos/'),                                               
+                                                array('label'=>'Padres y Apoderados', 'url'=>Yii::app()->request->baseUrl.'/encargados/'),
+                                                array('label'=>'Alumnos', 'url'=>Yii::app()->request->baseUrl.'/alumnos/'),
+                                                '---',
+                                                array('label'=>'Mantenedor de Cursos'),
+                                                array('label'=>'Secciones', 'url'=>Yii::app()->request->baseUrl.'/secciones/'),
+                                                array('label'=>'Grados Para Secciones', 'url'=>Yii::app()->request->baseUrl.'/grados/'),
+                                                array('label'=>'Gestor de Cursos', 'url'=>Yii::app()->request->baseUrl.'/seccionesGrados'),
+                                                '---',
+                                                array('label'=>'Otras Preferencias'),
+                                                array('label'=>'Tipos de Compromisos', 'url'=>Yii::app()->request->baseUrl.'/tiposcompromisos'),
+                                                array('label'=>'Medios de Pago', 'url'=>Yii::app()->request->baseUrl.'/mediospagos/'),
+                                                array('label'=>'Tasa de Interes Anual', 'url'=>Yii::app()->request->baseUrl.'/tasasinteres/'),
+                                                array('label'=>'Comunas', 'url'=>Yii::app()->request->baseUrl.'/comuna/'),
+                                                
+                                                //array('label'=>'LIST HEADER'),
+                                                '---',                 
+                                            )),
+                                        ),
+                                    ),        
+                                    array(
+                                        'class'=>'bootstrap.widgets.TbMenu',
+                                        'htmlOptions'=>array('class'=>'pull-right'),
+                                        'items'=>array(
+                                            '---',
+                                        ),
+                                    ),
+                                ),
+                            )); 
+                
+                ?>
 
              <div class=" sesion right"> Bienvenido <?php echo Yii::app()->user->name;?> <a href="<?php echo Yii::app()->request->baseUrl;?>/user/logout">Cerrar sesión </a></div>
              </div> 

@@ -64,6 +64,23 @@ a.boton2{background: url("imag/bt2.png") repeat scroll 0 0 transparent;
     margin-left: -8px;
     width: 923px;
 }
+#MenuPrincipal{
+    background: url("imag/bg-menu.png") repeat-x scroll left bottom transparent;
+    height: 52px;
+    margin-left: -12px;
+    width: 929px;
+}
+#MenuPrincipal .navbar-fixed-top, #MenuPrincipal .navbar-fixed-bottom {
+    float: left;
+    position: relative;
+    width: 600px;    
+}
+
+#MenuPrincipal .container{background-color: transparent;width: auto;}
+#MenuPrincipal .navbar-fixed-top .navbar-inner,#MenuPrincipal .navbar-static-top .navbar-inner{box-shadow:none;border: medium none;}
+#MenuPrincipal .navbar-inner{background-color: transparent;background-image:none;box-shadow:none;}
+#MenuPrincipal .dropdown .dropdown-menu .nav-header{padding-left:5px;font-size: 10px;}
+#MenuPrincipal .dropdown-menu .divider{margin:0px;}
 .menuIndex{height:47px; width:932px; margin-left:-12px;}
 .menu ul li{border-right:1px solid #ccc; border-left:1px solid #fff;display:inline; height:47px; padding:13px 7px 20px 7px; line-height:40px}
 .menu ul{ height:47px; margin:0; margin-left:0px;}
@@ -675,9 +692,15 @@ select {
 table.detail-view { border:1px solid #fff !important; }
 table.detail-view tbody tr:nth-child(even) { background:#E5F1F4; border-color:#fff; }
 table.detail-view tbody tr:nth-child(odd) { background:#F8F8F8;  border-color:#fff; }
-table.detail-view tbody td { border-color:#fff; min-width:25%; }
+table.detail-view tbody td { border-color:#fff; }
 table.detail-view tbody tr.header { background:#95C8D5; }
 table.detail-view tbody tr.header th { text-align:left; min-width:20%; }
 
 .deleteRecord{display: none;}
+div#cboxCurrent,div#cboxNext,div#cboxPrevious{display:none;background-image: none;}
+
+div.form table.detail-view th {
+    text-align: right;
+    width: 225px;
+}
 

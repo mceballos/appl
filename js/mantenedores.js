@@ -29,6 +29,7 @@ function changeImageDependingAccess(){
 }*/
 
 //Validando que el ancho de la tabla no supere los valores asignados como máximo. Esto puede pasar al colocar un link demasiado largo
+//Validando que el ancho de la tabla no supere los valores asignados como máximo. Esto puede pasar al colocar un link demasiado largo
 function validarAnchoTabla(){
 	//En caso de utilizar mas de una grilla en la misma página
 	$('.grid-view').each(function(){
@@ -56,8 +57,15 @@ function afterAjaxUpdateSuccess(){
 }
 
 function asignacionModals(){
-	$(".update,.button-column .view").colorbox({iframe:true,fastIframe:false, width:"990", height:"90%", title:true,
+	$(".update,.button-column .view,.btn-small.view").colorbox({current:'',previous:'',next:'',overlayClose:false,iframe:true,fastIframe:false, width:"990", height:"90%", title:true,
+		onLoad:function(){
+			$("#cboxPrevious,#cboxCurrent,#cboxNext").hide();
+		},
+		onOpen:function(){
+			$("#cboxPrevious,#cboxCurrent,#cboxNext").hide();
+		},
 		onComplete: function(){
+			$("#cboxPrevious,#cboxCurrent,#cboxNext").hide();
 			var x= $('.cboxIframe')[0].contentWindow.document.body;
 			var title = $(x).find('.form').eq(0).find('h3').eq(0).html();
 			if($(x).find('.form').eq(0).find('h3').eq(0).attr('rel')){
@@ -67,8 +75,9 @@ function asignacionModals(){
         }
 	});
 	
-	$(".modalIndice").colorbox({iframe:true,fastIframe:false, width:"990", height:"90%", title:true,
+	$(".modalIndice").colorbox({rel:false,overlayClose:false,iframe:true,fastIframe:false, width:"990", height:"90%", title:true,
 		onComplete: function(){
+			$("#cboxPrevious,#cboxCurrent,#cboxNext").hide();
 			var x= $('.cboxIframe')[0].contentWindow.document.body;
 			var title = $(x).find('.form').eq(0).find('h3').eq(0).html();
 			if(!$(x).find('.form').eq(0).find('h3').eq(0).attr('rel')){
@@ -78,8 +87,9 @@ function asignacionModals(){
         }
 	});
 	
-	$(".MenuOperations").not('.NoModal').find('li a').colorbox({iframe:true,fastIframe:false, width:"990",height:"90%",  
+	$(".MenuOperations").not('.NoModal').find('li a').colorbox({rel:false,overlayClose:false,iframe:true,fastIframe:false, width:"990",height:"90%",  
 		onComplete: function(){
+			$("#cboxPrevious,#cboxCurrent,#cboxNext").hide();
 			var x= $('.cboxIframe')[0].contentWindow.document.body;
 			var title = $(x).find('.form').eq(0).find('h3').eq(0).html();
 			if(!$(x).find('.form').eq(0).find('h3').eq(0).attr('rel')){

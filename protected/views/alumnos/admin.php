@@ -95,6 +95,30 @@ $('.search-form form').submit(function(){
 		'rut_serie',
 		*/
 		array(
+            'class'=>'bootstrap.widgets.TbButtonColumn',
+            'header'=>'Opciones',
+            'template' => '{view}{update} {delete}',
+            'afterDelete'=>'function(link,success,data){if(success)mostrarMensajes(data); }',
+            'buttons' => array(
+                'update' => array(                    
+                    'options'=>array(
+                        'class'=>'btn btn-small update'
+                    )
+                ),
+                'view' => array(                    
+                    'options'=>array(
+                        'class'=>'btn btn-small view'
+                    )
+                ),
+                'delete' => array(                    
+                    'options'=>array(
+                        'class'=>'btn btn-small delete'
+                    )
+                )
+            ),
+            'htmlOptions'=>array('style'=>'width: 80px'),
+        ),
+		/*array(
             'class' => 'CButtonColumn',
             'template'=>'{view}{update}{delete}',
             'header' => 'Acción',
@@ -105,7 +129,7 @@ $('.search-form form').submit(function(){
                             'url'=>'$this->grid->controller->createUrl("ver", array("id"=>$data->rut))',                              
                         ),          
             ),   
-        ),
+        ),*/
 	),
 )); ?>
 </div>

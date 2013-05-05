@@ -29,6 +29,7 @@ public function accessRules() {
 }
 
 	public function actionView($id) {
+	    $this->layout = '//layouts/iframe';
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'ProcesosPeriodos'),
 		));
