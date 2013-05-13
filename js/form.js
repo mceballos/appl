@@ -24,7 +24,7 @@ function addStringAfterLabel(){
 		$(this).addClass('colon');
 	});
 	//Debemos agregar los dos puntos en caso de encontrarse el label dentro de un TR
-	$("input[type='text'],textarea,select,input[type='password']").parent('td').prev('td').children('label').each(function(){
+	$("input[type='text'],input[type='checkbox'],textarea,select,input[type='password']").parent('td').prev('td').children('label').each(function(){
 		$(this).html($.trim($(this).html())+": ");
 		$(this).addClass('colon');
 	});
@@ -641,19 +641,28 @@ function mostrarComentarios(bandera, id, b)
 				return false;
 		}
 		return false;
+	}	
+	
+	function buscarCompromisoV2(idRUT,idDV,visualizar){	
+			if(validarut($('#'+idRUT).val(),$('#'+idDV).val())){
+				obtenerMatriculaAlumno($('#'+idRUT).val(),visualizar);
+			}else{
+				alert('Debe ingresar un RUT valido.');
+			}
+			
+		return false;
 	}
+	
 	
 	function obtenerMatriculaAlumno(rut,visualizar)
 	{
 	
 		var action = baseURL + '/procesosPeriodos/obtenerMatriculaAlumno/'+rut;
-		
+		$('#'+visualizar).html("Buscando...");
 		// se pide al action la lista de productos de la categoria seleccionada
 		$.getJSON(action, function(data) {
 			// limpiar 
 			$('#'+visualizar).html("");
-			
-			
 			
 			if(data.nombre!=""){
 				
@@ -664,7 +673,7 @@ function mostrarComentarios(bandera, id, b)
 				$('#'+visualizar).html("El rut no contiene matricula para esté periodo.");
 			}		
 		}).error(function(e){ 
-				
+				$('#'+visualizar).html("");
 			});
 		
 		return false;
@@ -679,17 +688,17 @@ function mostrarComentarios(bandera, id, b)
 	
 	
 	if (interes==0){
-		$('#montoTotal').html('$'+ parseInt(valor)+ '.-');
+		$('#montoTotal').html('$'+ formatNumber(parseInt(valor)));
 		$("#Compromisos_monto_total").val(valor);
-		$("#cuotaMensual").html('$'+ parseInt(valor / cuotas) +'.-');
+		$("#cuotaMensual").html('$'+ formatNumber(parseInt(valor / cuotas)));
 		
 		
 	}else{
 		if (valor){
 			calcular = eval(((valor*interes)/100))+ eval(valor);
-			$('#montoTotal').html('$'+ parseInt(calcular)+ '.-');
+			$('#montoTotal').html('$'+ formatNumber(parseInt(calcular)));
 			$("#Compromisos_monto_total").val(parseInt(calcular));
-			$("#cuotaMensual").html('$'+ parseInt(calcular / cuotas)+'.-');
+			$("#cuotaMensual").html('$'+ formatNumber(parseInt(calcular / cuotas)));
 		}
 	}
 		
@@ -705,5 +714,48 @@ function mostrarComentarios(bandera, id, b)
  	asignarMontoTotal();
  
  }	
+ 
+ function validarut(ruti,dvi){
+	    var rut = ruti+"-"+dvi;
+	    if (rut.length<9)
+	    	return(false)
+	    i1=rut.indexOf("-");
+	    dv=rut.substr(i1+1);
+	    dv=dv.toUpperCase();
+	    nu=rut.substr(0,i1);
+	     
+	    cnt=0;
+	    suma=0;
+	    for (i=nu.length-1; i>=0; i--)
+	    {
+		    dig=nu.substr(i,1);
+		    fc=cnt+2;
+		    suma += parseInt(dig)*fc;
+		    cnt=(cnt+1) % 6;
+	    }
+	    dvok=11-(suma%11);
+	    if (dvok==11) dvokstr="0";
+	    if (dvok==10) dvokstr="K";
+	    if ((dvok!=11) && (dvok!=10)) dvokstr=""+dvok;
+	     
+	    if (dvokstr==dv)
+	    	return(true);
+	    else
+	    	return(false);
+}
+ 
+ function formatNumber(number){
+	 if (!/^([0-9])*$/.test(number)){
+		 return "0";
+	 }
+		var number = new String(number);
+		var result = '';
+		while( number.length > 3 ){
+		 result = '.' + number.substr(number.length - 3) + result;
+		 number = number.substring(0, number.length - 3);
+		}
+		result = number + result;
+		return result;
+	}
 
 
