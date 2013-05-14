@@ -4,26 +4,18 @@
 	'action' => Yii::app()->createUrl($this->route),
 	'method' => 'get',
 )); ?>
-
-	<div class="row">
-		<?php echo $form->label($model, 'id'); ?>
-		<?php echo $form->textField($model, 'id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'nombre'); ?>
-		<?php echo $form->textField($model, 'nombre', array('maxlength' => 200)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'porcentaje'); ?>
-		<?php echo $form->textField($model, 'porcentaje'); ?>
-	</div>
-
-
-	<div class="row buttons">
-		<?php echo GxHtml::submitButton(Yii::t('app', 'Buscar')); ?>
-	</div>
+    <table width="100%">
+        <tr>
+            <td colspan="5"><div class="instruccionesBusqueda">Si lo desea, puede introducir un operador de comparación (<, <=, >, >=, <> or =) al comienzo de cada uno de los valores de su búsqueda para especificar cómo la comparación se debe hacer. </div></td>
+        </tr>
+        <tr>
+            <th align="right"><?php echo $form->label($model, 'porcentaje'); ?>:</th>
+            <td><?php echo $form->textField($model, 'porcentaje'); ?></td>
+            <th align="right"><?php echo $form->label($model, 'nombre'); ?>:</th>
+            <td><?php echo $form->textField($model, 'nombre', array('maxlength' => 200)); ?></td>
+            <td align="right"><?php echo GxHtml::submitButton(Yii::t('app', 'Buscar')); ?></td>
+        </tr>
+    </table>
 
 <?php $this->endWidget(); ?>
 

@@ -14,12 +14,12 @@
 	<?php echo $form->errorSummary($model); ?>
 <table width="100%" border="0" cellspacing="5" cellpadding="5">
     <tr>
-        <td><?php echo $form->labelEx($model,'compromiso_detalle_id'); ?></td>
-        <td>            
+        <td style="width: 130px;"><?php echo $form->labelEx($model,'compromiso_detalle_id'); ?></td>
+        <td style="width: 355px;">            
             <?php echo $form->dropDownList($model, 'compromiso_detalle_id', GxHtml::listDataEx(DetallesCompromisos::model()->findAllAttributes(null, true))); ?>
             <?php echo $form->error($model,'compromiso_detalle_id'); ?>
         </td>
-        <td><?php echo $form->labelEx($model,'tipo_pago_id'); ?></td>
+        <td style="width: 110px;"><?php echo $form->labelEx($model,'tipo_pago_id'); ?></td>
         <td>            
             <?php echo $form->dropDownList($model, 'tipo_pago_id', GxHtml::listDataEx(TiposPagos::model()->findAllAttributes(null, true))); ?>
             <?php echo $form->error($model,'tipo_pago_id'); ?>

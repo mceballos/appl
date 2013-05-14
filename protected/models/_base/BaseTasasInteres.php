@@ -48,8 +48,8 @@ abstract class BaseTasasInteres extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'compromisoses' => array(self::HAS_MANY, 'Compromisos', 'tasa_interes_id'),
-			'pagoses' => array(self::HAS_MANY, 'Pagos', 'tasa_interes_id'),
+			'compromisoses' => array(self::HAS_MANY, 'Compromisos', 'tasa_interes_id','condition' => 'compromisoses.estado = 1'),
+			'pagoses' => array(self::HAS_MANY, 'Pagos', 'tasa_interes_id','condition' => 'pagoses.estado = 1'),
 		);
 	}
 

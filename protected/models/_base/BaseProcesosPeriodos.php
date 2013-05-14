@@ -22,7 +22,7 @@
  * @property SeccionesGrados $seccionGrado
  */
 abstract class BaseProcesosPeriodos extends GxActiveRecord {
-	public $nombreCurso,$nombreCompleto;
+	public $nombreCurso,$nombreCompleto,$dv;
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
 	}
@@ -44,18 +44,20 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 			array('alumno_rut, periodo_id, seccion_grado_id', 'required'),
 			array('alumno_rut, periodo_id, seccion_grado_id, estado, pago_pendiente, promovido', 'numerical', 'integerOnly'=>true),
 			array('estado, pago_pendiente, promovido', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('alumno_rut, periodo_id, seccion_grado_id, estado, pago_pendiente, promovido', 'safe', 'on'=>'search'),
+			array('alumno_rut, periodo_id, seccion_grado_id, estado, pago_pendiente, promovido,dv', 'safe', 'on'=>'search'),
+			array('alumno_rut', 'checkRut','message'=>'El Rut ingresado no es valido. Ej:123456789-0'),
 			array('alumno_rut', 'UniqueAttributesValidator', 'with'=>'periodo_id','message'=>'{attribute} "{value}" Se ecuentra matriculado en esté periodo.'),
+            
         );		
 	
 	}
 
 	public function relations() {
 		return array(
-			'compromisoses' => array(self::HAS_MANY, 'Compromisos', 'proceso_periodo_id'),
-			'alumnoRut' => array(self::BELONGS_TO, 'Alumnos', 'alumno_rut'),
-			'periodo' => array(self::BELONGS_TO, 'Periodos', 'periodo_id'),
-			'seccionGrado' => array(self::BELONGS_TO, 'SeccionesGrados', 'seccion_grado_id'),
+			'compromisoses' => array(self::HAS_MANY, 'Compromisos', 'proceso_periodo_id','condition' => 'compromisoses.estado = 1'),
+			'alumnoRut' => array(self::BELONGS_TO, 'Alumnos', 'alumno_rut','condition' => 'alumnoRut.estado = 1'),
+			'periodo' => array(self::BELONGS_TO, 'Periodos', 'periodo_id','condition' => 'periodo.estado = 1'),
+			'seccionGrado' => array(self::BELONGS_TO, 'SeccionesGrados', 'seccion_grado_id','condition' => 'seccionGrado.estado = 1'),
 		);
 	}
 
@@ -66,7 +68,7 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 
 	public function attributeLabels() {
 		return array(
-			'alumno_rut' => null,
+			'alumno_rut' => Yii::t('app', 'Rut del Alumno'),
 			'periodo_id' => Yii::t('app', 'Período'),
 			'seccion_grado_id' => Yii::t('app', 'Curso '),
 			'estado' => Yii::t('app', 'Estado'),
@@ -81,13 +83,19 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 
 	public function search() {
 		$criteria = new CDbCriteria;
-
-		$criteria->compare('alumno_rut', $this->alumno_rut);
-		$criteria->compare('periodo_id', Yii::app()->session['idPeriodo']);
-		$criteria->compare('seccion_grado_id', $this->seccion_grado_id);
-		$criteria->compare('estado', 1);
-		$criteria->compare('pago_pendiente', $this->pago_pendiente);
-		$criteria->compare('promovido', $this->promovido);
+        $criteria->with=array('alumnoRut');
+		$criteria->compare('t.alumno_rut', $this->alumno_rut);
+		$criteria->compare('t.periodo_id', Yii::app()->session['idPeriodo']);
+		$criteria->compare('t.seccion_grado_id', $this->seccion_grado_id);
+		$criteria->compare('t.estado', 1);
+		$criteria->compare('t.pago_pendiente', $this->pago_pendiente);
+		$criteria->compare('t.promovido', $this->promovido);
+        if(isset($_GET['ProcesosPeriodos'])){
+            if(isset($_GET['ProcesosPeriodos']['dv']))
+                if(!is_null($_GET['ProcesosPeriodos']['dv']))
+                    $criteria->compare('alumnoRut.dv', $_GET['ProcesosPeriodos']['dv']);
+        }
+        
 		//$criteria->condition='t.periodo_id='.Yii::app()->session['idPeriodo'];
 
 		return new CActiveDataProvider($this, array(
@@ -127,4 +135,46 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
             'pagination' => array('pageSize' => 60,)
 			));
 	}
+
+
+    public function checkRut($attribute,$params){
+        $rut=$this->alumno_rut;
+        $digito_verificador=null;//$this->DV;
+        if(isset($_POST['ProcesosPeriodos'])){
+            if(isset($_POST['ProcesosPeriodos']['DV'])){
+                if(!is_null($_POST['ProcesosPeriodos']['DV'])){
+                    $digito_verificador=$_POST['ProcesosPeriodos']['DV'];
+                }
+            }
+        }
+        /* Preparar dígito verificador */
+          $digito_ingresado = strtoupper($digito_verificador);
+          $posibles_valores = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'K');         
+          /* Sólo si $rut es natural y $digito_ingresado está en $posibles_valores */
+          if ($rut > 0 && in_array($digito_ingresado, $posibles_valores)){
+            /* Calcular el digito verificador del rut ingresado */
+            $d = 1;
+            for ($x = 0; $rut != 0; $rut /= 10)
+              $d = ($d + $rut % 10 * (9 - $x++ % 6)) % 11;
+            
+            
+            $digito_calculado = chr($d ? $d + 47 : 75);
+            
+            /* Comparar el digito ingresado con el digito calculado */
+            if ($digito_calculado == $digito_ingresado){
+                //return true;
+            } else{
+              /* el digito ingresado es incorrecto */
+              //return false;
+              if(!$this->hasErrors("alumno_rut"))
+                    $this->addError("alumno_rut", $params['message']);
+            }
+          } else{
+            /* $rut no es natural o bien $digito_ingresado no está en $posibles_valores */
+            //return false;
+            if(!$this->hasErrors("alumno_rut"))
+                    $this->addError("alumno_rut", $params['message']);
+          }
+    }
+
 }

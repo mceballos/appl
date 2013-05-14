@@ -39,12 +39,12 @@
             </td>
          </tr>
          <tr>
-            <td align="right"><?php echo $form->labelEx($model,'tipo_compromiso_id'); ?></td>
-            <td><?php echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))));   ?>        
+            <td align="left" style="width: 150px;"><?php echo $form->labelEx($model,'tipo_compromiso_id'); ?></td>
+            <td style="width: 290px;"><?php echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))));   ?>        
                 <?php echo $form->error($model,'tipo_compromiso_id'); ?></td>
-            <td align="right"><label class="required" for="Compromisos_proceso_periodo_id"><span class="required"> * </span>Rut Alumno Matriculado</label></td>
+            <td align="left" style="width: 150px;"><label class="required" for="Compromisos_proceso_periodo_id"><span class="required"> * </span>Rut Alumno Matriculado</label></td>
             <td><?php echo $form->hiddenField($model, 'proceso_periodo_id');    
-            echo '<input id="compromisoRut" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8">- <input id="compromisoDV" name="Compromisos[dv]" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarCompromisoV2(\'compromisoRut\',\'compromisoDV\',\'nombreAlumnoMatriculado\');" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
+            echo '<input id="compromisoRut" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="compromisoDV" name="Compromisos[dv]" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarCompromisoV2(\'compromisoRut\',\'compromisoDV\',\'nombreAlumnoMatriculado\');" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
                 ?>
                 <br/>
                 <strong id="nombreAlumnoMatriculado"></strong>
@@ -52,15 +52,15 @@
             </td>
          </tr>
          <tr>
-            <td align="right">  <?php echo $form->labelEx($model,'observaciones'); ?></td>
+            <td align="left">  <?php echo $form->labelEx($model,'observaciones'); ?></td>
             <td colspan="3"><?php echo $form->textArea($model, 'observaciones',array('rows'=>3,'maxlength' => 200,'style'=>'width: 668px;')); ?>
         <?php echo $form->error($model,'observaciones'); ?></td>
          </tr>
          <tr>
-            <td align="right"><?php echo $form->labelEx($model,'numero_cuotas'); ?>:</td>
+            <td align="left"><?php echo $form->labelEx($model,'numero_cuotas'); ?>:</td>
             <td><?php echo $form->radioButtonList($model,'numero_cuotas',array('1'=>'1','6'=>'6','9'=>'9'),array('onclick'=>'calcularMontoTotal();','separator'=>'      '));?>
                 <?php echo $form->error($model,'numero_cuotas'); ?></td>
-            <td align="right"><?php echo $form->labelEx($model,'tasa_interes_id'); ?></td>
+            <td align="left"><?php echo $form->labelEx($model,'tasa_interes_id'); ?></td>
             <td><?php //echo $form->dropDownList($model, 'tasa_interes_id', GxHtml::listDataEx(TasasInteres::model()->findAll(array('condition'=>'estado=1')))); 
                       echo '<select id="Compromisos_tasa_interes_id" name="Compromisos[tasa_interes_id]" onChange="calcularMontoTotal()">';
                       echo "<option value=''  tasa='0'>--</option>";    
@@ -78,10 +78,10 @@
                 <?php echo $form->error($model,'tasa_interes_id'); ?></td>
          </tr>
          <tr>
-            <td align="right"><?php echo $form->labelEx($model,'monto_sin_interes'); ?></td>
+            <td align="left"><?php echo $form->labelEx($model,'monto_sin_interes'); ?></td>
             <td><?php echo $form->textField($model, 'monto_sin_interes',array('style'=>'width: 155px;','maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeyup'=>'asignarMontoTotal()')); ?>
                 <?php echo $form->error($model,'monto_sin_interes'); ?></td>
-            <td align="right"><?php echo $form->labelEx($model,'monto_total'); ?>:</td>
+            <td align="left"><?php echo $form->labelEx($model,'monto_total'); ?>:</td>
             <td><?php //echo $form->textField($model, 'monto_total'); 
               echo '<strong id="montoTotal" style="color:#E91919;font-size: 20px;">'.$model->monto_total.'</strong>';
               echo $form->hiddenField($model, 'monto_total',array('value'=>''));
@@ -89,14 +89,14 @@
         <?php echo $form->error($model,'monto_total'); ?></td>
          </tr>
          <tr>
-            <td align="right"><label class="colon">Cuota Mensual Estimada : </label></td>
+            <td align="left"><label class="colon">Cuota Mensual Estimada : </label></td>
             <td><strong id="cuotaMensual" style="color:#E91919;font-size: 20px;"></strong></td>
-            <td align="right"><?php echo $form->labelEx($model,'medio_pago_id');?></td>
+            <td align="left"><?php echo $form->labelEx($model,'medio_pago_id');?></td>
             <td><?php echo $form->dropDownList($model, 'medio_pago_id', GxHtml::listDataEx(MediosPagos::model()->findAll(array('condition'=>'estado=1')))); ?>
                 <?php echo $form->error($model,'medio_pago_id'); ?></td>
          </tr>
          <tr>
-            <td align="right"><?php echo $form->labelEx($model,'fecha_primera_cuota'); ?></td>
+            <td align="left"><?php echo $form->labelEx($model,'fecha_primera_cuota'); ?></td>
             <td>
                     <?php
                         $this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -128,7 +128,7 @@
                     <?php //echo $form->textField($model, 'fecha_primera_cuota'); ?>
                     <?php echo $form->error($model,'fecha_primera_cuota'); ?>
             </td>
-            <td align="right"><?php echo $form->labelEx($model,'evidencia_pdf');?></td>
+            <td align="left"><?php echo $form->labelEx($model,'evidencia_pdf');?></td>
             <td><?php echo $form->fileField($model, 'documento');
             echo $form->error($model,'documento'); ?></td>
          </tr>

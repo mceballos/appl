@@ -45,7 +45,7 @@ abstract class BaseMediosPagos extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'compromisoses' => array(self::HAS_MANY, 'Compromisos', 'medio_pago_id'),
+			'compromisoses' => array(self::HAS_MANY, 'Compromisos', 'medio_pago_id','condition' => 'compromisoses.estado = 1'),
 		);
 	}
 

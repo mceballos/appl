@@ -45,7 +45,7 @@ abstract class BaseParentescos extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'encargadoses' => array(self::HAS_MANY, 'Encargados', 'parentesco_id'),
+			'encargadoses' => array(self::HAS_MANY, 'Encargados', 'parentesco_id','condition' => 'encargadoses.estado = 1'),
 		);
 	}
 

@@ -21,8 +21,7 @@
  * @property string $villa_poblacion
  * @property integer $comuna_id
  * @property string $fecha_actualizacion
- * @property integer $responsable_actualizacion
- * @property integer $estado
+  * @property integer $estado
  * @property integer $parentesco_id
  * @property integer $estudios_superiores_anios
  * @property string $ocupacion
@@ -53,14 +52,14 @@ abstract class BaseEncargados extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('rut, dv, nombre, apellido_paterno, apellido_materno, responsable_actualizacion, parentesco_id', 'required'),
-			array('rut, comuna_id, responsable_actualizacion, estado, parentesco_id, estudios_superiores_anios', 'numerical', 'integerOnly'=>true),
+			array('rut, dv, nombre, apellido_paterno, apellido_materno, , parentesco_id', 'required'),
+			array('rut, comuna_id, estado, parentesco_id, estudios_superiores_anios', 'numerical', 'integerOnly'=>true),
 			array('dv', 'length', 'max'=>1),
 			array('nombre, apellido_paterno, apellido_materno, ocupacion', 'length', 'max'=>50),
 			array('telefono_laboral, telefono_fijo, celular', 'length', 'max'=>12),
 			array('direccion_particular, villa_poblacion', 'length', 'max'=>200),
 			array('rut, telefono_laboral, telefono_fijo, celular, direccion_particular, villa_poblacion, comuna_id, estado, estudios_superiores_anios, ocupacion', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('rut, dv, nombre, apellido_paterno, apellido_materno, telefono_laboral, telefono_fijo, celular, direccion_particular, villa_poblacion, comuna_id, fecha_actualizacion, responsable_actualizacion, estado, parentesco_id, estudios_superiores_anios, ocupacion', 'safe', 'on'=>'search'),
+			array('rut, dv, nombre, apellido_paterno, apellido_materno, telefono_laboral, telefono_fijo, celular, direccion_particular, villa_poblacion, comuna_id, fecha_actualizacion, estado, parentesco_id, estudios_superiores_anios, ocupacion', 'safe', 'on'=>'search'),
 			array('rut','unique','message'=>'{attribute} : {value}  se encuentra registrado en la base de datos !!!'),
 			
 		 );
@@ -68,12 +67,11 @@ abstract class BaseEncargados extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'alumnoses' => array(self::HAS_MANY, 'Alumnos', 'apoderado_rut'),
-			'alumnoses1' => array(self::HAS_MANY, 'Alumnos', 'madre_rut'),
-			'alumnoses2' => array(self::HAS_MANY, 'Alumnos', 'padre_rut'),
-			'comuna' => array(self::BELONGS_TO, 'Comuna', 'comuna_id'),
-			'parentesco' => array(self::BELONGS_TO, 'Parentescos', 'parentesco_id'),
-			'responsableActualizacion' => array(self::BELONGS_TO, 'Users', 'responsable_actualizacion'),
+			'alumnoses' => array(self::HAS_MANY, 'Alumnos', 'apoderado_rut','condition' => 'alumnoses.estado = 1'),
+			'alumnoses1' => array(self::HAS_MANY, 'Alumnos', 'madre_rut','condition' => 'alumnoses1.estado = 1'),
+			'alumnoses2' => array(self::HAS_MANY, 'Alumnos', 'padre_rut','condition' => 'alumnoses2.estado = 1'),
+			'comuna' => array(self::BELONGS_TO, 'Comuna', 'comuna_id','condition' => 'comuna.estado = 1'),
+			'parentesco' => array(self::BELONGS_TO, 'Parentescos', 'parentesco_id','condition' => 'parentesco.estado = 1'),			
 		);
 	}
 
@@ -95,8 +93,7 @@ abstract class BaseEncargados extends GxActiveRecord {
 			'direccion_particular' => Yii::t('app', 'Dirección Particular'),
 			'villa_poblacion' => Yii::t('app', 'Villa Población'),
 			'comuna_id' => null,
-			'fecha_actualizacion' => Yii::t('app', 'Fecha Actualizacion'),
-			'responsable_actualizacion' => Yii::t('app', 'Responsable Actualizacion'),
+			'fecha_actualizacion' => Yii::t('app', 'Fecha Actualizacion'),			
 			'estado' => Yii::t('app', 'Estado'),
 			'parentesco_id' => null,
 			'estudios_superiores_anios' => Yii::t('app', 'Años de estudios Superiores'),
@@ -124,8 +121,7 @@ abstract class BaseEncargados extends GxActiveRecord {
 		$criteria->compare('direccion_particular', $this->direccion_particular, true);
 		$criteria->compare('villa_poblacion', $this->villa_poblacion, true);
 		$criteria->compare('comuna_id', $this->comuna_id);
-		$criteria->compare('fecha_actualizacion', $this->fecha_actualizacion, true);
-		$criteria->compare('responsable_actualizacion', $this->responsable_actualizacion);
+		$criteria->compare('fecha_actualizacion', $this->fecha_actualizacion, true);		
 		$criteria->compare('estado', 1);
 		$criteria->compare('parentesco_id', $this->parentesco_id);
 		$criteria->compare('estudios_superiores_anios', $this->estudios_superiores_anios);
@@ -135,4 +131,9 @@ abstract class BaseEncargados extends GxActiveRecord {
 			'criteria' => $criteria,
 		));
 	}
+
+    public function getRutCompleto(){
+        return $this->rut.'-'.$this->dv;           
+    }
+
 }

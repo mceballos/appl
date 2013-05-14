@@ -47,8 +47,8 @@ abstract class BaseComuna extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'alumnoses' => array(self::HAS_MANY, 'Alumnos', 'comuna_id'),
-			'encargadoses' => array(self::HAS_MANY, 'Encargados', 'comuna_id'),
+			'alumnoses' => array(self::HAS_MANY, 'Alumnos', 'comuna_id','condition' => 'alumnoses.estado = 1'),
+			'encargadoses' => array(self::HAS_MANY, 'Encargados', 'comuna_id','condition' => 'encargadoses.estado = 1'),
 		);
 	}
 

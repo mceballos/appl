@@ -29,13 +29,14 @@ $this->breadcrumbs = array(
 	$this->widget('zii.widgets.grid.CGridView', array(
 	'id' => 'alumnos-curso-grid',
 	'dataProvider' => $model->searchCursos(),
+	'afterAjaxUpdate'=>'function(id, data){afterAjaxUpdateSuccess();}',
 	'filter' => $model,
 	'columns' => array(
 		array(
-      		'header'=>'Nº',
-      		'type'=>'raw',
-      		'value'=>'$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1',//this for the auto page number of cgridview
-   		),
+            'header'=>'N°',
+            'htmlOptions'=>array('width'=>'30'),
+            'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+        ),
 		array(
 			'name'=>'seccion_grado_id',
 			'type'=>'raw',

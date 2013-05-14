@@ -172,7 +172,7 @@ class User extends CActiveRecord
 			'UserStatus' => array(
 				self::STATUS_NOACTIVE => UserModule::t('Not active'),
 				self::STATUS_ACTIVE => UserModule::t('Active'),
-				self::STATUS_BANNED => UserModule::t('Banned'),
+				//self::STATUS_BANNED => UserModule::t('Banned'),
 			),
 			'AdminStatus' => array(
 				'0' => UserModule::t('No'),

@@ -27,35 +27,36 @@
         </tr>
 
         <tr>
-            <td align="right"> <?php echo $form->labelEx($model,'superuser'); ?></td>
-            <td><?php echo $form->dropDownList($model,'superuser',User::itemAlias('AdminStatus'),array('style'=>'width: 266px;')); ?>
-            <?php echo $form->error($model,'superuser'); ?></td>
+            <td align="right" width="150px"><?php echo $form->labelEx($model,'email'); ?></td>
+         <td><?php echo $form->textField($model,'email',array('style'=>'width: 250px;','maxlength'=>20)); ?>
+                <?php echo $form->error($model,'email'); ?>
+          </td>
+            
             <td align="right"> <?php echo $form->labelEx($model,'status'); ?></td>
             <td >   <?php echo $form->dropDownList($model,'status',User::itemAlias('UserStatus'),array('style'=>'width: 266px;')); ?>
             <?php echo $form->error($model,'status'); ?>
             </td>
         </tr>
         
-         <td align="right" width="150px"><?php echo $form->labelEx($model,'email'); ?></td>
-         <td><?php echo $form->textField($model,'email',array('style'=>'width: 250px;','maxlength'=>20)); ?>
-                <?php echo $form->error($model,'email'); ?>
-          </td>
+         
         
         <tr>
             <td align="right"><?php echo $form->labelEx($model,'nombres'); ?></td>
             <td><?php echo $form->textField($model,'nombres',array('style'=>'width: 252px;','maxlength'=>128)); ?>
         <?php echo $form->error($model,'nombres'); ?></td>
-            <td></td>
-            <td></td>
-        </tr>
-    
-        <tr>
-            <td align="right"><?php echo $form->labelEx($model,'ape_paterno'); ?></td>
+        <td align="right"><?php echo $form->labelEx($model,'ape_paterno'); ?></td>
             <td><?php echo $form->textField($model,'ape_paterno',array('style'=>'width: 254px;','maxlength'=>128)); ?>
         <?php echo $form->error($model,'ape_paterno'); ?></td>
+            
+        </tr>
+    
+        <tr>            
             <td align="right"><?php echo $form->labelEx($model,'ape_materno'); ?></td>
             <td><?php echo $form->textField($model,'ape_materno',array('style'=>'width: 250px;','maxlength'=>128)); ?>
         <?php echo $form->error($model,'ape_materno'); ?></td>
+            <td align="right"><?php echo $form->labelEx($model,'rut'); ?></td>
+            <td><?php echo $form->textField($model,'rut',array('style'=>'width: 250px;','maxlength'=>128)); ?>
+            <?php echo $form->error($model,'rut'); ?></td>
         </tr>        
     </table>   
     
@@ -79,11 +80,11 @@
               foreach($arrayPerfiles as $k=>$v):
                   $parOImpar=$x%2?"even":"odd";
                   echo "<tr class=".$parOImpar.">";
-                  echo "<td><label for=\"User_authItems_".$x."\">".$v."</label></td>";
+                  echo "<td><label for=\"User_authItems_".$x."\">".ucfirst($v)."</label></td>";
                   if (array_key_exists($k, $arraySelectedPerfiles)) {
-                     echo "<td><input type=\"checkbox\" name=\"User[authItems][]\" checked=\"checked\" value=\"".$k."\" id=\"User_authItems_".$x."\"></td>";     
+                     echo "<td><input type=\"radio\" name=\"User[authItems][]\" checked=\"checked\" value=\"".$k."\" id=\"User_authItems_".$x."\"></td>";     
                   }else{
-                      echo "<td><input type=\"checkbox\" name=\"User[authItems][]\" value=\"".$k."\" id=\"User_authItems_".$x."\"></td>";
+                      echo "<td><input type=\"radio\" name=\"User[authItems][]\" value=\"".$k."\" id=\"User_authItems_".$x."\"></td>";
                   }
                   echo "</tr>";
               ?>    

@@ -4,22 +4,14 @@ class PagosController extends GxController {
 
 
 	public function actionView($id) {
+	    //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'Pagos'),
 		));
 	}
 	
-	//Agregado para ver desde la ventana MODAL
-	public function actionVer($id) {
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
-		
-		$this->render('view_admin', array(
-			'model' => $this->loadModel($id, 'Pagos'),
-		));
-	}
 	
-
 	public function actionCreate() {
 		$model = new Pagos;
 

@@ -35,17 +35,7 @@ public function accessRules() {
 		));
 	}
 	
-	//Agregado para ver desde la ventana MODAL
-	public function actionVer($id) {
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
-		
-		$this->render('view_admin', array(
-			'model' => $this->loadModel($id, 'ProcesosPeriodos'),
-		));
-	}
 	
-
 	public function actionCreate() {
 		$model = new ProcesosPeriodos;
 
@@ -62,7 +52,7 @@ public function accessRules() {
 			}
 		}
 		//Para mostrar en la ventana modal solo el content
-		//$this->layout = '//layouts/iframe';
+		$this->layout = '//layouts/iframe';
 		$this->render('create', array( 'model' => $model));
 	}
 
@@ -99,42 +89,17 @@ public function accessRules() {
 			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
 	}
 	
-	public function actionDeleteIndex($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$this->loadModel($id, 'ProcesosPeriodos')->delete();
-
-			if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				$this->redirect(array('index'));
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
-	}
-	public function actionAdmin() {
-	//public function actionIndex() {
-		$criteria = new CDbCriteria;
-		$criteria->compare('estado', 1);
-		$criteria->compare('periodo_id', Yii::app()->session['idPeriodo']);
-		//$criteria->addCondition('t.tipo_producto_id = '.$id.' AND t.estado =1 AND pp.descripcion = '.Yii::app()->session['idPeriodoSelecionado']);
-		//Agregado el estado para solo mostrar los activos
-		$dataProvider = new CActiveDataProvider('ProcesosPeriodos',
-		array(
-			'criteria' => $criteria,
-		));
-		$this->render('index', array(
-			'dataProvider' => $dataProvider,
-		));
-	}
-	public function actionIndex() {
-	//public function actionAdmin() {
+	
+	
+	public function actionIndex() {	
 		$model = new ProcesosPeriodos('searchs');
 		$model->unsetAttributes();
 
 		if (isset($_GET['ProcesosPeriodos']))
 			$model->setAttributes($_GET['ProcesosPeriodos']);
 			
-		//Para mostrar en la ventana modal solo el content
-		//$this->layout = '//layouts/iframe';	
 		
-		$this->render('admin', array(
+		$this->render('index', array(
 			'model' => $model,
 		));
 	}

@@ -45,7 +45,7 @@ abstract class BaseTiposPagos extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'pagoses' => array(self::HAS_MANY, 'Pagos', 'tipo_pago_id'),
+			'pagoses' => array(self::HAS_MANY, 'Pagos', 'tipo_pago_id','condition' => 'pagoses.estado = 1'),
 		);
 	}
 
@@ -68,7 +68,7 @@ abstract class BaseTiposPagos extends GxActiveRecord {
 
 		$criteria->compare('id', $this->id);
 		$criteria->compare('nombre', $this->nombre, true);
-		$criteria->compare('estado', $this->estado);
+		$criteria->compare('estado', 1);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

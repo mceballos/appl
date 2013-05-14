@@ -5,27 +5,19 @@
 	'method' => 'get',
 )); 
 ?>
-
-	<div class="row">
-		<?php //echo $form->label($model, 'id'); ?>
-		<?php //echo $form->textField($model, 'id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model, 'tipo_compromiso_id'); ?>
-		<?php echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))), array('prompt' => Yii::t('app', 'All'))); ?>
-	</div>
-	
-
-	<div class="row">
-		<?php echo $form->label($model, 'medio_pago_id'); ?>
-		<?php echo $form->dropDownList($model, 'medio_pago_id', GxHtml::listDataEx(MediosPagos::model()->findAll(array('condition'=>'estado=1'))), array('prompt' => Yii::t('app', 'All'))); ?>
-	</div>
-
-	<div class="row">
-		<?php //echo $form->label($model, 'proceso_periodo_id'); ?>
-		<?php //echo $form->textField($model, 'proceso_periodo_id'); ?>
-	</div>
+    <table width="100%">
+        <tr>
+            <td colspan="5"><div class="instruccionesBusqueda">Si lo desea, puede introducir un operador de comparación (<, <=, >, >=, <> or =) al comienzo de cada uno de los valores de su búsqueda para especificar cómo la comparación se debe hacer. </div></td>
+        </tr>
+        <tr>
+            <th align="right"><?php echo $form->label($model, 'tipo_compromiso_id'); ?>:</th>
+            <td width="230"><?php echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))), array('prompt' => Yii::t('app', 'All'))); ?></td>
+            <th align="right"><?php echo $form->label($model, 'medio_pago_id'); ?>:</th>
+            <td width="230"><?php echo $form->dropDownList($model, 'medio_pago_id', GxHtml::listDataEx(MediosPagos::model()->findAll(array('condition'=>'estado=1'))), array('prompt' => Yii::t('app', 'All'))); ?></td>
+            <td align="right"><?php echo GxHtml::submitButton(Yii::t('app', 'Buscar')); ?></td>
+        </tr>
+    </table>
+		
 	<!-- 
 	<div class="row">
 		<?php //echo $form->label($model, 'compromiso_id_repactacion'); ?>
@@ -78,11 +70,6 @@
 	
   -->
 
-
-
-	<div class="row buttons">
-		<?php echo GxHtml::submitButton(Yii::t('app', 'Buscar')); ?>
-	</div>
 
 <?php $this->endWidget(); ?>
 

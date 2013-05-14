@@ -59,8 +59,8 @@ abstract class BaseSeccionesGrados extends GxActiveRecord {
 	public function relations() {
 		return array(
 			// 'procesosPeriodoses' => array(self::HAS_MANY, 'ProcesosPeriodos', 'seccion_grado_id'),
-			'grado' => array(self::BELONGS_TO, 'Grados', 'grado_id'),
-			'seccion' => array(self::BELONGS_TO, 'Secciones', 'seccion_id'),
+			'grado' => array(self::BELONGS_TO, 'Grados', 'grado_id','condition' => 'grado.estado = 1'),
+			'seccion' => array(self::BELONGS_TO, 'Secciones', 'seccion_id','condition' => 'seccion.estado = 1'),
 		);
 	}
 

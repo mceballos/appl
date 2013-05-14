@@ -25,5 +25,6 @@ return array (
   'ObjetivosEstrategicoses'=>'Objetivos Estrátegicos',
   'Parent'=>'Padre',
   'Viaticos' => 'Viáticos',
-  'update'=>'Modificar'
+  'update'=>'Modificar',
+  'Yes'=>'Si',  
 ); 

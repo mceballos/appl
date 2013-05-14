@@ -5,7 +5,20 @@
 	'method' => 'get',
 )); ?>
 
-	<div class="row">
+    <table width="100%">
+        <tr>
+            <td colspan="5"><div class="instruccionesBusqueda">Si lo desea, puede introducir un operador de comparación (<, <=, >, >=, <> or =) al comienzo de cada uno de los valores de su búsqueda para especificar cómo la comparación se debe hacer. </div></td>
+        </tr>
+        <tr>
+            <th align="right"><label for="ProcesosPeriodos_alumno_rut">Rut del Alumno</label>:</th>
+            <td width="180"><?php echo $form->textField($model, 'rut',array('style'=>'width:85px','maxlength' => 8,'size'=>10)); ?>-<input type="text" id="Alumnos_dv" name="Alumnos[dv]" size="1" maxlength="1"></td>
+            <th align="right"><?php echo $form->label($model, 'apellido_paterno'); ?>:</th>
+            <td><?php echo $form->textField($model, 'apellido_paterno', array('maxlength' => 50)); ?></td>
+            <td align="right"><?php echo GxHtml::submitButton(Yii::t('app', 'Buscar')); ?></td>
+        </tr>
+    </table>
+
+	<!--<div class="row">
 		<?php echo $form->label($model, 'rut'); ?>
 		<?php echo $form->textField($model, 'rut'); ?>
 	</div>
@@ -74,7 +87,7 @@
 
 	<div class="row buttons">
 		<?php echo GxHtml::submitButton(Yii::t('app', 'Buscar')); ?>
-	</div>
+	</div>-->
 
 <?php $this->endWidget(); ?>
 

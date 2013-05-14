@@ -26,7 +26,7 @@ class AdminController extends Controller
                 return array(
                     array('allow', // allow admin user to perform 'admin' and 'delete' actions
                             'actions'=>array('admin','delete','create','update','view'),
-                            'users'=>UserModule::getAdmins(),
+                            'roles'=>array('admin'),
                     ),
                     array('deny',  // deny all users
                             'users'=>array('*'),
@@ -63,6 +63,7 @@ class AdminController extends Controller
          */
         public function actionView()
         {
+            $this->layout = '//layouts/iframe';
                 $model = $this->loadModel();
                 $this->render('view',array(
                         'model'=>$model,
@@ -148,7 +149,7 @@ class AdminController extends Controller
                                         }         
                                     }    
                                     
-                                    UsersCentros::model()->deleteAll('user_id=:user_id',array(':user_id'=>$model->id));
+                                //    UsersCentros::model()->deleteAll('user_id=:user_id',array(':user_id'=>$model->id));
                                     //.. add checked materia to the alumno
                               
                                 }
@@ -175,11 +176,6 @@ class AdminController extends Controller
                 {
                         // we only allow deletion via POST request                        
                         $model = $this->loadModel();
-                        //AuthAssignment::model()->deleteAll('userid=:user_id',array(':userid'=>$model->id));
-                        //UsersCentros::model()->deleteAll('user_id=:user_id',array(':user_id'=>$model->id));
-                        //$profile = Profile::model()->findByPk($model->id);
-						//$profile->delete();
-                       	//$model->delete();
                        	
                        	//CREANDO FUNCION PARA VALIDAR SI EXISTEN DEPENDENCIAS PARA PODER ELIMINAR USUARIOS
                        	$actualizarEstado=true;
@@ -191,7 +187,7 @@ class AdminController extends Controller
                             //Validando el tipo de relación
                             if($v[0]=='CHasManyRelation'){
                                 foreach($this->$k as $relRecord) {
-                                        if($relRecord->estado=='1'){
+                                        if($relRecord->ESTADO=='1'){
                                             $actualizarEstado=false;    
                                             $campoYtabla.="<li>Existe una dependencia asociada al registro: '".$relRecord."'</li>";
                                         }              
@@ -202,8 +198,8 @@ class AdminController extends Controller
                        if(!$actualizarEstado){
                             echo "<div class='alert alert-block'><button type='button' class='close' data-dismiss='alert'>×</button> <h3>Atención!</h3>".$campoYtabla."</div>";
                         }else{
-                            $this->status=0;
-                            $this->save();
+                            $tabla->ESTADO=0;
+                            $tabla->save(false);
                        }
                         return true;
                        	//FIN CREANDO FUNCTION PARA VALIDAR...

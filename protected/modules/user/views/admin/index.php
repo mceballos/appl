@@ -1,7 +1,7 @@
 <?php
-$this->breadcrumbs=array(
-	'Preferencias'=>array('/site/preferencias'),
-	UserModule::t('Manage'),
+$this->breadcrumbs=array(	
+    'Administración',
+	'Administrar Usuarios',
 );
 
 
@@ -35,30 +35,35 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		'create_at',
 		'lastvisit_at',
-		array(
-			'name'=>'superuser',
-			'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
-			'filter'=>User::itemAlias("AdminStatus"),
-		),
+		
 		array(
 			'name'=>'status',
 			'value'=>'User::itemAlias("UserStatus",$data->status)',
 			'filter' => User::itemAlias("UserStatus"),
 		),
 		array(
-			'class'=>'CButtonColumn',
-			 'template'=>'{update}{delete}',
-			'header'=>'Acciones',
-			'afterDelete'=>'function(link,success,data){if(success)mostrarMensajes(data); }',
-			'buttons'=>array(
-                         'update'=> array(
-                                                                 
-                                      'imageUrl'=>Yii::app()->request->baseUrl.'/images/edit.png',
-                                   ),
-                        'delete'=>  array('imageUrl'=>Yii::app()->request->baseUrl.'/images/delete.png',
-                                      
-                                    ),
+            'class'=>'bootstrap.widgets.TbButtonColumn',
+            'header'=>'Opciones',
+            'template' => '{view}{update}{delete}',
+            'afterDelete'=>'function(link,success,data){if(success)mostrarMensajes(data); }',
+            'buttons' => array(
+                'view' => array(                    
+                    'options'=>array(
+                        'class'=>'btn-small view'
+                    )
                 ),
-		),
+                'update' => array(                    
+                    'options'=>array(
+                        'class'=>'btn-small update'
+                    )
+                ),
+                'delete' => array(                    
+                    'options'=>array(
+                        'class'=>'btn-small delete'
+                    )
+                )
+            ),
+            'htmlOptions'=>array('style'=>'width: 80px'),
+        ),
 	),
 )); ?>

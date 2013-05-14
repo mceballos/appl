@@ -83,11 +83,11 @@ abstract class BaseAlumnos extends GxActiveRecord {
 	public function relations() {
 		return array(
 			//'responsableActualizacion' => array(self::BELONGS_TO, 'Users', 'responsable_actualizacion'),
-			'comuna' => array(self::BELONGS_TO, 'Comuna', 'comuna_id'),
-			'apoderadoRut' => array(self::BELONGS_TO, 'Encargados', 'apoderado_rut'),
-			'madreRut' => array(self::BELONGS_TO, 'Encargados', 'madre_rut'),
-			'padreRut' => array(self::BELONGS_TO, 'Encargados', 'padre_rut'),
-			'procesosPeriodos' => array(self::HAS_ONE, 'ProcesosPeriodos', 'alumno_rut'),
+			'comuna' => array(self::BELONGS_TO, 'Comuna', 'comuna_id','condition' => 'comuna.estado = 1'),
+			'apoderadoRut' => array(self::BELONGS_TO, 'Encargados', 'apoderado_rut','condition' => 'apoderadoRut.estado = 1'),
+			'madreRut' => array(self::BELONGS_TO, 'Encargados', 'madre_rut','condition' => 'madreRut.estado = 1'),
+			'padreRut' => array(self::BELONGS_TO, 'Encargados', 'padre_rut','condition' => 'padreRut.estado = 1'),
+			'procesosPeriodos' => array(self::HAS_ONE, 'ProcesosPeriodos', 'alumno_rut','condition' => 'procesosPeriodos.estado = 1'),
 		);
 	}
 
@@ -169,4 +169,16 @@ abstract class BaseAlumnos extends GxActiveRecord {
 			'criteria' => $criteria,
 		));
 	}
+
+    /*public function getNombreYRutArray(){
+        return array($this->apellido_paterno.' '.$this->apellido_materno.' '.$this->nombre,$this->rut.'-'.$this->dv);   
+    }*/
+    
+    public function getRutCompleto(){
+        return $this->rut.'-'.$this->dv;           
+    }
+    
+    public function getRutNombre(){
+        return $this->apellido_paterno.' '.$this->apellido_materno.' '.$this->nombre.' ('.$this->rut.'-'.$this->dv.')';           
+    }
 }

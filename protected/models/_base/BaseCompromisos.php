@@ -13,8 +13,7 @@
  * @property string $fecha_actual
  * @property integer $tipo_compromiso_id
  * @property integer $compromiso_id_repactacion
- * @property string $observaciones
- * @property integer $responsable_id
+ * @property string $observaciones 
  * @property string $evidencia_pdf
  * @property integer $tasa_interes_id
  * @property integer $numero_cuotas
@@ -25,8 +24,7 @@
  * @property integer $proceso_periodo_id
  * @property integer $estado
  *
- * @property ProcesosPeriodos $procesoPeriodo
- * @property Users $responsable
+ * @property ProcesosPeriodos $procesoPeriodo 
  * @property MediosPagos $medioPago
  * @property TasasInteres $tasaInteres
  * @property TiposCompromisos $tipoCompromiso
@@ -55,24 +53,23 @@ abstract class BaseCompromisos extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('documento', 'file', 'types'=>'pdf'),
-			array('tasa_interes_id,fecha_actual, tipo_compromiso_id, responsable_id, monto_sin_interes, monto_total, medio_pago_id, proceso_periodo_id,numero_cuotas', 'required'),
-			array('tipo_compromiso_id, responsable_id, tasa_interes_id, numero_cuotas, monto_sin_interes, monto_total, medio_pago_id, proceso_periodo_id, estado', 'numerical', 'integerOnly'=>true),
+			array('tasa_interes_id,fecha_actual, tipo_compromiso_id, monto_sin_interes, monto_total, medio_pago_id, proceso_periodo_id,numero_cuotas', 'required'),
+			array('tipo_compromiso_id, tasa_interes_id, numero_cuotas, monto_sin_interes, monto_total, medio_pago_id, proceso_periodo_id, estado', 'numerical', 'integerOnly'=>true),
 			array('evidencia_pdf', 'length', 'max'=>200),
 			array('observaciones, fecha_primera_cuota', 'safe'),
 			array('observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, fecha_primera_cuota, estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, fecha_actual, tipo_compromiso_id, observaciones, responsable_id, evidencia_pdf, tasa_interes_id, numero_cuotas, monto_sin_interes, fecha_primera_cuota, monto_total, medio_pago_id, proceso_periodo_id, estado', 'safe', 'on'=>'search'),
+			array('id, fecha_actual, tipo_compromiso_id, observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, monto_sin_interes, fecha_primera_cuota, monto_total, medio_pago_id, proceso_periodo_id, estado', 'safe', 'on'=>'search'),
 			array('proceso_periodo_id','unique','message'=>'{attribute} : {value}  se encuentra registrado en la base de datos !!!'),
 		);
 	}
 
 	public function relations() {
 		return array(
-			'procesoPeriodo' => array(self::BELONGS_TO, 'ProcesosPeriodos', 'proceso_periodo_id'),
-			//'responsable' => array(self::BELONGS_TO, 'Users', 'responsable_id'),
-			'medioPago' => array(self::BELONGS_TO, 'MediosPagos', 'medio_pago_id'),
-			'tasaInteres' => array(self::BELONGS_TO, 'TasasInteres', 'tasa_interes_id'),
-			'tipoCompromiso' => array(self::BELONGS_TO, 'TiposCompromisos', 'tipo_compromiso_id'),
-			'detallesCompromisoses' => array(self::HAS_MANY, 'DetallesCompromisos', 'compromiso_id'),
+			'procesoPeriodo' => array(self::BELONGS_TO, 'ProcesosPeriodos', 'proceso_periodo_id','condition' => 'procesoPeriodo.estado = 1'),			
+			'medioPago' => array(self::BELONGS_TO, 'MediosPagos', 'medio_pago_id','condition' => 'medioPago.estado = 1'),
+			'tasaInteres' => array(self::BELONGS_TO, 'TasasInteres', 'tasa_interes_id','condition' => 'tasaInteres.estado = 1'),
+			'tipoCompromiso' => array(self::BELONGS_TO, 'TiposCompromisos', 'tipo_compromiso_id','condition' => 'tipoCompromiso.estado = 1'),
+			'detallesCompromisoses' => array(self::HAS_MANY, 'DetallesCompromisos', 'compromiso_id','condition' => 'detallesCompromisoses.estado = 1'),
 		);
 	}
 
@@ -87,8 +84,7 @@ abstract class BaseCompromisos extends GxActiveRecord {
 			'fecha_actual' => Yii::t('app', 'Fecha Actual'),
 			'tipo_compromiso_id' => null,
 			//'compromiso_id_repactacion' => Yii::t('app', 'Compromiso Id Repactacion'),
-			'observaciones' => Yii::t('app', 'Observaciones'),
-			'responsable_id' => null,
+			'observaciones' => Yii::t('app', 'Observaciones'),			
 			'evidencia_pdf' => Yii::t('app', 'Evidencia Pdf'),
 			'tasa_interes_id' => null,
 			'numero_cuotas' => Yii::t('app', 'Numero Cuotas'),
@@ -98,8 +94,7 @@ abstract class BaseCompromisos extends GxActiveRecord {
 			'medio_pago_id' => null,
 			'proceso_periodo_id' => null,
 			'estado' => Yii::t('app', 'Estado'),
-			'procesoPeriodo' => null,
-			//'responsable' => null,
+			'procesoPeriodo' => null,			
 			'medioPago' => null,
 			'tasaInteres' => null,
 			'tipoCompromiso' => null,
@@ -114,8 +109,7 @@ abstract class BaseCompromisos extends GxActiveRecord {
 		$criteria->compare('fecha_actual', $this->fecha_actual, true);
 		$criteria->compare('tipo_compromiso_id', $this->tipo_compromiso_id);
 		//$criteria->compare('compromiso_id_repactacion', $this->compromiso_id_repactacion);
-		$criteria->compare('observaciones', $this->observaciones, true);
-		$criteria->compare('responsable_id', $this->responsable_id);
+		$criteria->compare('observaciones', $this->observaciones, true);		
 		$criteria->compare('evidencia_pdf', $this->evidencia_pdf, true);
 		$criteria->compare('tasa_interes_id', $this->tasa_interes_id);
 		$criteria->compare('numero_cuotas', $this->numero_cuotas);

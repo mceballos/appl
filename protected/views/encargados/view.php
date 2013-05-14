@@ -23,7 +23,10 @@ array(
 			'type' => 'raw',
 			'value' => $model->parentesco ,
 			),
-'rut',
+    array(
+            'name'=>'rut',
+            'value'=>$model->RutCompleto            
+        ), 
 //'dv',
 'nombre',
 'apellido_paterno',

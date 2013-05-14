@@ -67,8 +67,8 @@ abstract class BaseTiposMensajes extends GxActiveRecord {
 		$criteria->compare('id', $this->id);
 		$criteria->compare('nombre', $this->nombre, true);
 		$criteria->compare('descripcion', $this->descripcion, true);
-		$criteria->compare('estado', $this->estado);
-		$criteria->condition='t.estado = 1';
+		$criteria->compare('estado', 1);
+		//$criteria->condition='t.estado = 1';
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

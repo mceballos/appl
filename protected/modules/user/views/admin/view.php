@@ -19,28 +19,26 @@ $this->menu=array(
 
 <?php
  
-	$attributes = array(
-		'id',
+	$attributes = array(		
 		'username',
 	);
 	
-	/*
+	
 	array_push($attributes,
-		'password',
+		//'password',
 		'email',
-		'activkey',
+		//'activkey',
 		'create_at',
 		'lastvisit_at',
-		array(
-			'name' => 'superuser',
-			'value' => User::itemAlias("AdminStatus",$model->superuser),
-		),
+		'nombres',
+		'ape_paterno',
+		'ape_materno',		
 		array(
 			'name' => 'status',
 			'value' => User::itemAlias("UserStatus",$model->status),
 		)
 	);
-	*/
+	
 	$this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
 		'attributes'=>$attributes,

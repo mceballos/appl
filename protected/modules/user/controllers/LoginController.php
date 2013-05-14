@@ -4,9 +4,7 @@ class LoginController extends Controller
 {
 	public $defaultAction = 'login';
 
-	/**
-	 * Displays the login page
-	 */
+
 	public function actionLogin()
 	{
 		if (Yii::app()->user->isGuest) {

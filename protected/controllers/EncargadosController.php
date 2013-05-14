@@ -29,22 +29,13 @@ public function accessRules() {
 }
 
 	public function actionView($id) {
+	    //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'Encargados'),
 		));
 	}
 	
-	//Agregado para ver desde la ventana MODAL
-	public function actionVer($id) {
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
-		
-		$this->render('view_admin', array(
-			'model' => $this->loadModel($id, 'Encargados'),
-		));
-	}
-	
-
 	public function actionCreate() {
 		$model = new Encargados;
 
@@ -98,48 +89,25 @@ public function accessRules() {
 			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
 	}
 	
-	public function actionDeleteIndex($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$this->loadModel($id, 'Encargados')->delete();
-
-			if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				$this->redirect(array('index'));
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
-	}
-	
+		
 	public function actionIndex() {
-		$criteria = new CDbCriteria;
-		$criteria->compare('estado', 1);
-		//Agregado el estado para solo mostrar los activos
-		$dataProvider = new CActiveDataProvider('Encargados',
-		array(
-			'criteria' => $criteria,
-		));
-		$this->render('index', array(
-			'dataProvider' => $dataProvider,
-		));
-	}
-
-	public function actionAdmin() {
 		$model = new Encargados('search');
-		$model->unsetAttributes();
+        $model->unsetAttributes();
 
-		if (isset($_GET['Encargados']))
-			$model->setAttributes($_GET['Encargados']);
-			
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';	
-		$this->render('admin', array(
-			'model' => $model,
-		));
+        if (isset($_GET['Encargados']))
+            $model->setAttributes($_GET['Encargados']);
+        
+        $this->render('index', array(
+            'model' => $model,
+        ));
 	}
+
 	 /* *************************************************
 	 * ObtenerNombreUsuario
 	 * ------------------------------------------
 	 * 
 	 * **************************************************/
-	public function obtenerNombreUsuario($id){
+	public static function obtenerNombreUsuario($id){
 		
 		$usuarioActivo = User::model()->find(array('condition'=>'id='.$id));
 	    $usuarioActivoConcatenado =	$usuarioActivo['nombres'].' '.$usuarioActivo['ape_paterno'].' '.$usuarioActivo['ape_materno'].' - '.$usuarioActivo['rut'];

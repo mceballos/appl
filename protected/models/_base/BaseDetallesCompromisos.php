@@ -50,7 +50,7 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'compromiso' => array(self::BELONGS_TO, 'Compromisos', 'compromiso_id'),
+			'compromiso' => array(self::BELONGS_TO, 'Compromisos', 'compromiso_id','condition' => 'compromiso.estado = 1'),
 			'pagoses' => array(self::HAS_MANY, 'Pagos', 'compromiso_detalle_id'),
 		);
 	}
@@ -83,7 +83,7 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 		$criteria->compare('fecha_vencimiento', $this->fecha_vencimiento, true);
 		$criteria->compare('estado_pago', $this->estado_pago);
 		$criteria->compare('pago_id', $this->pago_id, true);
-		$criteria->compare('estado', $this->estado);
+		$criteria->compare('estado', 1);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

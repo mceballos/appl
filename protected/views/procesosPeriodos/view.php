@@ -18,24 +18,33 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data' => $model,
 	'attributes' => array(
-array(
-			'name' => 'alumnoRut',
-			'type' => 'raw',
-			'value' => $model->alumnoRut !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->alumnoRut)), array('alumnos/view', 'id' => GxActiveRecord::extractPkValue($model->alumnoRut, true))) : null,
-			),
-array(
-			'name' => 'periodo',
-			'type' => 'raw',
-			'value' => $model->periodo !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->periodo)), array('periodos/view', 'id' => GxActiveRecord::extractPkValue($model->periodo, true))) : null,
-			),
-array(
-			'name' => 'seccionGrado',
-			'type' => 'raw',
-			'value' => $model->seccionGrado !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->seccionGrado)), array('seccionesGrados/view', 'id' => GxActiveRecord::extractPkValue($model->seccionGrado, true))) : null,
-			),
-//'estado',
-'pago_pendiente:boolean',
-'promovido',
+	       array(                    
+                    'name'=>'alumnoRut',
+                    'type' => 'raw',
+                    'value'=>$model->alumnoRut.'-'.$model->alumnoRut->dv,
+            ),            
+            array(
+            			'name' => 'periodo',
+            			'type' => 'raw',
+            			'value' => GxHtml::valueEx($model->periodo),
+            			),
+            array(
+            			'name' => 'seccionGrado',
+            			'type' => 'raw',
+            			'value' => GxHtml::valueEx($model->seccionGrado),
+            			),
+            //'estado',
+            array(                    
+                    'name'=>'pago_pendiente',
+                    'type' => 'raw',
+                    'value'=>($model->pago_pendiente)?'Si':'No',
+            ),
+            array(                    
+                    'name'=>'promovido',
+                    'type' => 'raw',
+                    'value'=>($model->promovido)?'Si':'No',
+            ),
+            
 	),
 )); ?>
 

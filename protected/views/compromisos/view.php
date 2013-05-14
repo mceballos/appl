@@ -1,58 +1,74 @@
 <?php
 
 $this->breadcrumbs = array(
-	$model->label(2) => array('index'),
-	GxHtml::valueEx($model),
+    $model->label(2) => array('index'),
+    GxHtml::valueEx($model),
 );
 
 $this->menu=array(
 
-	array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id)),
-	array('label'=>Yii::t('app', 'Delete') . ' ' . $model->label(), 'url'=>'#', 'linkOptions' => array('submit' => array('deleteIndex', 'id' => $model->id), 'confirm'=>'¿Seguro que desea borrar este elemento?')),
+    array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id)),
+    array('label'=>Yii::t('app', 'Delete') . ' ' . $model->label(), 'url'=>'#', 'linkOptions' => array('submit' => array('deleteIndex', 'id' => $model->id), 'confirm'=>'Â¿Seguro que desea borrar este elemento?')),
 
 );
 ?>
 <div class="form">
-<h3><?php echo Yii::t('app', 'View') . ' ' . GxHtml::encode($model->label()) . ' ' . GxHtml::encode(GxHtml::valueEx($model)); ?></h3>
+<h3><?php echo Yii::t('app', 'View') . ' ' . GxHtml::encode($model->label()); ?></h3>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
-	'data' => $model,
-	'attributes' => array(
-'id',
-'fecha_actual',
+    'data' => $model,
+    'attributes' => array(        
+        /*array(
+            'name' => 'Funcionario Responsable',
+            'type' => 'raw',
+            'value' => EncargadosController::obtenerNombreUsuario($model->responsable_id),
+            ),*/
+        array(
+            'name' => 'Fecha Celebración Compromiso',            
+            'value' => Yii::app()->dateFormatter->format("d MMMM y",strtotime($model->fecha_actual)),
+            ),
+            
+    array(
+            'name' => 'tipoCompromiso',
+            'type' => 'raw',
+            'value' => $model->tipoCompromiso,
+            ),
 array(
-			'name' => 'tipoCompromiso',
-			'type' => 'raw',
-			'value' => $model->tipoCompromiso !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->tipoCompromiso)), array('tiposCompromisos/view', 'id' => GxActiveRecord::extractPkValue($model->tipoCompromiso, true))) : null,
-			),
-'compromiso_id_repactacion',
+            'name' => 'Rut Matriculado',
+            'type' => 'raw',
+            'value' => $model->procesoPeriodo,
+            ),
+//'compromiso_id_repactacion',
 'observaciones',
+
+    
 array(
-			'name' => 'responsable_id',
-			'type' => 'raw',
-			'value' => $model->responsable_id !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->responsable_id)), array('users/view', 'id' => GxActiveRecord::extractPkValue($model->responsable_id, true))) : null,
-			),
-'evidencia_pdf',
-array(
-			'name' => 'tasaInteres',
-			'type' => 'raw',
-			'value' => $model->tasaInteres !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->tasaInteres)), array('tasasInteres/view', 'id' => GxActiveRecord::extractPkValue($model->tasaInteres, true))) : null,
-			),
+            'name' => 'tasaInteres',
+            'type' => 'raw',
+            'value' => $model->tasaInteres,//$model->tasaInteres !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->tasaInteres)), array('tasasInteres/ver', 'id' => GxActiveRecord::extractPkValue($model->tasaInteres, true))) : null,
+            ),
 'numero_cuotas',
 'monto_sin_interes',
-'fecha_primera_cuota',
+array(
+            'name' => 'Fecha Primera Cuota',            
+            'value' => Yii::app()->dateFormatter->format("d MMMM y",strtotime($model->fecha_primera_cuota)),
+            ),
 'monto_total',
 array(
-			'name' => 'medioPago',
-			'type' => 'raw',
-			'value' => $model->medioPago !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->medioPago)), array('mediosPagos/view', 'id' => GxActiveRecord::extractPkValue($model->medioPago, true))) : null,
-			),
+            'name' => 'medioPago',
+            'type' => 'raw',
+            'value' => $model->medioPago ,
+            ),
+
+//'estado', 
 array(
-			'name' => 'procesoPeriodo',
-			'type' => 'raw',
-			'value' => $model->procesoPeriodo !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->procesoPeriodo)), array('procesosPeriodos/view', 'id' => GxActiveRecord::extractPkValue($model->procesoPeriodo, true))) : null,
-			),
-'estado',
-	),
+            'name' => 'evidencia_pdf',
+            'type' => 'raw',
+            'value' => $model->evidencia_pdf !== null ? CHtml::link(GxHtml::encode($model->evidencia_pdf), Yii::app()->baseUrl . '/upload/doc/'.$model->evidencia_pdf):null,
+            ),
+            
+    ),
 )); ?>
+
+
 </div>

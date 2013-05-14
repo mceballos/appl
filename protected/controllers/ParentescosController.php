@@ -29,22 +29,13 @@ public function accessRules() {
 }
 
 	public function actionView($id) {
+	    //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'Parentescos'),
 		));
 	}
 	
-	//Agregado para ver desde la ventana MODAL
-	public function actionVer($id) {
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
-		
-		$this->render('view_admin', array(
-			'model' => $this->loadModel($id, 'Parentescos'),
-		));
-	}
-	
-
 	public function actionCreate() {
 		$model = new Parentescos;
 
@@ -98,39 +89,17 @@ public function accessRules() {
 			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
 	}
 	
-	public function actionDeleteIndex($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$this->loadModel($id, 'Parentescos')->delete();
-
-			if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				$this->redirect(array('index'));
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
-	}
 	
-	public function actionIndex() {
-		$criteria = new CDbCriteria;
-		$criteria->compare('estado', 1);
-		//Agregado el estado para solo mostrar los activos
-		$dataProvider = new CActiveDataProvider('Parentescos',
-		array(
-			'criteria' => $criteria,
-		));
-		$this->render('index', array(
-			'dataProvider' => $dataProvider,
-		));
-	}
 
-	public function actionAdmin() {
+	public function actionIndex() {
 		$model = new Parentescos('search');
 		$model->unsetAttributes();
 
 		if (isset($_GET['Parentescos']))
 			$model->setAttributes($_GET['Parentescos']);
 			
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';	
-		$this->render('admin', array(
+		
+		$this->render('index', array(
 			'model' => $model,
 		));
 	}

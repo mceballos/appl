@@ -29,22 +29,12 @@ public function accessRules() {
 }
 
 	public function actionView($id) {
+	    $this->layout = '//layouts/iframe';
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'Compromisos'),
 		));
 	}
 	
-	//Agregado para ver desde la ventana MODAL
-	public function actionVer($id) {
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
-		
-		$this->render('view_admin', array(
-			'model' => $this->loadModel($id, 'Compromisos'),
-		));
-	}
-	
-
 	public function actionCreate() {
 		$model = new Compromisos;
 
@@ -139,28 +129,6 @@ public function accessRules() {
 			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
 	}
 	
-	public function actionDeleteIndex($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$this->loadModel($id, 'Compromisos')->delete();
-
-			if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				$this->redirect(array('index'));
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
-	}
-	public function actionAdmin() {
-	//public function actionIndex() {
-		$criteria = new CDbCriteria;
-		$criteria->compare('estado', 1);
-		//Agregado el estado para solo mostrar los activos
-		$dataProvider = new CActiveDataProvider('Compromisos',
-		array(
-			'criteria' => $criteria,
-		));
-		$this->render('index', array(
-			'dataProvider' => $dataProvider,
-		));
-	}
 	public function actionIndex() {
 	//public function actionAdmin() {
 		$model = new Compromisos('search');
@@ -168,10 +136,7 @@ public function accessRules() {
 
 		if (isset($_GET['Compromisos']))
 			$model->setAttributes($_GET['Compromisos']);
-			
-		//Para mostrar en la ventana modal solo el content
-		//$this->layout = '//layouts/iframe';	
-		$this->render('admin', array(
+		$this->render('index', array(
 			'model' => $model,
 		));
 	}

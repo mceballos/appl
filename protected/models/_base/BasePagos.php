@@ -67,11 +67,11 @@ abstract class BasePagos extends GxActiveRecord {
 
 	public function relations() {
 		return array(
-			'responsable' => array(self::BELONGS_TO, 'User', 'responsable_id'),
-			'chequeBanco' => array(self::BELONGS_TO, 'Bancos', 'cheque_banco_id'),
-			'compromisoDetalle' => array(self::BELONGS_TO, 'DetallesCompromisos', 'compromiso_detalle_id'),
-			'tipoPago' => array(self::BELONGS_TO, 'TiposPagos', 'tipo_pago_id'),
-			'tasaInteres' => array(self::BELONGS_TO, 'TasasInteres', 'tasa_interes_id'),
+			'responsable' => array(self::BELONGS_TO, 'User', 'responsable_id','condition' => 'responsable.estado = 1'),
+			'chequeBanco' => array(self::BELONGS_TO, 'Bancos', 'cheque_banco_id','condition' => 'chequeBanco.estado = 1'),
+			'compromisoDetalle' => array(self::BELONGS_TO, 'DetallesCompromisos', 'compromiso_detalle_id','condition' => 'compromisoDetalle.estado = 1'),
+			'tipoPago' => array(self::BELONGS_TO, 'TiposPagos', 'tipo_pago_id','condition' => 'tipoPago.estado = 1'),
+			'tasaInteres' => array(self::BELONGS_TO, 'TasasInteres', 'tasa_interes_id','condition' => 'tasaInteres.estado = 1'),
 		);
 	}
 
@@ -129,7 +129,7 @@ abstract class BasePagos extends GxActiveRecord {
 		$criteria->compare('pago_total', $this->pago_total);
 		$criteria->compare('cheque_serie', $this->cheque_serie, true);
 		$criteria->compare('cheque_rut_serie', $this->cheque_rut_serie, true);
-		$criteria->compare('estado', $this->estado);
+		$criteria->compare('estado', 1);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
