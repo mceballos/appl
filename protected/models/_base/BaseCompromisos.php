@@ -57,9 +57,9 @@ abstract class BaseCompromisos extends GxActiveRecord {
 			array('tipo_compromiso_id, tasa_interes_id, numero_cuotas, monto_sin_interes, monto_total, medio_pago_id, proceso_periodo_id, estado', 'numerical', 'integerOnly'=>true),
 			array('evidencia_pdf', 'length', 'max'=>200),
 			array('observaciones, fecha_primera_cuota', 'safe'),
+			array('proceso_periodo_id', 'ext.UniqueAttributesValidator', 'with' => 'estado',"message"=>'El rut ya tiene compromisos asignados para este periodo'),
 			array('observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, fecha_primera_cuota, estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, fecha_actual, tipo_compromiso_id, observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, monto_sin_interes, fecha_primera_cuota, monto_total, medio_pago_id, proceso_periodo_id, estado', 'safe', 'on'=>'search'),
-			array('proceso_periodo_id','unique','message'=>'{attribute} : {value}  se encuentra registrado en la base de datos !!!'),
+			array('id, fecha_actual, tipo_compromiso_id, observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, monto_sin_interes, fecha_primera_cuota, monto_total, medio_pago_id, proceso_periodo_id, estado', 'safe', 'on'=>'search'),			
 		);
 	}
 
@@ -107,8 +107,7 @@ abstract class BaseCompromisos extends GxActiveRecord {
 
 		$criteria->compare('id', $this->id);
 		$criteria->compare('fecha_actual', $this->fecha_actual, true);
-		$criteria->compare('tipo_compromiso_id', $this->tipo_compromiso_id);
-		//$criteria->compare('compromiso_id_repactacion', $this->compromiso_id_repactacion);
+		$criteria->compare('tipo_compromiso_id', $this->tipo_compromiso_id);		
 		$criteria->compare('observaciones', $this->observaciones, true);		
 		$criteria->compare('evidencia_pdf', $this->evidencia_pdf, true);
 		$criteria->compare('tasa_interes_id', $this->tasa_interes_id);

@@ -1,6 +1,6 @@
 <?php
 
-class CompromisosController extends GxController {
+class PagosPorCompromisosController extends GxController {
 
 public function filters() {
 	return array(
@@ -35,68 +35,20 @@ public function accessRules() {
 		));
 	}
 	
-	public function actionCreate() {
-		$model = new Compromisos;
-
-		$this->performAjaxValidation($model, 'compromisos-form');
-
-		if (isset($_POST['Compromisos'])) {
-			$model->setAttributes($_POST['Compromisos']);
-			$model->documento=CUploadedFile::getInstance($model,'documento');
-			$nombrePDF = str_replace(' ', '_', $model->documento);	
-			$nombrePDF = date("Y_m_d_H:i:s").$nombrePDF;
-			$textoLimpio = preg_replace('([^A-Za-z0-9._])', '', $nombrePDF);
-			$nombrePDF = $textoLimpio;
-			$model->evidencia_pdf = $nombrePDF;
-
-			if ($model->save()) {
-				$model->documento->saveAs(Yii::getPathOfAlias('webroot').'/upload/doc/'.$nombrePDF);
-				$cuotas = $model->numero_cuotas;
-				$montoTotal = $model->monto_total;
-				$valorCuota = (($montoTotal / $cuotas )-1);
-				$valorCuota = round($valorCuota);
-				$sum = 0;
-				for ( $num = 1 ; $num <= $cuotas ; $num ++) {
-					
-					if($num==$cuotas){
-						$valorCuota = $montoTotal - $sum;
-					}
-					$sum= $sum + $valorCuota;
-					$fPrimera = $model->fecha_primera_cuota;
-					//$f= date("j-n-Y",strtotime($fPrimera." + ".$num." month"));		
-
-					//$fecha = date('Y-m-j');
-					$sumaMes= $num-1;
-					$nuevafecha = strtotime ( '+'.$sumaMes.' month' , strtotime ( $fPrimera  ) ) ;
-					$nuevafecha = date ( 'Y-m-j' , $nuevafecha );
-
-						$d = new DetallesCompromisos;
-						$d->compromiso_id = $model->id;
-						$d->cuota_numero = $num;
-						$d->fecha_vencimiento =$nuevafecha;
-						$d->monto_cuota = $valorCuota;
-						$d->save();
-				
-				}
-					
-				
-				
-				
-				
-				if (Yii::app()->getRequest()->getIsAjaxRequest())
-					Yii::app()->end();
-				else
-					//Cierra la venta Modal
-					echo CHtml::script("parent.cerrarModal();");
-			}
-		}
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
-		$this->render('create', array( 'model' => $model));
-	}
+	
 
 	public function actionUpdate($id) {
-		$model = $this->loadModel($id, 'Compromisos');
+	    $model = new DetallesCompromisos('search');
+        $model->unsetAttributes();
+        $model->compromiso_id=$id;
+        if (isset($_GET['DetallesCompromisos']))
+            $model->setAttributes($_GET['DetallesCompromisos']);            
+        //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';    
+        $this->render('update', array(
+            'model' => $model,
+        )); 
+		/*$model = $this->loadModel($id, 'Compromisos');
 
 		$this->performAjaxValidation($model, 'compromisos-form');
 
@@ -143,26 +95,17 @@ public function accessRules() {
 		
 		$this->render('update', array(
 				'model' => $model,
-				));
+				));*/
+	   
 	}
 
-	public function actionDelete($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$this->loadModel($id, 'Compromisos')->delete();
-
-			if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				$this->redirect(array('admin'));
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
-	}
-	
-	public function actionIndex() {
-	//public function actionAdmin() {
+		
+	public function actionIndex() {	
 		$model = new Compromisos('search');
 		$model->unsetAttributes();
 
 		if (isset($_GET['Compromisos']))
-			$model->setAttributes($_GET['Compromisos']);
+			$model->setAttributes($_GET['Compromisos']);        
 		$this->render('index', array(
 			'model' => $model,
 		));

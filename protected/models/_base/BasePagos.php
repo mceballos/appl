@@ -19,16 +19,14 @@
  * @property string $observaciones
  * @property integer $tasa_interes_id
  * @property integer $interes_cobrado
- * @property string $fecha_pago
- * @property integer $responsable_id
+ * @property string $fecha_pago 
  * @property string $cheque_fecha
  * @property integer $valor_cuota
  * @property integer $pago_total
  * @property string $cheque_serie
  * @property string $cheque_rut_serie
  * @property integer $estado
- *
- * @property Users $responsable
+ * 
  * @property Bancos $chequeBanco
  * @property DetallesCompromisos $compromisoDetalle
  * @property TiposPagos $tipoPago
@@ -54,20 +52,19 @@ abstract class BasePagos extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('compromiso_detalle_id, tipo_pago_id, interes_cobrado, fecha_pago, responsable_id, cheque_fecha', 'required'),
-			array('compromiso_detalle_id, tipo_pago_id, cheque_rut, cheque_banco_id, tasa_interes_id, interes_cobrado, responsable_id, valor_cuota, pago_total, estado', 'numerical', 'integerOnly'=>true),
+			array('compromiso_detalle_id, tipo_pago_id, interes_cobrado, fecha_pago, cheque_fecha', 'required'),
+			array('compromiso_detalle_id, tipo_pago_id, cheque_rut, cheque_banco_id, tasa_interes_id, interes_cobrado, valor_cuota, pago_total, estado', 'numerical', 'integerOnly'=>true),
 			array('cheque_numero', 'length', 'max'=>50),
 			array('cheque_plaza', 'length', 'max'=>100),
 			array('cheque_serie, cheque_rut_serie', 'length', 'max'=>20),
 			array('observaciones', 'safe'),
 			array('cheque_numero, cheque_rut, cheque_plaza, cheque_banco_id, observaciones, tasa_interes_id, valor_cuota, pago_total, cheque_serie, cheque_rut_serie, estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, compromiso_detalle_id, tipo_pago_id, cheque_numero, cheque_rut, cheque_plaza, cheque_banco_id, observaciones, tasa_interes_id, interes_cobrado, fecha_pago, responsable_id, cheque_fecha, valor_cuota, pago_total, cheque_serie, cheque_rut_serie, estado', 'safe', 'on'=>'search'),
+			array('id, compromiso_detalle_id, tipo_pago_id, cheque_numero, cheque_rut, cheque_plaza, cheque_banco_id, observaciones, tasa_interes_id, interes_cobrado, fecha_pago, cheque_fecha, valor_cuota, pago_total, cheque_serie, cheque_rut_serie, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations() {
-		return array(
-			'responsable' => array(self::BELONGS_TO, 'User', 'responsable_id','condition' => 'responsable.estado = 1'),
+		return array(			
 			'chequeBanco' => array(self::BELONGS_TO, 'Bancos', 'cheque_banco_id','condition' => 'chequeBanco.estado = 1'),
 			'compromisoDetalle' => array(self::BELONGS_TO, 'DetallesCompromisos', 'compromiso_detalle_id','condition' => 'compromisoDetalle.estado = 1'),
 			'tipoPago' => array(self::BELONGS_TO, 'TiposPagos', 'tipo_pago_id','condition' => 'tipoPago.estado = 1'),
@@ -93,15 +90,13 @@ abstract class BasePagos extends GxActiveRecord {
 			'observaciones' => Yii::t('app', 'Observaciones'),
 			'tasa_interes_id' => null,
 			'interes_cobrado' => Yii::t('app', 'Interes Cobrado'),
-			'fecha_pago' => Yii::t('app', 'Fecha Pago'),
-			'responsable_id' => 'Responsable',
+			'fecha_pago' => Yii::t('app', 'Fecha Pago'),			
 			'cheque_fecha' => Yii::t('app', 'Cheque Fecha'),
 			'valor_cuota' => Yii::t('app', 'Valor Cuota'),
 			'pago_total' => Yii::t('app', 'Pago Total'),
 			'cheque_serie' => Yii::t('app', 'Cheque Serie'),
 			'cheque_rut_serie' => Yii::t('app', 'Cheque Rut Serie'),
-			'estado' => Yii::t('app', 'Estado'),
-			'responsable' => 'Responsable',
+			'estado' => Yii::t('app', 'Estado'),			
 			'chequeBanco' => null,
 			'compromisoDetalle' => null,
 			'tipoPago' => null,
@@ -122,8 +117,7 @@ abstract class BasePagos extends GxActiveRecord {
 		$criteria->compare('observaciones', $this->observaciones, true);
 		$criteria->compare('tasa_interes_id', $this->tasa_interes_id);
 		$criteria->compare('interes_cobrado', $this->interes_cobrado);
-		$criteria->compare('fecha_pago', $this->fecha_pago, true);
-		$criteria->compare('responsable_id', $this->responsable_id);
+		$criteria->compare('fecha_pago', $this->fecha_pago, true);		
 		$criteria->compare('cheque_fecha', $this->cheque_fecha, true);
 		$criteria->compare('valor_cuota', $this->valor_cuota);
 		$criteria->compare('pago_total', $this->pago_total);

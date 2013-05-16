@@ -14,8 +14,7 @@
  * @property integer $cuota_numero
  * @property string $fecha_vencimiento
  * @property integer $estado_pago
- * @property string $pago_id
- * @property integer $estado
+  * @property integer $estado
  *
  * @property Compromisos $compromiso
  * @property Pagos[] $pagoses
@@ -41,10 +40,9 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('compromiso_id, cuota_numero, fecha_vencimiento', 'required'),
-			array('compromiso_id, cuota_numero, estado_pago, estado', 'numerical', 'integerOnly'=>true),
-			array('pago_id', 'length', 'max'=>20),
-			array('estado_pago, pago_id, estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, compromiso_id, cuota_numero, fecha_vencimiento, estado_pago, pago_id, estado', 'safe', 'on'=>'search'),
+			array('compromiso_id, cuota_numero, estado_pago, estado', 'numerical', 'integerOnly'=>true),			
+			array('estado_pago, estado', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, compromiso_id, cuota_numero, fecha_vencimiento, estado_pago, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,8 +64,7 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 			'compromiso_id' => null,
 			'cuota_numero' => Yii::t('app', 'Cuota Numero'),
 			'fecha_vencimiento' => Yii::t('app', 'Fecha Vencimiento'),
-			'estado_pago' => Yii::t('app', 'Estado Pago'),
-			'pago_id' => Yii::t('app', 'Pago'),
+			'estado_pago' => Yii::t('app', 'Estado Pago'),			
 			'estado' => Yii::t('app', 'Estado'),
 			'compromiso' => null,
 			'pagoses' => null,
@@ -81,8 +78,7 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 		$criteria->compare('compromiso_id', $this->compromiso_id);
 		$criteria->compare('cuota_numero', $this->cuota_numero);
 		$criteria->compare('fecha_vencimiento', $this->fecha_vencimiento, true);
-		$criteria->compare('estado_pago', $this->estado_pago);
-		$criteria->compare('pago_id', $this->pago_id, true);
+		$criteria->compare('estado_pago', $this->estado_pago);		
 		$criteria->compare('estado', 1);
 
 		return new CActiveDataProvider($this, array(
