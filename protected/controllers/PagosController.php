@@ -12,9 +12,8 @@ class PagosController extends GxController {
 	}
 	
 	
-	public function actionCreate() {
+	/*public function actionCreate() {
 		$model = new Pagos;
-
 
 		if (isset($_POST['Pagos'])) {
 			$model->setAttributes($_POST['Pagos']);
@@ -30,29 +29,46 @@ class PagosController extends GxController {
 		//Para mostrar en la ventana modal solo el content
 		$this->layout = '//layouts/iframe';
 		$this->render('create', array( 'model' => $model));
-	}
+	}*/
 
 	public function actionUpdate($id) {
-		$model = $this->loadModel($id, 'Pagos');
-
-
-		if (isset($_POST['Pagos'])) {
-			$model->setAttributes($_POST['Pagos']);
-
-			if ($model->save()) {
-				//Cierra la venta Modal
-				//echo CHtml::script("parent.cerrarModal();");
-				echo CHtml::script("parent.location.reload();");
-				//$this->redirect(array('view', 'id' => $model->id));
-			}
-		}
+	    
+        $pago=Pagos::model()->findAll(array('condition'=>'t.estado = 1 AND compromiso_detalle_id='.$id));
+        
+        if(isset($pago[0])){
+            //EXISTE Y DEBE SER UN UPDATE
+            $model = $this->loadModel($pago[0]->id, 'Pagos');
+            if (isset($_POST['Pagos'])) {
+                $model->setAttributes($_POST['Pagos']);
+                if ($model->save()) {
+                    //Cierra la venta Modal             
+                    echo CHtml::script("parent.cerrarModal();");                
+                }
+            }       
+            //Para mostrar en la ventana modal solo el content
+            $this->layout = '//layouts/iframe';     
+            $this->render('update', array(
+                    'model' => $model,
+            ));
+        }else{
+            //NO EXISTE EL PAGO DEBE SER UN CREATE
+            $model = new Pagos;
+            if (isset($_POST['Pagos'])) {
+                $model->setAttributes($_POST['Pagos']);
+    
+                if ($model->save()) {
+                    if (Yii::app()->getRequest()->getIsAjaxRequest())
+                        Yii::app()->end();
+                    else
+                        //Cierra la venta Modal
+                        echo CHtml::script("parent.cerrarModal();");
+                }
+            }
+            //Para mostrar en la ventana modal solo el content
+            $this->layout = '//layouts/iframe';
+            $this->render('create', array( 'model' => $model));
+        }
 		
-		//Para mostrar en la ventana modal solo el content
-		$this->layout = '//layouts/iframe';
-		
-		$this->render('update', array(
-				'model' => $model,
-				));
 	}
 
 	public function actionDelete($id) {

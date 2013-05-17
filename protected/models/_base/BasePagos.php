@@ -51,24 +51,24 @@ abstract class BasePagos extends GxActiveRecord {
 	}
 
 	public function rules() {
-		return array(
-			array('compromiso_detalle_id, tipo_pago_id, interes_cobrado, fecha_pago, cheque_fecha', 'required'),
-			array('compromiso_detalle_id, tipo_pago_id, cheque_rut, cheque_banco_id, tasa_interes_id, interes_cobrado, valor_cuota, pago_total, estado', 'numerical', 'integerOnly'=>true),
-			array('cheque_numero', 'length', 'max'=>50),
-			array('cheque_plaza', 'length', 'max'=>100),
-			array('cheque_serie, cheque_rut_serie', 'length', 'max'=>20),
-			array('observaciones', 'safe'),
-			array('cheque_numero, cheque_rut, cheque_plaza, cheque_banco_id, observaciones, tasa_interes_id, valor_cuota, pago_total, cheque_serie, cheque_rut_serie, estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, compromiso_detalle_id, tipo_pago_id, cheque_numero, cheque_rut, cheque_plaza, cheque_banco_id, observaciones, tasa_interes_id, interes_cobrado, fecha_pago, cheque_fecha, valor_cuota, pago_total, cheque_serie, cheque_rut_serie, estado', 'safe', 'on'=>'search'),
-		);
+        return array(
+            array('compromiso_detalle_id, tipo_pago_id', 'required'),
+            array('compromiso_detalle_id, tipo_pago_id, cheque_rut, cheque_banco_id, pago_total, descuento, estado', 'numerical', 'integerOnly'=>true),
+            array('cheque_numero', 'length', 'max'=>50),
+            array('cheque_plaza', 'length', 'max'=>100),
+            array('cheque_serie, cheque_rut_serie', 'length', 'max'=>20),
+            array('observaciones', 'safe'),
+            array('compromiso_detalle_id', 'unique','message'=>'El compromiso debe ser unico.'),
+            array('cheque_numero, cheque_rut, cheque_plaza, cheque_banco_id, observaciones, pago_total, cheque_serie, cheque_rut_serie, descuento, estado', 'default', 'setOnEmpty' => true, 'value' => null),
+            array('id, compromiso_detalle_id, tipo_pago_id, cheque_numero, cheque_rut, cheque_plaza, cheque_banco_id, observaciones, fecha_pago, cheque_fecha, pago_total, cheque_serie, cheque_rut_serie, descuento, estado', 'safe', 'on'=>'search'),
+        );
 	}
 
 	public function relations() {
 		return array(			
 			'chequeBanco' => array(self::BELONGS_TO, 'Bancos', 'cheque_banco_id','condition' => 'chequeBanco.estado = 1'),
 			'compromisoDetalle' => array(self::BELONGS_TO, 'DetallesCompromisos', 'compromiso_detalle_id','condition' => 'compromisoDetalle.estado = 1'),
-			'tipoPago' => array(self::BELONGS_TO, 'TiposPagos', 'tipo_pago_id','condition' => 'tipoPago.estado = 1'),
-			'tasaInteres' => array(self::BELONGS_TO, 'TasasInteres', 'tasa_interes_id','condition' => 'tasaInteres.estado = 1'),
+			'tipoPago' => array(self::BELONGS_TO, 'TiposPagos', 'tipo_pago_id','condition' => 'tipoPago.estado = 1'),			
 		);
 	}
 
@@ -80,27 +80,23 @@ abstract class BasePagos extends GxActiveRecord {
 	public function attributeLabels() {
 		return array(
 			'id' => Yii::t('app', 'ID'),
-			'compromiso_detalle_id' => null,
-			'tipo_pago_id' => null,
-			'User'=>'Usuario',
-			'cheque_numero' => Yii::t('app', 'Cheque Numero'),
-			'cheque_rut' => Yii::t('app', 'Cheque Rut'),
-			'cheque_plaza' => Yii::t('app', 'Cheque Plaza'),
-			'cheque_banco_id' => null,
-			'observaciones' => Yii::t('app', 'Observaciones'),
-			'tasa_interes_id' => null,
-			'interes_cobrado' => Yii::t('app', 'Interes Cobrado'),
-			'fecha_pago' => Yii::t('app', 'Fecha Pago'),			
-			'cheque_fecha' => Yii::t('app', 'Cheque Fecha'),
-			'valor_cuota' => Yii::t('app', 'Valor Cuota'),
-			'pago_total' => Yii::t('app', 'Pago Total'),
-			'cheque_serie' => Yii::t('app', 'Cheque Serie'),
-			'cheque_rut_serie' => Yii::t('app', 'Cheque Rut Serie'),
-			'estado' => Yii::t('app', 'Estado'),			
-			'chequeBanco' => null,
-			'compromisoDetalle' => null,
-			'tipoPago' => null,
-			'tasaInteres' => null,
+            'compromiso_detalle_id' => null,
+            'tipo_pago_id' => null,
+            'cheque_numero' => Yii::t('app', 'Cheque Numero'),
+            'cheque_rut' => Yii::t('app', 'Cheque Rut'),
+            'cheque_plaza' => Yii::t('app', 'Cheque Plaza'),
+            'cheque_banco_id' => null,
+            'observaciones' => Yii::t('app', 'Observaciones'),
+            'fecha_pago' => Yii::t('app', 'Fecha Pago'),
+            'cheque_fecha' => Yii::t('app', 'Cheque Fecha'),
+            'pago_total' => Yii::t('app', 'Pago Total'),
+            'cheque_serie' => Yii::t('app', 'Cheque Serie'),
+            'cheque_rut_serie' => Yii::t('app', 'Cheque Rut Serie'),
+            'descuento' => Yii::t('app', 'Descuento'),
+            'estado' => Yii::t('app', 'Estado'),
+            'chequeBanco' => null,
+            'compromisoDetalle' => null,
+            'tipoPago' => null,
 		);
 	}
 
@@ -108,21 +104,19 @@ abstract class BasePagos extends GxActiveRecord {
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id);
-		$criteria->compare('compromiso_detalle_id', $this->compromiso_detalle_id);
-		$criteria->compare('tipo_pago_id', $this->tipo_pago_id);
-		$criteria->compare('cheque_numero', $this->cheque_numero, true);
-		$criteria->compare('cheque_rut', $this->cheque_rut);
-		$criteria->compare('cheque_plaza', $this->cheque_plaza, true);
-		$criteria->compare('cheque_banco_id', $this->cheque_banco_id);
-		$criteria->compare('observaciones', $this->observaciones, true);
-		$criteria->compare('tasa_interes_id', $this->tasa_interes_id);
-		$criteria->compare('interes_cobrado', $this->interes_cobrado);
-		$criteria->compare('fecha_pago', $this->fecha_pago, true);		
-		$criteria->compare('cheque_fecha', $this->cheque_fecha, true);
-		$criteria->compare('valor_cuota', $this->valor_cuota);
-		$criteria->compare('pago_total', $this->pago_total);
-		$criteria->compare('cheque_serie', $this->cheque_serie, true);
-		$criteria->compare('cheque_rut_serie', $this->cheque_rut_serie, true);
+        $criteria->compare('compromiso_detalle_id', $this->compromiso_detalle_id);
+        $criteria->compare('tipo_pago_id', $this->tipo_pago_id);
+        $criteria->compare('cheque_numero', $this->cheque_numero, true);
+        $criteria->compare('cheque_rut', $this->cheque_rut);
+        $criteria->compare('cheque_plaza', $this->cheque_plaza, true);
+        $criteria->compare('cheque_banco_id', $this->cheque_banco_id);
+        $criteria->compare('observaciones', $this->observaciones, true);
+        $criteria->compare('fecha_pago', $this->fecha_pago, true);
+        $criteria->compare('cheque_fecha', $this->cheque_fecha, true);
+        $criteria->compare('pago_total', $this->pago_total);
+        $criteria->compare('cheque_serie', $this->cheque_serie, true);
+        $criteria->compare('cheque_rut_serie', $this->cheque_rut_serie, true);
+        $criteria->compare('descuento', $this->descuento); 
 		$criteria->compare('estado', 1);
 
 		return new CActiveDataProvider($this, array(
