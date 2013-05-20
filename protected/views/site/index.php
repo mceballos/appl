@@ -67,7 +67,7 @@ if (Yii::app()->user->id == '0'){
 		  		<div class="flechaPrincipal left"></div>
 			<a   href="<?php echo Yii::app()->request->baseUrl;?>/compromisos/" id="procesoControlGestion" class="etapaPrincipal left" ><span class="texto">COMPROMISOS</span></a>
 				<div class="flechaPrincipal left"></div>
-			<a   href="<?php echo Yii::app()->request->baseUrl;?>/pagos/" id="procesoControlGestion" class="etapaPrincipal left" ><span class="texto">PAGOS</span></a>	
+			<a   href="<?php echo Yii::app()->request->baseUrl;?>/pagosporcompromisos/" id="procesoControlGestion" class="etapaPrincipal left" ><span class="texto">PAGOS</span></a>	
 		       <div class="limpia"></div>
 		</div>
 		
