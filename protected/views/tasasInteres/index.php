@@ -6,28 +6,10 @@ $this->breadcrumbs = array(
 );
 
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-    $('.search-form').toggle();
-    return false;
-});
-$('.search-form form').submit(function(){
-    $.fn.yiiGridView.update('tasas-interes-grid', {
-        data: $(this).serialize()
-    });
-    return false;
-});
-");
 ?>
 <div class="form">
 <h3><?php echo Yii::t('app', 'Manage') . ' ' . GxHtml::encode($model->label(2)); ?></h3>
 
-<?php echo GxHtml::link(Yii::t('app', 'Búsqueda Avanzada'), '#', array('class' => 'search-button')); ?>
-<div class="search-form">
-<?php $this->renderPartial('_search', array(
-    'model' => $model,
-)); ?>
-</div><!-- search-form -->
 
 <?php
 $this->widget('zii.widgets.CMenu', array(

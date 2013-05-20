@@ -19,16 +19,13 @@ $this->menu=array(
 	'data' => $model,
 	'attributes' => array(
 array(
-			'name' => 'seccion',
-			'type' => 'raw',
-			'value' => $model->seccion !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->seccion)), array('secciones/view', 'id' => GxActiveRecord::extractPkValue($model->seccion, true))) : null,
+			'name' => 'seccion',			
+			'value' => $model->seccion,
 			),
 array(
-			'name' => 'grado',
-			'type' => 'raw',
-			'value' => $model->grado !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->grado)), array('grados/view', 'id' => GxActiveRecord::extractPkValue($model->grado, true))) : null,
+			'name' => 'grado',			
+			'value' => $model->grado,
 			),
-'id',
 //'estado',
 'alum_max_grado',
 	),

@@ -12,26 +12,23 @@
 	</p>
 
 	<?php echo $form->errorSummary($model); ?>
-
-		<div class="row">
-		<?php echo $form->labelEx($model,'seccion_id'); ?>
-		<?php echo $form->dropDownList($model, 'seccion_id', GxHtml::listDataEx(Secciones::model()->findAll(array('condition'=>'estado=1')))); ?>
-		<?php echo $form->error($model,'seccion_id'); ?>
-		</div><!-- row -->
-		<div class="row">
-		<?php echo $form->labelEx($model,'grado_id'); ?>
-		<?php echo $form->dropDownList($model, 'grado_id', GxHtml::listDataEx(Grados::model()->findAll(array('condition'=>'estado=1')))); ?>
-		<?php echo $form->error($model,'grado_id'); ?>
-		</div><!-- row -->
-
-		<div class="row">
-		<?php echo $form->labelEx($model,'alum_max_grado'); ?>
-		<?php echo $form->textField($model, 'alum_max_grado',array('maxlength' => 2, 'onkeydown'=>'validarNumeros(event)')); ?>
-		<?php echo $form->error($model,'alum_max_grado'); ?>
-		</div><!-- row -->
-
-		<label><?php //echo GxHtml::encode($model->getRelationLabel('procesosPeriodoses')); ?></label>
-		<?php //echo $form->checkBoxList($model, 'procesosPeriodoses', GxHtml::encodeEx(GxHtml::listDataEx(ProcesosPeriodos::model()->findAllAttributes(null, true)), false, true)); ?>
+	<table width="100%" border="0" cellspacing="5" cellpadding="5">
+        <tr>
+            <td align="right" style="width: 150px;"><?php echo $form->labelEx($model,'seccion_id'); ?></td>
+            <td><?php echo $form->dropDownList($model, 'seccion_id', GxHtml::listDataEx(Secciones::model()->findAll(array('condition'=>'estado=1')))); ?>
+        <?php echo $form->error($model,'seccion_id'); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->labelEx($model,'grado_id'); ?></td>
+            <td><?php echo $form->dropDownList($model, 'grado_id', GxHtml::listDataEx(Grados::model()->findAll(array('condition'=>'estado=1')))); ?>
+        <?php echo $form->error($model,'grado_id'); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->labelEx($model,'alum_max_grado'); ?></td>
+            <td><?php echo $form->textField($model, 'alum_max_grado',array('maxlength' => 2, 'onkeydown'=>'validarNumeros(event)')); ?>
+        <?php echo $form->error($model,'alum_max_grado'); ?></td>
+        </tr>
+    </table>
 
 <?php
 echo GxHtml::submitButton(Yii::t('app', 'Save'));

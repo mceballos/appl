@@ -68,10 +68,11 @@
 		<div class="row">
 		<div style='float:left;width: 35%;'>
 			<?php echo $form->labelEx($model,'fecha_nacimiento'); ?>
-			<?php //echo $form->textField($model, 'fecha_nacimiento', array('maxlength' => 10,'size'=>12,'value'=>'2000-12-23','onClick' => 'this.value=""')); ?>
+			<?php 
+			 //echo $form->textField($model, 'fecha_nacimiento', array('maxlength' => 10,'size'=>12,'value'=>'2000-12-23','onClick' => 'this.value=""')); 
+			?>
 			<?php
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                //'name'=>'date',
+            $this->widget('zii.widgets.jui.CJuiDatePicker', array(                
                 'model'=>$model,
                 'attribute'=>'fecha_nacimiento',
                 'language'=>Yii::app()->language=='es' ? 'es' : null,
@@ -96,21 +97,6 @@
             
             ?>
             
-			<?
-			/*$this->widget('application.extensions.jui.EDatePicker',
-				array(
-                    'name'=>'fecha_nacimiento',
-					'model'=> $model,
-					'attribute'=> 'fecha_nacimiento',
-                    'language'=>'es',
-                    'mode'=>'imagebutton',
-                    'theme'=>'redmond',
-                    'value'=>date('dd-mm-yy'),
-                    'htmlOptions'=>array('class'=>'date')
-                   )
-		
-		 	);*/
-			?>
 			<?php echo $form->error($model,'fecha_nacimiento'); ?>
 		</div>
 		<div style='float:left;width: 45%;'>

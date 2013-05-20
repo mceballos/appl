@@ -51,6 +51,7 @@ abstract class BaseSeccionesGrados extends GxActiveRecord {
 		return array(
 			array('seccion_id, grado_id, alum_max_grado', 'required'),
 			array('seccion_id, grado_id, estado, alum_max_grado', 'numerical', 'integerOnly'=>true),
+			//array('seccion_id', 'ext.UniqueAttributesValidator', 'with' => 'grado_id,estado',"message"=>'La sección ya tiene ese grado asociado'),
 			array('estado', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('seccion_id, grado_id, id, estado, alum_max_grado', 'safe', 'on'=>'search'),
 		);

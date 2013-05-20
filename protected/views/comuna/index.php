@@ -35,13 +35,6 @@ $this->widget('zii.widgets.CMenu', array(
                 ));
 
 ?>
-<?php
-$this->widget('zii.widgets.CMenu', array(
-                    'items'=>array(array('label'=>'Agregar', 'url'=>array('create'))),
-                    'htmlOptions'=>array('class'=>'MenuOperations'),
-                ));
-
-?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'comuna-grid',
@@ -55,6 +48,14 @@ $this->widget('zii.widgets.CMenu', array(
             'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
         ),
         'nombre',
+        array(
+                'name'=>'comuna_provincia_id',
+                'value'=>'$data->comunaProvincia',
+        ),
+        array(
+                'header'=>'Región',
+                'value'=>'$data->comunaProvincia->provinciaRegion',
+        ),
         //'estado',
         array(
             'class'=>'bootstrap.widgets.TbButtonColumn',

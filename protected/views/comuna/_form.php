@@ -12,23 +12,21 @@
 	</p>
 
 	<?php echo $form->errorSummary($model); ?>
+       <table width="100%" border="0" cellspacing="5" cellpadding="5">
+        <tr>
+            <td align="right" style="width: 150px;"><?php echo $form->labelEx($model,'nombre'); ?></td>
+            <td><?php echo $form->textField($model, 'nombre', array('maxlength' => 200)); ?>
+        <?php echo $form->error($model,'nombre'); ?></td>
+        </tr>
+        <tr>
+            <td align="right" style="width: 150px;"><?php echo $form->labelEx($model,'comuna_provincia_id'); ?></td>
+            <td><?php echo $form->dropDownList($model, 'comuna_provincia_id', GxHtml::listDataEx(Comuna::model()->findAllAttributes(null, true))); ?>
+        <?php echo $form->error($model,'comuna_provincia_id'); ?></td>
+        </tr>
+       </table>
 
-		<div class="row">
-		<?php echo $form->labelEx($model,'id'); ?>
-		<?php echo $form->textField($model, 'id'); ?>
-		<?php echo $form->error($model,'id'); ?>
-		</div><!-- row -->
-		<div class="row">
-		<?php echo $form->labelEx($model,'nombre'); ?>
-		<?php echo $form->textField($model, 'nombre', array('maxlength' => 20)); ?>
-		<?php echo $form->error($model,'nombre'); ?>
-		</div><!-- row -->
-
-		<label><?php //echo GxHtml::encode($model->getRelationLabel('alumnoses')); ?></label>
-		<?php //echo $form->checkBoxList($model, 'alumnoses', GxHtml::encodeEx(GxHtml::listDataEx(Alumnos::model()->findAllAttributes(null, true)), false, true)); ?>
-		<label><?php //echo GxHtml::encode($model->getRelationLabel('encargadoses')); ?></label>
-		<?php //echo $form->checkBoxList($model, 'encargadoses', GxHtml::encodeEx(GxHtml::listDataEx(Encargados::model()->findAllAttributes(null, true)), false, true)); ?>
-
+        
+		
 <?php
 echo GxHtml::submitButton(Yii::t('app', 'Save'));
 $this->endWidget();

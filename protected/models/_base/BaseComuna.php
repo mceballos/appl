@@ -36,11 +36,11 @@ abstract class BaseComuna extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('id, nombre', 'required'),
-			array('id, estado', 'numerical', 'integerOnly'=>true),
+			array('id, nombre, comuna_provincia_id', 'required'),
+			array('id, estado, comuna_provincia_id', 'numerical', 'integerOnly'=>true),
 			array('nombre', 'length', 'max'=>20),
 			array('estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, nombre, estado', 'safe', 'on'=>'search'),
+			array('id, nombre, estado, comuna_provincia_id', 'safe', 'on'=>'search'),
 			array('id','unique','message'=>'{attribute} : {value}  se encuentra registrado en la base de datos !!!'),
 		);
 	}
@@ -49,6 +49,7 @@ abstract class BaseComuna extends GxActiveRecord {
 		return array(
 			'alumnoses' => array(self::HAS_MANY, 'Alumnos', 'comuna_id','condition' => 'alumnoses.estado = 1'),
 			'encargadoses' => array(self::HAS_MANY, 'Encargados', 'comuna_id','condition' => 'encargadoses.estado = 1'),
+			'comunaProvincia' => array(self::BELONGS_TO, 'Provincia', 'comuna_provincia_id','condition' => 'comunaProvincia.estado = 1'),
 		);
 	}
 
@@ -63,6 +64,8 @@ abstract class BaseComuna extends GxActiveRecord {
 			'nombre' => Yii::t('app', 'Nombre'),
 			'estado' => Yii::t('app', 'Estado'),
 			'alumnoses' => null,
+			'comuna_provincia_id' => null,
+			'comunaProvincia' => null,
 			'encargadoses' => null,
 		);
 	}
@@ -73,7 +76,7 @@ abstract class BaseComuna extends GxActiveRecord {
 		$criteria->compare('id', $this->id);
 		$criteria->compare('nombre', $this->nombre, true);
 		$criteria->compare('estado', 1);
-
+        $criteria->compare('comuna_provincia_id', $this->comuna_provincia_id);
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
 		));

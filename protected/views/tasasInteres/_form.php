@@ -13,17 +13,19 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-		<div class="row">
-		<?php echo $form->labelEx($model,'nombre'); ?>
-		<?php echo $form->textField($model, 'nombre', array('maxlength' => 200)); ?>
-		<?php echo $form->error($model,'nombre'); ?>
-		</div><!-- row -->
-		<div class="row">
-		<?php echo $form->labelEx($model,'porcentaje'); ?>
-		<?php echo $form->textField($model, 'porcentaje'); ?>
-		<?php echo $form->error($model,'porcentaje'); ?>
-		</div><!-- row -->
-
+    <table width="100%" border="0" cellspacing="5" cellpadding="5">
+        <tr>
+            <td align="right" style="width: 150px;"><?php echo $form->labelEx($model,'nombre'); ?></td>
+            <td><?php echo $form->textField($model, 'nombre', array('maxlength' => 200)); ?>
+        <?php echo $form->error($model,'nombre'); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->labelEx($model,'porcentaje'); ?></td>
+            <td><?php echo $form->textField($model, 'porcentaje', array('style' => 'width:50px')); ?><strong> %</strong> 
+        <?php echo $form->error($model,'porcentaje'); ?></td>
+        </tr>
+    </table>    
+        
 <?php
 echo GxHtml::submitButton(Yii::t('app', 'Save'));
 $this->endWidget();
