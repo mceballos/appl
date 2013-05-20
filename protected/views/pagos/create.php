@@ -18,6 +18,7 @@ $titulo= Yii::t('app', 'Create') . ' ' . GxHtml::encode($model->label());
 $this->renderPartial('_form', array(
 		'model' => $model,
 		'buttons' => 'create',
-		'titulo'=>$titulo
+		'titulo'=>$titulo,
+		'modelDetalleCompromiso'=>$modelDetalleCompromiso
 		));
 ?>

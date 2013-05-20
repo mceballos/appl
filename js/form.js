@@ -84,13 +84,13 @@ function actualizarSRCIframe(id){
 
 
 function cerrarPanelIframe(){
-	$('#iframeModal').hide('slow');
+	$('#iframeModal').hide();
 	actualizarDatosDeListasYGrillasWithIframe();
 	AltoModaldentroDeModal();
 }
 
 function cerrarModalSinCambios(){
-	$('#iframeModal').hide('slow');
+	$('#iframeModal').hide();
 	AltoModaldentroDeModal();
 }
 
@@ -682,19 +682,22 @@ function mostrarComentarios(bandera, id, b)
 	
  function asignarMontoTotal(){
 	var calcular;
-	var valor =$("#Compromisos_monto_sin_interes").val()
+	var valor =$("#Compromisos_monto_sin_interes").val();
 	var interes = $('#Compromisos_tasa_interes_id option:selected').attr('tasa');
-	var cuotas = $("input[name='Compromisos[numero_cuotas]']:checked").val(); 
+	var cuotas = $("#Compromisos_numero_cuotas").val(); 
 	
+	if(parseInt(cuotas)==0){
+		valor = 0;
+		interes=0;
+		cuotas=1;//Para que al dividir no se cuelge la consulta
+	}
 	
 	if (interes==0){
 		$('#montoTotal').html('$'+ formatNumber(parseInt(valor)));
 		$("#Compromisos_monto_total").val(valor);
-		$("#cuotaMensual").html('$'+ formatNumber(parseInt(valor / cuotas)));
-		
-		
+		$("#cuotaMensual").html('$'+ formatNumber(parseInt(valor / cuotas)));		
 	}else{
-		if (valor){
+		if (valor){			
 			calcular = eval(((valor*interes)/100))+ eval(valor);
 			$('#montoTotal').html('$'+ formatNumber(parseInt(calcular)));
 			$("#Compromisos_monto_total").val(parseInt(calcular));
@@ -744,6 +747,16 @@ function mostrarComentarios(bandera, id, b)
 	    	return(false);
 }
  
+function cambiarMontoCuotaDescuento(){
+	if($('#Pagos_descuento').val()==1){
+		$("#Pagos_pago_total").val($("#pago_normal").val());
+	}else{
+		$("#Pagos_pago_total").val($("#pago_con_atraso").val());
+	}
+	
+	$('#pago_total').html('$'+ formatNumber(parseInt($('#Pagos_pago_total').val())));
+} 
+ 
  function formatNumber(number){
 	 if (!/^([0-9])*$/.test(number)){
 		 return "0";
@@ -758,4 +771,10 @@ function mostrarComentarios(bandera, id, b)
 		return result;
 	}
 
-
+function submitPagos(){
+	jConfirm("¿Deseas ingresar el pago de la cuota?", "Confirmación de Pago Cuota", function(r) {  
+	    if(r) {  
+	    	$("#pagos-form").submit();
+	    }  
+	}); 
+}

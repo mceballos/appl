@@ -11,7 +11,7 @@
 	<!--[if lt IE 8]>
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
 	<![endif]-->
-
+    <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.alerts.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/app.css" />
@@ -19,7 +19,8 @@
 <?php
 	   $cs = Yii::app()->clientScript;        
        $cs->registerCoreScript('jquery'); 
-       $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/form.js'); 
+       $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/form.js');       
+       Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.alerts.js');
        
 	?>
 

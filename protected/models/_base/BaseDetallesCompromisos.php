@@ -12,8 +12,7 @@
  * @property integer $id
  * @property integer $compromiso_id
  * @property integer $cuota_numero
- * @property string $fecha_vencimiento
- * @property integer $estado_pago
+ * @property string $fecha_vencimiento 
   * @property integer $estado
  *
  * @property Compromisos $compromiso
@@ -39,10 +38,10 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('compromiso_id, cuota_numero, fecha_vencimiento', 'required'),
-			array('compromiso_id, cuota_numero, estado_pago, estado', 'numerical', 'integerOnly'=>true),			
-			array('estado_pago, estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, compromiso_id, cuota_numero, fecha_vencimiento, estado_pago, estado', 'safe', 'on'=>'search'),
+			array('compromiso_id, cuota_numero,monto_cuota,monto_cuota_atraso,fecha_vencimiento', 'required'),
+			array('compromiso_id, cuota_numero,monto_cuota,monto_cuota_atraso estado', 'numerical', 'integerOnly'=>true),			
+			array('estado', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, compromiso_id,monto_cuota,monto_cuota_atraso,cuota_numero, fecha_vencimiento, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,8 +62,9 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 			'id' => Yii::t('app', 'ID'),
 			'compromiso_id' => null,
 			'cuota_numero' => Yii::t('app', 'Cuota Numero'),
-			'fecha_vencimiento' => Yii::t('app', 'Fecha Vencimiento'),
-			'estado_pago' => Yii::t('app', 'Estado Pago'),			
+			'fecha_vencimiento' => Yii::t('app', 'Fecha Vencimiento'),	
+			'monto_cuota_atraso' => Yii::t('app', 'Monto cuota atraso'),   
+			'monto_cuota' => Yii::t('app', 'Monto cuota'),   		
 			'estado' => Yii::t('app', 'Estado'),
 			'compromiso' => null,
 			'pagoses' => null,
@@ -77,12 +77,22 @@ abstract class BaseDetallesCompromisos extends GxActiveRecord {
 		$criteria->compare('id', $this->id);
 		$criteria->compare('compromiso_id', $this->compromiso_id);
 		$criteria->compare('cuota_numero', $this->cuota_numero);
-		$criteria->compare('fecha_vencimiento', $this->fecha_vencimiento, true);
-		$criteria->compare('estado_pago', $this->estado_pago);		
+		$criteria->compare('fecha_vencimiento', $this->fecha_vencimiento, true);	
+        $criteria->compare('monto_cuota', $this->monto_cuota, true);
+        $criteria->compare('monto_cuota_atraso', $this->monto_cuota_atraso, true);        	
 		$criteria->compare('estado', 1);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
 		));
 	}
+    public function getCuotaAtrasada(){
+        $atraso=false;        
+        $date1 = new DateTime("now");
+        $date2 = date_create($this->fecha_vencimiento);         
+        if($date2<$date1){
+            $atraso=true;
+        }
+        return $atraso;           
+    }
 }

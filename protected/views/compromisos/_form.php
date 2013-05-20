@@ -40,7 +40,10 @@
          </tr>
          <tr>
             <td align="left" style="width: 150px;"><?php echo $form->labelEx($model,'tipo_compromiso_id'); ?></td>
-            <td style="width: 290px;"><?php echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))));   ?>        
+            <td style="width: 290px;">Colegiatura<?php 
+                    //echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))));   
+                    echo $form->hiddenField($model, 'tipo_compromiso_id',array('value'=>'1'));  
+                    ?>        
                 <?php echo $form->error($model,'tipo_compromiso_id'); ?></td>
             <td align="left" style="width: 150px;"><label class="required" for="Compromisos_proceso_periodo_id"><span class="required"> * </span>Rut Alumno Matriculado</label></td>
             <td><?php echo $form->hiddenField($model, 'proceso_periodo_id');  
@@ -64,21 +67,25 @@
          </tr>
          <tr>
             <td align="left"><?php echo $form->labelEx($model,'numero_cuotas'); ?>:</td>
-            <td><?php echo $form->radioButtonList($model,'numero_cuotas',array('1'=>'1','6'=>'6','9'=>'9'),array('onclick'=>'calcularMontoTotal();','separator'=>'      '));?>
+            <td><?php 
+                    echo $form->dropDownList($model, 'numero_cuotas', array('0','0','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6','7'=>'7','8'=>'8','9'=>'9','10'=>'10'),array('onchange'=>'calcularMontoTotal();')); 
+                    //echo $form->radioButtonList($model,'numero_cuotas',array('0','0','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6','7'=>'7','8'=>'8','9'=>'9','10'=>'10',),array('onclick'=>'calcularMontoTotal();','separator'=>'      '));
+                    
+                    ?>
                 <?php echo $form->error($model,'numero_cuotas'); ?></td>
             <td align="left"><?php echo $form->labelEx($model,'tasa_interes_id'); ?></td>
             <td><?php //echo $form->dropDownList($model, 'tasa_interes_id', GxHtml::listDataEx(TasasInteres::model()->findAll(array('condition'=>'estado=1')))); 
                       echo '<select id="Compromisos_tasa_interes_id" name="Compromisos[tasa_interes_id]" onChange="calcularMontoTotal()">';
                       echo "<option value=''  tasa='0'>--</option>";    
-                        foreach (TasasInteres::model()->findAll(array('condition'=>'estado=1')) as $value){
+                        foreach (TasasInteres::model()->findAll(array('condition'=>'t.estado=1 AND t.id <> 2')) as $value){
                             if($model->tasa_interes_id==$value->id) {
-                                echo "<option value='".$value->id."' selected='selected' tasa='".$value->porcentaje."'>".$value->nombre."</option>";
+                                echo "<option value='".$value->id."' selected='selected' tasa='".$value->porcentaje."'>".$value->nombre." (".$value->porcentaje."%)</option>";
                             }else{
-                                echo "<option value='".$value->id."' tasa='".$value->porcentaje."'>".$value->nombre."</option>";
+                                echo "<option value='".$value->id."' tasa='".$value->porcentaje."'>".$value->nombre." (".$value->porcentaje."%)</option>";
                             }
                         }
                       echo '</select>';
-                      echo '<strong id="interes" style="color:#E91919;font-size: 20px;"></strong>';
+                      //echo '<strong id="interes" style="color:#E91919;font-size: 20px;"></strong>';
                 ?>
                 
                 <?php echo $form->error($model,'tasa_interes_id'); ?></td>
@@ -87,21 +94,6 @@
             <td align="left"><?php echo $form->labelEx($model,'monto_sin_interes'); ?></td>
             <td><?php echo $form->textField($model, 'monto_sin_interes',array('style'=>'width: 155px;','maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeyup'=>'asignarMontoTotal()')); ?>
                 <?php echo $form->error($model,'monto_sin_interes'); ?></td>
-            <td align="left"><?php echo $form->labelEx($model,'monto_total'); ?>:</td>
-            <td><?php //echo $form->textField($model, 'monto_total'); 
-              echo '<strong id="montoTotal" style="color:#E91919;font-size: 20px;">'.$model->monto_total.'</strong>';
-              echo $form->hiddenField($model, 'monto_total',array('value'=>''));
-        ?>
-        <?php echo $form->error($model,'monto_total'); ?></td>
-         </tr>
-         <tr>
-            <td align="left"><label class="colon">Cuota Mensual Estimada : </label></td>
-            <td><strong id="cuotaMensual" style="color:#E91919;font-size: 20px;"></strong></td>
-            <td align="left"><?php echo $form->labelEx($model,'medio_pago_id');?></td>
-            <td><?php echo $form->dropDownList($model, 'medio_pago_id', GxHtml::listDataEx(MediosPagos::model()->findAll(array('condition'=>'estado=1')))); ?>
-                <?php echo $form->error($model,'medio_pago_id'); ?></td>
-         </tr>
-         <tr>
             <td align="left"><?php echo $form->labelEx($model,'fecha_primera_cuota'); ?></td>
             <td>
                     <?php
@@ -133,11 +125,19 @@
                         
                     <?php //echo $form->textField($model, 'fecha_primera_cuota'); ?>
                     <?php echo $form->error($model,'fecha_primera_cuota'); ?>
-            </td>
-            <td align="left"><?php echo $form->labelEx($model,'evidencia_pdf');?></td>
-            <td><?php echo $form->fileField($model, 'documento');
-            echo $form->error($model,'documento'); ?></td>
+            </td>            
+            
          </tr>
+         <tr>
+            <td align="left"><label class="colon">Cuota Mensual Estimada : </label></td>
+            <td><strong id="cuotaMensual" style="color:#E91919;font-size: 20px;"></strong></td>
+            <td align="left"><?php echo $form->labelEx($model,'monto_total'); ?>:</td>
+            <td><?php //echo $form->textField($model, 'monto_total'); 
+              echo '<strong id="montoTotal" style="color:#E91919;font-size: 20px;">'.$model->monto_total.'</strong>';
+              echo $form->hiddenField($model, 'monto_total',array('value'=>''));
+            ?>
+            <?php echo $form->error($model,'monto_total'); ?></td>
+         </tr>         
     </table>
 		
 <?php

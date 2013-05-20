@@ -38,6 +38,11 @@ public function accessRules() {
 	
 
 	public function actionUpdate($id) {
+	    $nombre="";
+        $a=Compromisos::model()->findAll(array('condition'=>'t.id='.$id));
+        if(isset($a[0])){
+            $nombre=$a[0]->procesoPeriodo->alumnoRut->rutNombre;
+        }
 	    $model = new DetallesCompromisos('search');
         $model->unsetAttributes();
         $model->compromiso_id=$id;
@@ -47,6 +52,7 @@ public function accessRules() {
         $this->layout = '//layouts/iframe';    
         $this->render('update', array(
             'model' => $model,
+            'nombre'=>$nombre,
         )); 
 		/*$model = $this->loadModel($id, 'Compromisos');
 

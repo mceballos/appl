@@ -124,7 +124,8 @@ $this->widget('zii.widgets.CMenu', array(
                 'update' => array(                    
                     'options'=>array(
                         'class'=>'btn-small update'
-                    )
+                    ),
+                    'visible'=>'($data->cantidadCuotasPagadas==0)',
                 ),
                 'delete' => array(                    
                     'options'=>array(

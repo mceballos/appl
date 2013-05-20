@@ -4,6 +4,13 @@ class PagosController extends GxController {
 
 
 	public function actionView($id) {
+	    //El id es del Detalle del compromiso
+	    $valor_id=Pagos::model()->findAll(array('condition'=>'compromiso_detalle_id='.$id));
+        if(isset($valor_id[0])){
+            $id=$valor_id[0]->id;
+        }else{
+            $id=0;
+        }
 	    //Para mostrar en la ventana modal solo el content
         $this->layout = '//layouts/iframe';
 		$this->render('view', array(
@@ -34,40 +41,24 @@ class PagosController extends GxController {
 	public function actionUpdate($id) {
 	    
         $pago=Pagos::model()->findAll(array('condition'=>'t.estado = 1 AND compromiso_detalle_id='.$id));
-        
+        $detalleCompromiso=$this->loadModel($id, 'DetallesCompromisos');
+        $pagina="create";
+        $model = new Pagos;
         if(isset($pago[0])){
             //EXISTE Y DEBE SER UN UPDATE
             $model = $this->loadModel($pago[0]->id, 'Pagos');
-            if (isset($_POST['Pagos'])) {
-                $model->setAttributes($_POST['Pagos']);
-                if ($model->save()) {
-                    //Cierra la venta Modal             
-                    echo CHtml::script("parent.cerrarModal();");                
-                }
-            }       
-            //Para mostrar en la ventana modal solo el content
-            $this->layout = '//layouts/iframe';     
-            $this->render('update', array(
-                    'model' => $model,
-            ));
-        }else{
-            //NO EXISTE EL PAGO DEBE SER UN CREATE
-            $model = new Pagos;
-            if (isset($_POST['Pagos'])) {
-                $model->setAttributes($_POST['Pagos']);
-    
-                if ($model->save()) {
-                    if (Yii::app()->getRequest()->getIsAjaxRequest())
-                        Yii::app()->end();
-                    else
-                        //Cierra la venta Modal
-                        echo CHtml::script("parent.cerrarModal();");
-                }
-            }
-            //Para mostrar en la ventana modal solo el content
-            $this->layout = '//layouts/iframe';
-            $this->render('create', array( 'model' => $model));
+            $pagina="update";
         }
+        
+        if (isset($_POST['Pagos'])) {
+            $model->setAttributes($_POST['Pagos']);
+            if ($model->save()) {
+                 echo CHtml::script("parent.parent.actualizarCierreModal();parent.cerrarPanelIframe();");
+            }
+        }
+        //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';
+        $this->render($pagina, array( 'model' => $model,'modelDetalleCompromiso'=>$detalleCompromiso));
 		
 	}
 

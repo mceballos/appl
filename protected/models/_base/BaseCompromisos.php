@@ -14,25 +14,22 @@
  * @property integer $tipo_compromiso_id
  * @property integer $compromiso_id_repactacion
  * @property string $observaciones 
- * @property string $evidencia_pdf
  * @property integer $tasa_interes_id
  * @property integer $numero_cuotas
  * @property integer $monto_sin_interes
  * @property string $fecha_primera_cuota
  * @property integer $monto_total
- * @property integer $medio_pago_id
  * @property integer $proceso_periodo_id
  * @property integer $estado
  *
- * @property ProcesosPeriodos $procesoPeriodo 
- * @property MediosPagos $medioPago
+ * @property ProcesosPeriodos $procesoPeriodo
  * @property TasasInteres $tasaInteres
  * @property TiposCompromisos $tipoCompromiso
  * @property DetallesCompromisos[] $detallesCompromisoses
  */
 abstract class BaseCompromisos extends GxActiveRecord {
 	
-	public $documento;
+	public $rut,$dv;
 
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
@@ -51,22 +48,19 @@ abstract class BaseCompromisos extends GxActiveRecord {
 	}
 
 	public function rules() {
-		return array(
-			array('documento', 'file', 'types'=>'pdf'),
-			array('tasa_interes_id,fecha_actual, tipo_compromiso_id, monto_sin_interes, monto_total, medio_pago_id, proceso_periodo_id,numero_cuotas', 'required'),
-			array('tipo_compromiso_id, tasa_interes_id, numero_cuotas, monto_sin_interes, monto_total, medio_pago_id, proceso_periodo_id, estado', 'numerical', 'integerOnly'=>true),
-			array('evidencia_pdf', 'length', 'max'=>200),
+		return array(			
+			array('tasa_interes_id,fecha_actual, tipo_compromiso_id, monto_sin_interes, monto_total, proceso_periodo_id,numero_cuotas', 'required'),
+			array('tipo_compromiso_id, tasa_interes_id, numero_cuotas, monto_sin_interes, monto_total, proceso_periodo_id, estado', 'numerical', 'integerOnly'=>true),			
 			array('observaciones, fecha_primera_cuota', 'safe'),
 			array('proceso_periodo_id', 'ext.UniqueAttributesValidator', 'with' => 'estado',"message"=>'El rut ya tiene compromisos asignados para este periodo'),
-			array('observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, fecha_primera_cuota, estado', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, fecha_actual, tipo_compromiso_id, observaciones, evidencia_pdf, tasa_interes_id, numero_cuotas, monto_sin_interes, fecha_primera_cuota, monto_total, medio_pago_id, proceso_periodo_id, estado', 'safe', 'on'=>'search'),			
+			array('observaciones, tasa_interes_id, numero_cuotas, fecha_primera_cuota, estado', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, fecha_actual, tipo_compromiso_id, observaciones, tasa_interes_id, numero_cuotas, monto_sin_interes, fecha_primera_cuota, monto_total, proceso_periodo_id, estado,rut,dv', 'safe', 'on'=>'search'),			
 		);
 	}
 
 	public function relations() {
 		return array(
-			'procesoPeriodo' => array(self::BELONGS_TO, 'ProcesosPeriodos', 'proceso_periodo_id','condition' => 'procesoPeriodo.estado = 1'),			
-			'medioPago' => array(self::BELONGS_TO, 'MediosPagos', 'medio_pago_id','condition' => 'medioPago.estado = 1'),
+			'procesoPeriodo' => array(self::BELONGS_TO, 'ProcesosPeriodos', 'proceso_periodo_id','condition' => 'procesoPeriodo.estado = 1'),
 			'tasaInteres' => array(self::BELONGS_TO, 'TasasInteres', 'tasa_interes_id','condition' => 'tasaInteres.estado = 1'),
 			'tipoCompromiso' => array(self::BELONGS_TO, 'TiposCompromisos', 'tipo_compromiso_id','condition' => 'tipoCompromiso.estado = 1'),
 			'detallesCompromisoses' => array(self::HAS_MANY, 'DetallesCompromisos', 'compromiso_id','condition' => 'detallesCompromisoses.estado = 1'),
@@ -84,18 +78,15 @@ abstract class BaseCompromisos extends GxActiveRecord {
 			'fecha_actual' => Yii::t('app', 'Fecha Actual'),
 			'tipo_compromiso_id' => null,
 			//'compromiso_id_repactacion' => Yii::t('app', 'Compromiso Id Repactacion'),
-			'observaciones' => Yii::t('app', 'Observaciones'),			
-			'evidencia_pdf' => Yii::t('app', 'Evidencia Pdf'),
+			'observaciones' => Yii::t('app', 'Observaciones'),
 			'tasa_interes_id' => null,
 			'numero_cuotas' => Yii::t('app', 'Numero Cuotas'),
 			'monto_sin_interes' => Yii::t('app', 'Monto Sin Interes'),
 			'fecha_primera_cuota' => Yii::t('app', 'Fecha Primera Cuota'),
-			'monto_total' => Yii::t('app', 'Monto Total'),
-			'medio_pago_id' => null,
+			'monto_total' => Yii::t('app', 'Monto Total'),			
 			'proceso_periodo_id' => null,
 			'estado' => Yii::t('app', 'Estado'),
-			'procesoPeriodo' => null,			
-			'medioPago' => null,
+			'procesoPeriodo' => null,
 			'tasaInteres' => null,
 			'tipoCompromiso' => null,
 			'detallesCompromisoses' => null,
@@ -104,25 +95,32 @@ abstract class BaseCompromisos extends GxActiveRecord {
 
 	public function search() {
 		$criteria = new CDbCriteria;
-
-		$criteria->compare('id', $this->id);
-		$criteria->compare('fecha_actual', $this->fecha_actual, true);
-		$criteria->compare('tipo_compromiso_id', $this->tipo_compromiso_id);		
-		$criteria->compare('observaciones', $this->observaciones, true);		
-		$criteria->compare('evidencia_pdf', $this->evidencia_pdf, true);
-		$criteria->compare('tasa_interes_id', $this->tasa_interes_id);
-		$criteria->compare('numero_cuotas', $this->numero_cuotas);
-		$criteria->compare('monto_sin_interes', $this->monto_sin_interes);
-		$criteria->compare('fecha_primera_cuota', $this->fecha_primera_cuota, true);
-		$criteria->compare('monto_total', $this->monto_total);
-		$criteria->compare('medio_pago_id', $this->medio_pago_id);
-		$criteria->compare('proceso_periodo_id', $this->proceso_periodo_id);
-		$criteria->compare('estado', 1);
+        
+		$criteria->compare('t.id', $this->id);
+		$criteria->compare('t.fecha_actual', $this->fecha_actual, true);
+		$criteria->compare('t.tipo_compromiso_id', $this->tipo_compromiso_id);		
+		$criteria->compare('t.observaciones', $this->observaciones, true);
+		$criteria->compare('t.tasa_interes_id', $this->tasa_interes_id);
+		$criteria->compare('t.numero_cuotas', $this->numero_cuotas);
+		$criteria->compare('t.monto_sin_interes', $this->monto_sin_interes);
+		$criteria->compare('t.fecha_primera_cuota', $this->fecha_primera_cuota, true);
+		$criteria->compare('t.monto_total', $this->monto_total);		
+		$criteria->compare('t.proceso_periodo_id', $this->proceso_periodo_id);
+		$criteria->compare('t.estado', 1);
+        if(isset($_GET['Compromisos'])){            
+            if(isset($_GET['Compromisos']['dv']) || isset($_GET['Compromisos']['rut'])){
+                $criteria->with=array('procesoPeriodo','procesoPeriodo.alumnoRut');
+                if(!is_null($_GET['Compromisos']['rut']))
+                    $criteria->compare('alumnoRut.rut', $_GET['Compromisos']['rut']);
+                if(!is_null($_GET['Compromisos']['dv']))
+                    $criteria->compare('alumnoRut.dv', $_GET['Compromisos']['dv']);
+            }                
+        }
 		if(isset(Yii::app()->session['idPeriodo'])){
-			$criteria->join='INNER JOIN procesos_periodos pp on 	t.proceso_periodo_id=pp.id';
+			$criteria->join='INNER JOIN procesos_periodos pp on t.proceso_periodo_id=pp.id';
 			$criteria->distinct =true;
             $criteria->select='t.*';	
-            $criteria->condition='t.estado = 1 AND pp.periodo_id = '.Yii::app()->session['idPeriodo'];
+            $criteria->addCondition(array('t.estado = 1','pp.periodo_id = '.Yii::app()->session['idPeriodo']));
 		}
 		
 		
@@ -130,4 +128,37 @@ abstract class BaseCompromisos extends GxActiveRecord {
 			'criteria' => $criteria,
 		));
 	}
+
+    public function getCantidadCuotasPagadas(){
+        $cantidad=0;
+        if($this->numero_cuotas>0){
+            if(isset($this->detallesCompromisoses[0])){
+                foreach($this->detallesCompromisoses as $a){
+                    if(isset($a->pagoses[0])){
+                        $cantidad++;
+                    }
+                }
+            }
+        }
+        //Debe retornar siempre un entero positivo
+        return $cantidad;           
+    }
+    
+    
+    
+    public function getCuotasAtrasadas(){
+        $atraso='No';
+        if($this->numero_cuotas>0){
+            $now = new DateTime("now");                
+            if(isset($this->detallesCompromisoses[0])){
+                foreach($this->detallesCompromisoses as $a){
+                    if(!isset($a->pagoses[0]) && (date_create($a->fecha_vencimiento)<$now)){
+                        $atraso='Si';
+                    }
+                }
+            }
+        }
+        return $atraso;           
+    }
+
 }

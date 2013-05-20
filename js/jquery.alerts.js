@@ -37,7 +37,7 @@ $(document).ready(function() {
 		overlayColor: '#FFF',               // base color of overlay
 		draggable: true,                    // make the dialogs draggable (requires UI Draggables plugin)
 		okButton: '&nbsp;OK&nbsp;',         // text for the OK button
-		cancelButton: '&nbsp;Cancel&nbsp;', // text for the Cancel button
+		cancelButton: '&nbsp;Cancelar&nbsp;', // text for the Cancel button
 		dialogClass: null,                  // if specified, this class will be applied to all dialogs
 		
 		// Public methods

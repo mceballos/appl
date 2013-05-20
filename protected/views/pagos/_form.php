@@ -9,13 +9,14 @@ Yii::app()->clientScript->registerScript('habilitar', "
                 $('.contenidoCheque').hide();
             }
             //cambiando alto del iframe
-            parent.$('#iframeModal').height($('body').outerHeight(true)+20);
-    });
+            parent.$('#iframeModal').height($('body').outerHeight(true)+40);
+    });    
+    $('#pago_total').html('$'+ formatNumber(parseInt($('#Pagos_pago_total').val())));
     if($('#Pagos_tipo_pago_id').val()==2){
         $('.contenidoCheque').show();
     }
     //cambiando alto del iframe
-    parent.$('#iframeModal').height($('body').outerHeight(true)+20);
+    parent.$('#iframeModal').height($('body').outerHeight(true)+40);
     $('body').css('background-color','#FFF');    
 ");
 
@@ -35,7 +36,7 @@ Yii::app()->clientScript->registerScript('habilitar', "
     
 	<?php echo $form->errorSummary($model); 
 	   echo $form->hiddenField($model, 'compromiso_detalle_id',array('value'=>$_GET['id']));
-	?>
+	?>	
 <table width="100%" border="0" cellspacing="5" cellpadding="5">
     <tr>
         <td style="width: 130px;"><?php echo $form->labelEx($model,'tipo_pago_id'); ?></td>
@@ -43,24 +44,55 @@ Yii::app()->clientScript->registerScript('habilitar', "
             <?php echo $form->dropDownList($model, 'tipo_pago_id', GxHtml::listDataEx(TiposPagos::model()->findAllAttributes(null, true))); ?>
             <?php echo $form->error($model,'tipo_pago_id'); ?>
         </td>
-        <td style="width: 110px;"></td>
-        <td>           
-            
+        <td><?php
+                if($modelDetalleCompromiso->cuotaAtrasada) 
+                    echo $form->labelEx($model,'descuento');                
+                ?></td>
+        <td>
+            <?php                
+                if($model->isNewRecord){
+                    if($modelDetalleCompromiso->cuotaAtrasada){
+                        echo $form->dropDownList($model, "descuento", array('No','Si'),array('onchange'=>'cambiarMontoCuotaDescuento();'));                    
+                    }else{
+                        echo $form->hiddenField($model,'descuento',array('value'=>0));
+                    }
+                }else{
+                    if($modelDetalleCompromiso->cuotaAtrasada){
+                        echo $form->dropDownList($model, "descuento", array('No','Si'),array('onchange'=>'cambiarMontoCuotaDescuento();'));                    
+                    }else{
+                        echo $form->hiddenField($model,'descuento');
+                    }
+                }
+                
+                
+            ?>
         </td>
+        
     </tr>
     <tr>        
         <td><?php echo $form->labelEx($model,'pago_total'); ?></td>
         <td>
-            <div id="pago_total"></div>
-            <?php echo $form->hiddenField($model, 'pago_total',array('value'=>$_GET['id'])); ?>
-        </td>
-        <td><?php echo $form->labelEx($model,'descuento');?></td>
-        <td>
-            <?php
-                echo $form->dropDownList($model, "descuento", array('No','Si'));
+            <div id="pago_total" style="color:#E91919;font-size: 20px;"></div>
+            <?php   
+                $valor_cuota=$modelDetalleCompromiso->monto_cuota;             
+                if($modelDetalleCompromiso->cuotaAtrasada){
+                    $valor_cuota=$modelDetalleCompromiso->monto_cuota_atraso;
+                    if(isset($model->descuento))
+                        if($model->descuento==1)//En caso de tener descuento
+                            $valor_cuota=$modelDetalleCompromiso->monto_cuota;     
+                }
+                if($model->isNewRecord){   
+                    echo $form->hiddenField($model,'pago_total',array('value'=>$valor_cuota));
+                }else{
+                    echo $form->hiddenField($model,'pago_total');
+                }
+                echo '<input type="hidden" id="pago_normal" name="pago_normal" value="'.$modelDetalleCompromiso->monto_cuota.'">';
+                echo '<input type="hidden" id="pago_con_atraso" name="pago_con_atraso" value="'.$modelDetalleCompromiso->monto_cuota_atraso.'">';                                
             ?>
         </td>
-    </tr>
+        <td></td>
+        <td></td>
+    </tr>    
     <tr>
         <td><?php echo $form->labelEx($model,'observaciones'); ?></td>
         <td colspan="3">
@@ -136,7 +168,8 @@ Yii::app()->clientScript->registerScript('habilitar', "
 </table>
 
 <?php
-echo GxHtml::submitButton(Yii::t('app', 'Save'));
+//echo GxHtml::submitButton(Yii::t('app', 'Pagar'));
+echo CHtml::button('Pagar',array('onclick'=>"submitPagos();"));
 echo CHtml::button('Cancelar',array('onclick'=>"window.parent.cerrarModalSinCambios()"));
 $this->endWidget();
 ?>

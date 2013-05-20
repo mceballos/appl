@@ -89,7 +89,7 @@ abstract class BasePagos extends GxActiveRecord {
             'observaciones' => Yii::t('app', 'Observaciones'),
             'fecha_pago' => Yii::t('app', 'Fecha Pago'),
             'cheque_fecha' => Yii::t('app', 'Cheque Fecha'),
-            'pago_total' => Yii::t('app', 'Pago Total'),
+            'pago_total' => Yii::t('app', 'Pago total'),            
             'cheque_serie' => Yii::t('app', 'Cheque Serie'),
             'cheque_rut_serie' => Yii::t('app', 'Cheque Rut Serie'),
             'descuento' => Yii::t('app', 'Descuento'),
@@ -113,7 +113,7 @@ abstract class BasePagos extends GxActiveRecord {
         $criteria->compare('observaciones', $this->observaciones, true);
         $criteria->compare('fecha_pago', $this->fecha_pago, true);
         $criteria->compare('cheque_fecha', $this->cheque_fecha, true);
-        $criteria->compare('pago_total', $this->pago_total);
+        $criteria->compare('pago_total', $this->pago_total);        
         $criteria->compare('cheque_serie', $this->cheque_serie, true);
         $criteria->compare('cheque_rut_serie', $this->cheque_rut_serie, true);
         $criteria->compare('descuento', $this->descuento); 

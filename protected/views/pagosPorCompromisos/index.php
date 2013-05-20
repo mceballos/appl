@@ -56,19 +56,28 @@ $('.search-form form').submit(function(){
             'value'=>'Yii::app()->dateFormatter->format("y-MM-d",strtotime($data->fecha_actual))',
         ),
         
-        array(
+        /* array(
                 'name'=>'tipo_compromiso_id',
                 'value'=>'GxHtml::valueEx($data->tipoCompromiso)',
                 'filter'=>GxHtml::listDataEx(TiposCompromisos::model()->findAllAttributes(null, true)),
                 ),
-    
+        */
          array(
             'name'=>'fecha_primera_cuota',
             'header'=>'Primera Cuota',
             'value'=>'Yii::app()->dateFormatter->format("y-MM-d",strtotime($data->fecha_primera_cuota))',
         ),
         
-        'numero_cuotas',
+        'numero_cuotas',        
+        array(
+            'header'=>'Cantidad de Cuotas Pagadas',
+            'value'=>'$data->cantidadCuotasPagadas'
+        ),
+        array(
+            'header'=>'Cuotas atrasadas',
+            'value'=>'$data->cuotasAtrasadas'
+        ),
+        
         'monto_total',
         //'proceso_periodo_id',
         array(
@@ -80,7 +89,7 @@ $('.search-form form').submit(function(){
                 'update' => array(                    
                     'options'=>array(
                         'class'=>'btn-small update'
-                    )
+                    ),                  
                 )
             ),
             'htmlOptions'=>array('style'=>'width: 80px'),
