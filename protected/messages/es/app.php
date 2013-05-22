@@ -5,6 +5,8 @@ return array (
   'Create'=>'Crear ',
   'Update'=>'Modificar',
   'Delete'=>'Eliminar ', 
+  'Print'=>'Imprimir',
+  'print'=>'Imprimir', 
   'Manage'=>'Buscar ',
   'View'=>'Ver ',  
   'Save'=>'Guardar',

@@ -32,5 +32,7 @@ return array (
   'Total 1 result.|Total {count} results.' => 'Total de 1 resultado.|Total de {count} resultados.',
   'Update' => 'Modificar',
   'View' => 'Mostrar',
+  'Print' => 'Imprimir',
+  'print' => 'Imprimir',
   '{class} must specify "model" and "attribute" or "name" property values.' => '{class} debe especificar valor/es para "model" y "atributte" o para "name".',
 );

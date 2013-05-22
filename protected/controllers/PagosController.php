@@ -18,6 +18,21 @@ class PagosController extends GxController {
 		));
 	}
 	
+    public function actionComprobante($id) {
+        //El id es del Detalle del compromiso
+        $valor_id=Pagos::model()->findAll(array('condition'=>'compromiso_detalle_id='.$id));
+        if(isset($valor_id[0])){
+            $id=$valor_id[0]->id;
+        }else{
+            $id=0;
+        }
+        //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';
+        $this->render('comprobante', array(
+            'model' => $this->loadModel($id, 'Pagos'),
+        ));
+    }
+    
 	
 	/*public function actionCreate() {
 		$model = new Pagos;

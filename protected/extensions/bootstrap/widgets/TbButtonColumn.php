@@ -28,6 +28,8 @@ class TbButtonColumn extends CButtonColumn
 	 * @var string the delete button icon (defaults to 'trash').
 	 */
 	public $deleteButtonIcon = 'trash';
+    
+    public $printButtonIcon = 'print';
 
 	/**
 	 * Initializes the default buttons (view, update and delete).
@@ -42,6 +44,8 @@ class TbButtonColumn extends CButtonColumn
 			$this->buttons['update']['icon'] = $this->updateButtonIcon;
 		if ($this->deleteButtonIcon !== false && !isset($this->buttons['delete']['icon']))
 			$this->buttons['delete']['icon'] = $this->deleteButtonIcon;
+        if ($this->printButtonIcon !== false && !isset($this->buttons['print']['icon']))
+            $this->buttons['print']['icon'] = $this->printButtonIcon;
 	}
 
 	/**
@@ -61,7 +65,7 @@ class TbButtonColumn extends CButtonColumn
 		$options = isset($button['options']) ? $button['options'] : array();
 
 		if (!isset($options['title']))
-			$options['title'] = $label;
+			$options['title'] = Yii::t('app',$label);
         
 		if (!isset($options['rel']))
 			$options['rel'] = 'tooltip';

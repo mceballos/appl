@@ -49,7 +49,10 @@ $this->widget('zii.widgets.CMenu', array(
             'htmlOptions'=>array('width'=>'30'),
             'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
         ),
-        'rut',
+        array(
+            'name'=>'rut',
+            'value'=>$model->rut
+        ),        
         //'dv',
         'nombre',
         'apellido_paterno',
