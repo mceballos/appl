@@ -54,18 +54,7 @@ array(
             'value' => Yii::app()->dateFormatter->format("d MMMM y",strtotime($model->fecha_primera_cuota)),
             ),
 'monto_total',
-array(
-            'name' => 'medioPago',
-            'type' => 'raw',
-            'value' => $model->medioPago ,
-            ),
-
 //'estado', 
-array(
-            'name' => 'evidencia_pdf',
-            'type' => 'raw',
-            'value' => $model->evidencia_pdf !== null ? CHtml::link(GxHtml::encode($model->evidencia_pdf), Yii::app()->baseUrl . '/upload/doc/'.$model->evidencia_pdf):null,
-            ),
             
     ),
 )); ?>
