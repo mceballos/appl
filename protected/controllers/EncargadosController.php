@@ -114,5 +114,23 @@ public function accessRules() {
 		return $usuarioActivoConcatenado;
 	}	
 	
+	 /* *************************************************
+	 * obtenerNombreEncargadoTexto
+	 * ------------------------------------------
+	 * 
+	 * **************************************************/
+	public static  function obtenerNombreEncargadoTexto($id){
+		$concatenado="";
+		$encargado = Encargados::model()->find(array('condition'=>'rut='.$id));
+		
+		if(isset( $encargado['nombre'])){
+			$concatenado =	$encargado['nombre'].' '.$encargado['apellido_paterno'].' '.$encargado['apellido_materno'];
+		}else{
+			$concatenado = "null";
+		}
 
+        return  $concatenado;
+        
+        
+	}
 }

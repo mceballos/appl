@@ -20,11 +20,14 @@ $userID = Yii::app()->user->id;
         <tr>
             <td align="left" style="width: 130px;"><?php echo $form->labelEx($model,'parentesco_id'); ?></td>
             <td style="width: 380px;"><?php echo $form->dropDownList($model, 'parentesco_id', GxHtml::listDataEx(Parentescos::model()->findAll(array('condition'=>'estado=1')))); ?>
-                <?php echo $form->error($model,'parentesco_id'); ?></td>
+                <?php echo $form->error($model,'parentesco_id'); ?>
+            </td>
+                
             <td align="left" style="width: 116px;"><?php echo $form->labelEx($model,'rut'); ?></td>
             <td><?php echo $form->textField($model, 'rut',array('maxlength' => 8,'size'=>11)).'-'.$form->textField($model, 'dv', array('maxlength' => 1,'size'=>2)) ?>
-        <?php echo $form->error($model,'rut'); ?>
-        <?php echo $form->error($model,'dv'); ?></td>    
+        		<?php echo $form->error($model,'rut'); ?>
+       		 	<?php echo $form->error($model,'dv'); ?>
+        	</td>    
         </tr>
         <tr>
             <td align="left"><?php echo $form->labelEx($model,'nombre'); ?></td>

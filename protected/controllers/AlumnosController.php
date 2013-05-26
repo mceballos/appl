@@ -11,7 +11,7 @@ public function filters() {
 public function accessRules() {
 	return array(
 			array('allow',
-				'actions'=>array('index','view','ver'),
+				'actions'=>array('index','view','ver','obtenerNombreEncargadoTexto'),
 				'users'=>array('*'),
 				),
 			array('allow', 
@@ -125,7 +125,7 @@ public function accessRules() {
 	}	
 	
 	 /* *************************************************
-	 * obtenerNombreEncargado
+	 * obtenerNombreAlumno
 	 * ------------------------------------------
 	 * 
 	 * **************************************************/
@@ -144,5 +144,6 @@ public function accessRules() {
         
         
 	}
+	
 
 }
