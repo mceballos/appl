@@ -59,6 +59,7 @@ abstract class BaseEncargados extends GxActiveRecord {
 			array('telefono_laboral, telefono_fijo, celular', 'length', 'max'=>12),
 			array('direccion_particular, villa_poblacion', 'length', 'max'=>200),
 			array('rut, telefono_laboral, telefono_fijo, celular, direccion_particular, villa_poblacion, comuna_id, estado, estudios_superiores_anios, ocupacion', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('rut', 'checkRut','message'=>'El Rut ingresado no es valido. Ej:123456789-0'),
 			array('rut, dv, nombre, apellido_paterno, apellido_materno, telefono_laboral, telefono_fijo, celular, direccion_particular, villa_poblacion, comuna_id, fecha_actualizacion, estado, parentesco_id, estudios_superiores_anios, ocupacion', 'safe', 'on'=>'search'),
 			array('rut','unique','message'=>'{attribute} : {value}  se encuentra registrado en la base de datos !!!'),
 			
@@ -134,6 +135,46 @@ abstract class BaseEncargados extends GxActiveRecord {
 
     public function getRutCompleto(){
         return $this->rut.'-'.$this->dv;           
+    }
+    
+    public function checkRut($attribute,$params){
+        $rut=$this->rut;
+        $digito_verificador=null;//$this->DV;
+        if(isset($_POST['Encargados'])){
+            if(isset($_POST['Encargados']['dv'])){
+                if(!is_null($_POST['Encargados']['dv'])){
+                    $digito_verificador=$_POST['Encargados']['dv'];
+                }
+            }
+        }
+        /* Preparar dígito verificador */
+          $digito_ingresado = strtoupper($digito_verificador);
+          $posibles_valores = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'K');         
+          /* Sólo si $rut es natural y $digito_ingresado está en $posibles_valores */
+          if ($rut > 0 && in_array($digito_ingresado, $posibles_valores)){
+            /* Calcular el digito verificador del rut ingresado */
+            $d = 1;
+            for ($x = 0; $rut != 0; $rut /= 10)
+              $d = ($d + $rut % 10 * (9 - $x++ % 6)) % 11;
+            
+            
+            $digito_calculado = chr($d ? $d + 47 : 75);
+            
+            /* Comparar el digito ingresado con el digito calculado */
+            if ($digito_calculado == $digito_ingresado){
+                //return true;
+            } else{
+              /* el digito ingresado es incorrecto */
+              //return false;
+              if(!$this->hasErrors("rut"))
+                    $this->addError("rut", $params['message']);
+            }
+          } else{
+            /* $rut no es natural o bien $digito_ingresado no está en $posibles_valores */
+            //return false;
+            if(!$this->hasErrors("rut"))
+                    $this->addError("rut", $params['message']);
+          }
     }
 
 }

@@ -18,31 +18,31 @@ return array(
 'defaultController'=>'user/login/',
 // autoloading model and component classes
 'import'=>array(
-'application.models.*',
-'application.components.*',
-'application.controllers.*',	
-            'application.modules.user.models.*',
-            'application.modules.user.components.*',
-     //'application.modules.user.models. *',
-     'ext.giix-components.*', // giix components
-            'ext.fileimagebehavior.*'
+        'application.models.*',
+        'application.components.*',
+        'application.controllers.*',	
+         'application.modules.user.models.*',
+         'application.modules.user.components.*',
+         //'application.modules.user.models. *',
+         'ext.giix-components.*', // giix components
+         'ext.fileimagebehavior.*'
 ),
     
 'modules'=>array(
 // uncomment the following to enable the Gii tool
 
-'gii'=>array(
-'class'=>'system.gii.GiiModule',
-'password'=>'admin',
-// If removed, Gii defaults to localhost only. Edit carefully to taste.
-'ipFilters'=>array('200.6.117.145','127.0.0.1','::1'),
-'generatorPaths' => array(
-                   'ext.giix-core', // giix generators
-             ),
-/*'generatorPaths'=>array(
-'bootstrap.gii',
-),*/
-),
+        'gii'=>array(
+                    'class'=>'system.gii.GiiModule',
+                    'password'=>'admin',
+                    // If removed, Gii defaults to localhost only. Edit carefully to taste.
+                    'ipFilters'=>array('200.6.117.145','127.0.0.1','::1'),
+                    'generatorPaths' => array(
+                           'ext.giix-core', // giix generators
+                     ),
+        /*'generatorPaths'=>array(
+        'bootstrap.gii',
+        ),*/
+        ),
 /*'mailbox'=>
 array(
 'userClass' => 'User',
@@ -111,6 +111,7 @@ array(
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+				'<controller:\w+>/<action:\w+>/<rut>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),

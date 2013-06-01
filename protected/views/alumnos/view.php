@@ -18,7 +18,10 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data' => $model,
 	'attributes' => array(
-'rut',
+array(
+            'name'=>'rut',
+            'value'=>$model->RutCompleto            
+        ),
 //'dv',
 'rut_serie',
 'nombre',
@@ -47,26 +50,17 @@ array(
 //'fecha_actualizacion',
 //'estado',
 array(
-			'name' => 'apoderadoRut',
-			'type' => 'raw',
-			'value' => $model->apoderadoRut !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->apoderadoRut)), array('encargados/view', 'id' => GxActiveRecord::extractPkValue($model->apoderadoRut, true))) : null,
-			),
+            'name'=>'apoderadoRut',
+            'value'=>(isset($model->apoderadoRut))?$model->apoderadoRut->RutCompleto:""       
+        ),
 array(
-			'name' => 'padreRut',
-			'type' => 'raw',
-			'value' => $model->padreRut !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->padreRut)), array('encargados/view', 'id' => GxActiveRecord::extractPkValue($model->padreRut, true))) : null,
-			),
+            'name'=>'padreRut',
+            'value'=>(isset($model->padreRut))?$model->padreRut->RutCompleto:""            
+        ),
 array(
-			'name' => 'madreRut',
-			'type' => 'raw',
-			'value' => $model->madreRut !== null ? GxHtml::link(GxHtml::encode(GxHtml::valueEx($model->madreRut)), array('encargados/view', 'id' => GxActiveRecord::extractPkValue($model->madreRut, true))) : null,
-			),
-
-array(
-			'name' => 'responsableActualizacion',
-			'type' => 'raw',
-			'value' => EncargadosController::obtenerNombreUsuario($model->responsable_actualizacion) ,
-			),
+            'name'=>'madreRut',
+            'value'=>(isset($model->madreRut))?$model->madreRut->RutCompleto:""            
+        ),               
 			
 	),
 )); ?>

@@ -11,7 +11,7 @@ public function filters() {
 public function accessRules() {
     return array(
             array('allow', 
-                'actions'=>array('index','view','delete','create','update'),
+                'actions'=>array('index','view','delete','create','update','createDesdeAlumno'),
                 'roles'=>array('administrativo'),
                 ),          
             array('deny', 
@@ -47,6 +47,22 @@ public function accessRules() {
 		$this->layout = '//layouts/iframe';
 		$this->render('create', array( 'model' => $model));
 	}
+
+    public function actionCreateDesdeAlumno($rut) {
+        $model = new Encargados;
+
+        if (isset($_POST['Encargados'])) {
+            $model->setAttributes($_POST['Encargados']);
+
+            if ($model->save()) {
+                  //Cierra la venta Modal
+                 echo CHtml::script("parent.buscarRutApoderadoParaMostrar('".$rut."');");
+            }
+        }
+        //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';
+        $this->render('create', array('model' => $model,'rutDesdeAlumno'=>$rut));
+    }
 
 	public function actionUpdate($id) {
 		$model = $this->loadModel($id, 'Encargados');
@@ -121,8 +137,7 @@ public function accessRules() {
 			$concatenado = "null";
 		}
 
-        return  $concatenado;
-        
+        return  $concatenado;       
         
 	}
 }

@@ -79,7 +79,7 @@ function actualizarSRCIframe(id){
 		url=$(id).attr('href');
 	}
     $('#iframeModal').html('<iframe  src="'+url+'" height="100%" width="100%" scrolling="no" frameborder="0"></iframe>');
-    $('#iframeModal').show('slow');
+    $('#iframeModal').show();
 }
 
 
@@ -557,7 +557,7 @@ function mostrarComentarios(bandera, id, b)
 	function obtenerNombreEncargado(rut,visualizar){
 	
 		var action = baseURL + '/alumnos/obtenerNombreEncargado/'+rut;
-		
+		var bolean=false;
 		// se pide al action la lista de productos de la categoria seleccionada
 		$.getJSON(action, function(data) {
 			// limpiar 
@@ -567,7 +567,7 @@ function mostrarComentarios(bandera, id, b)
 			if(data!="null"){
 				
 				$('#'+visualizar).html(data);
-			
+				bolean=true;
 			}else{
 			
 				$('#'+visualizar).html("No se encuentran Datos para esté RUT");
@@ -576,7 +576,7 @@ function mostrarComentarios(bandera, id, b)
 				
 			});
 		
-		return false;
+		return bolean;
 	
 	}
 	function obtenerNombreAlumno(rut,visualizar){
@@ -652,8 +652,58 @@ function mostrarComentarios(bandera, id, b)
 			
 		return false;
 	}
+	//Al momento de almacenar el encargado se buscará el input desde donde llamamos a la funcion para guardarlo.
+	function buscarRutApoderadoParaMostrar(rutDesdeEncargado){
+		cerrarIframeDesdeEncargado();
+		var rut="";
+		var dv="";
+		var strSplit=rutDesdeEncargado.split('-');
+		if(strSplit[1]){
+			rut=strSplit[0];
+			dv=strSplit[1];
+		}
+		if($("#AlumnosApoderadoRut").val()==rut){
+			buscarApoderado('AlumnosApoderadoRut','AlumnosApoderadoDv','nombreApoderado');
+		}
+		if($("#AlumnosPadreRut").val()==rut){
+			buscarApoderado('AlumnosPadreRut','AlumnosPadreDv','nombrePadre');
+		}
+		if($("#AlumnosMadreRut").val()==rut){
+			buscarApoderado('AlumnosMadreRut','AlumnosMadreDv','nombreMadre');
+		}		
+	}
+	
+	function cerrarIframeDesdeEncargado(){
+		$('#iframeModal').hide('slow');
+		$('#formAlumnos').show('slow');
+		//AltoModaldentroDeModal();
+	}
+	
+	function abrirIframeDesdeAlumno(rutCompleto){
+		actualizarSRCIframe($('#urlSitioWeb').val()+'/encargados/createDesdeAlumno/'+rutCompleto);
+		$('#formAlumnos').hide();
+		$('#iframeModal').show();		
+	}
+	
+	function buscarApoderado(idRUT,idDV,visualizar){	
+		var idRUT=idRUT;
+		var idDV=idDV;
+		if(validarut($('#'+idRUT).val(),$('#'+idDV).val())){
+			if(!obtenerNombreEncargado($('#'+idRUT).val(),visualizar)){
+				jConfirm("El Rut no se encuentra ingresado como apoderado en el sistema, ¿Desea agregarlo?", "Confirmación de datos", function(r) {
+	        		if(r){	        			
+	        			abrirIframeDesdeAlumno(''+$('#'+idRUT).val()+'-'+$('#'+idDV).val());
+	        		}
+				});
+			}
+		}else{
+			alert('Debe ingresar un RUT valido.');
+		}		
+		return false;
+	}
 	
 	
+		
 	function obtenerMatriculaAlumno(rut,visualizar)
 	{
 	

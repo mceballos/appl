@@ -52,20 +52,20 @@ $this->widget('zii.widgets.CMenu', array(
         ),
         array(
             'name'=>'rut',
-            'value'=>$model->rut
-        ),        
+            'value'=>'$data->RutCompleto'            
+        ),      
         //'dv',
         'nombre',
         'apellido_paterno',
         'apellido_materno',
         'fecha_nacimiento',
         'telefono_particular',
-        'correo_electronico',
-        array(
+        //'correo_electronico',
+        /*array(
                 'name'=>'apoderado_rut',
                 'value'=>'GxHtml::valueEx($data->apoderadoRut)',
                 'filter'=>GxHtml::listDataEx(Encargados::model()->findAllAttributes(null, true)),
-        ),
+        ),*/
         /*
         'lugar_nacimiento',
         'vive_con',
