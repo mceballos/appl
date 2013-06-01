@@ -11,23 +11,11 @@ class SiteController extends GxController
         return array(
                 array('allow',
                     'actions'=>array('index', 'view', 'login'),
-                    'users'=>array('*'),
+                    'roles'=>array('*'),
                     ),
                 array('allow',
-                    'actions'=>array('profile', 'logout', 'changepassword', 'passwordexpired', 'delete', 'browse'),
-                    'users'=>array('@'),
-                    ),
-                array('allow',
-                    'actions'=>array('admin','delete','create','update', 'list', 'assign', 'generateData', 'csv'),
-                    'expression' => 'Yii::app()->user->isAdmin()'
-                    ),
-                array('allow',
-                    'actions'=>array('create'),
-                    'expression' => 'Yii::app()->user->can("user_create")'
-                    ),
-                array('allow',
-                    'actions'=>array('admin'),
-                    'expression' => 'Yii::app()->user->can("user_admin")'
+                    'actions'=>array('profile', 'logout', /*'changepassword', 'passwordexpired', 'delete'*/ 'browse'),
+                    'roles'=>array('@'),
                     ),
                 array('deny',  // deny all other users
                         'users'=>array('*'),

@@ -39,7 +39,7 @@
                         'class'=>'btn-small update formIframe',
                         'onclick'=>'actualizarSRCIframe(this);return false;',
                     ),
-                    'visible'=>'(!isset($data->pagoses[0]))'
+                    'visible'=>'(!isset($data->pagoses[0]))&&(Yii::app()->user->checkAccessChangeData("update"))'
                 ),
                 'view' => array(         
                     'url'=>'$this->grid->controller->createUrl("/pagos/view/", array("id"=>$data->primaryKey))',           
