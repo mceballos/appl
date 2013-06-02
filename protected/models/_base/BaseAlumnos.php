@@ -195,7 +195,9 @@ abstract class BaseAlumnos extends GxActiveRecord {
         }else{
             return false;
         }
-        
+        if($rut==null || $rut==""){
+            return true;
+        }
         $validar=Encargados::model()->findAll(array('condition'=>'estado=1 AND rut='.$rut));
         if(isset($validar[0])){
             return true;

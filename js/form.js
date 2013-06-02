@@ -557,27 +557,22 @@ function mostrarComentarios(bandera, id, b)
 	function obtenerNombreEncargado(rut,visualizar){
 	
 		var action = baseURL + '/alumnos/obtenerNombreEncargado/'+rut;
-		var bolean=false;
+		
 		// se pide al action la lista de productos de la categoria seleccionada
 		$.getJSON(action, function(data) {
 			// limpiar 
+			var bolean=false;
 			$('#'+visualizar).html("");
-		
-			
-			if(data!="null"){
-				
+			if(data!="null"){				
 				$('#'+visualizar).html(data);
 				bolean=true;
-			}else{
-			
-				$('#'+visualizar).html("No se encuentran Datos para esté RUT");
+			}else{			
+				$('#'+visualizar).html("<span class='error'>No se encuentran Datos para el RUT ingresado</span>");
 			}		
+			return bolean;
 		}).error(function(e){ 
-				
+			return false;
 			});
-		
-		return bolean;
-	
 	}
 	function obtenerNombreAlumno(rut,visualizar){
 	
@@ -688,14 +683,30 @@ function mostrarComentarios(bandera, id, b)
 	function buscarApoderado(idRUT,idDV,visualizar){	
 		var idRUT=idRUT;
 		var idDV=idDV;
+		var visualizar=visualizar;
 		if(validarut($('#'+idRUT).val(),$('#'+idDV).val())){
-			if(!obtenerNombreEncargado($('#'+idRUT).val(),visualizar)){
-				jConfirm("El Rut no se encuentra ingresado como apoderado en el sistema, ¿Desea agregarlo?", "Confirmación de datos", function(r) {
-	        		if(r){	        			
-	        			abrirIframeDesdeAlumno(''+$('#'+idRUT).val()+'-'+$('#'+idDV).val());
-	        		}
-				});
-			}
+			//obtenerNombreEncargado($('#'+idRUT).val(),visualizar)
+			var action = baseURL + '/alumnos/obtenerNombreEncargado/'+$('#'+idRUT).val();
+			$('#'+visualizar).html("");
+			// se pide al action la lista de productos de la categoria seleccionada
+			$.getJSON(action, function(data) {
+				// limpiar 
+					if(data!="null"){				
+						$('#'+visualizar).html(data);
+					}else{			
+						$('#'+visualizar).html("<span class='error'>No se encuentran Datos para el RUT ingresado</span>");
+						jConfirm("El Rut no se encuentra ingresado como apoderado en el sistema, ¿Desea agregarlo?", "Confirmación de datos", function(r) {
+			        		if(r){	        			
+			        			abrirIframeDesdeAlumno(''+$('#'+idRUT).val()+'-'+$('#'+idDV).val());
+			        		}
+						});
+					}	
+			}).error(function(e){ 
+			
+			});
+			
+				
+			
 		}else{
 			alert('Debe ingresar un RUT valido.');
 		}		

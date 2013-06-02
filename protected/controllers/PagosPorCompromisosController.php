@@ -83,7 +83,6 @@ public function accessRules() {
                 }
 				//Cierra la venta Modal
 				echo CHtml::script("parent.cerrarModal();");
-				//echo CHtml::script("parent.location.reload();");
 				//$this->redirect(array('view', 'id' => $model->id));
 			}
 		}

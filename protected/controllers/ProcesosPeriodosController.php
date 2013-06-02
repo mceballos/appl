@@ -62,8 +62,7 @@ public function accessRules() {
 
 			if ($model->save()) {
 				//Cierra la venta Modal
-				//echo CHtml::script("parent.cerrarModal();");
-				echo CHtml::script("parent.location.reload();");
+				echo CHtml::script("parent.cerrarModal();");
 				//$this->redirect(array('view', 'id' => $model->alumno_rut));
 			}
 		}
