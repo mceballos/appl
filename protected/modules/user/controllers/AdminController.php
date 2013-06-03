@@ -6,7 +6,8 @@ class AdminController extends Controller
         public $layout='//layouts/column2';
        
         private $_model;
-
+        
+        
         /**
          * @return array action filters
          */
@@ -26,7 +27,7 @@ class AdminController extends Controller
                 return array(
                     array('allow', // allow admin user to perform 'admin' and 'delete' actions
                             'actions'=>array('admin','delete','create','update','view'),
-                            'roles'=>array('admin'),
+                            'roles'=>array('director'),
                     ),
                     array('deny',  // deny all users
                             'users'=>array('*'),

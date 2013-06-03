@@ -11,11 +11,11 @@ public function filters() {
 public function accessRules() {
     return array(
            array('allow', 
-                'actions'=>array('delete','create','update'),
+                'actions'=>array('delete','update'),
                 'roles'=>array('director'),
                 ),
             array('allow', 
-                'actions'=>array('index','view','obtenerMatriculaAlumno'),
+                'actions'=>array('index','view','obtenerMatriculaAlumno','create'),
                 'roles'=>array('administrativo'),
                 ),
             array('deny', 
