@@ -43,12 +43,7 @@ array(
 			),
 'estudios_superiores_anios',
 'ocupacion',
-'fecha_actualizacion',
-array(
-			'name' => 'responsable_actualizacion',
-			'type' => 'raw',
-			'value' => EncargadosController::obtenerNombreUsuario($model->responsable_actualizacion) ,
-),			
+'fecha_actualizacion',	
 	),
 )); ?>
 

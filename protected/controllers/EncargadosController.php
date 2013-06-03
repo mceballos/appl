@@ -3,29 +3,21 @@
 class EncargadosController extends GxController {
 
 public function filters() {
-	return array(
-			'accessControl', 
-			);
+    return array(
+            'accessControl', 
+            );
 }
 
 public function accessRules() {
-	return array(
-			array('allow',
-				'actions'=>array('index','view','ver'),
-				'users'=>array('*'),
-				),
-			array('allow', 
-				'actions'=>array('minicreate', 'create','update'),
-				'users'=>array('@'),
-				),
-			array('allow', 
-				'actions'=>array('admin','delete','deleteIndex'),
-				'users'=>array('admin'),
-				),
-			array('deny', 
-				'users'=>array('*'),
-				),
-			);
+    return array(
+            array('allow', 
+                'actions'=>array('index','view','delete','create','update','createDesdeAlumno'),
+                'roles'=>array('administrativo'),
+                ),          
+            array('deny', 
+                'users'=>array('*'),
+                ),
+            );
 }
 
 	public function actionView($id) {
@@ -56,6 +48,22 @@ public function accessRules() {
 		$this->render('create', array( 'model' => $model));
 	}
 
+    public function actionCreateDesdeAlumno($rut) {
+        $model = new Encargados;
+
+        if (isset($_POST['Encargados'])) {
+            $model->setAttributes($_POST['Encargados']);
+
+            if ($model->save()) {
+                  //Cierra la venta Modal
+                 echo CHtml::script("parent.buscarRutApoderadoParaMostrar('".$rut."');");
+            }
+        }
+        //Para mostrar en la ventana modal solo el content
+        $this->layout = '//layouts/iframe';
+        $this->render('create', array('model' => $model,'rutDesdeAlumno'=>$rut));
+    }
+
 	public function actionUpdate($id) {
 		$model = $this->loadModel($id, 'Encargados');
 
@@ -65,8 +73,7 @@ public function accessRules() {
 
 			if ($model->save()) {
 				//Cierra la venta Modal
-				//echo CHtml::script("parent.cerrarModal();");
-				echo CHtml::script("parent.location.reload();");
+				echo CHtml::script("parent.cerrarModal();");
 				//$this->redirect(array('view', 'id' => $model->rut));
 			}
 		}
@@ -129,8 +136,7 @@ public function accessRules() {
 			$concatenado = "null";
 		}
 
-        return  $concatenado;
-        
+        return  $concatenado;       
         
 	}
 }

@@ -3,29 +3,21 @@
 class PagosPorCompromisosController extends GxController {
 
 public function filters() {
-	return array(
-			'accessControl', 
-			);
+    return array(
+            'accessControl', 
+            );
 }
 
 public function accessRules() {
-	return array(
-			array('allow',
-				'actions'=>array('index','view','ver'),
-				'users'=>array('*'),
-				),
-			array('allow', 
-				'actions'=>array('minicreate', 'create','update'),
-				'users'=>array('@'),
-				),
-			array('allow', 
-				'actions'=>array('admin','delete','deleteIndex'),
-				'users'=>array('admin'),
-				),
-			array('deny', 
-				'users'=>array('*'),
-				),
-			);
+    return array(
+            array('allow', 
+                'actions'=>array('index','view','update'),
+                'roles'=>array('administrativo'),
+                ),          
+            array('deny', 
+                'users'=>array('*'),
+                ),
+            );
 }
 
 	public function actionView($id) {
@@ -91,7 +83,6 @@ public function accessRules() {
                 }
 				//Cierra la venta Modal
 				echo CHtml::script("parent.cerrarModal();");
-				//echo CHtml::script("parent.location.reload();");
 				//$this->redirect(array('view', 'id' => $model->id));
 			}
 		}

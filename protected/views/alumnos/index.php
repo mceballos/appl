@@ -31,6 +31,7 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php
+if(Yii::app()->user->checkAccessChangeData("create"))
 $this->widget('zii.widgets.CMenu', array(
                     'items'=>array(array('label'=>'Agregar', 'url'=>array('create'))),
                     'htmlOptions'=>array('class'=>'MenuOperations'),
@@ -51,20 +52,20 @@ $this->widget('zii.widgets.CMenu', array(
         ),
         array(
             'name'=>'rut',
-            'value'=>$model->rut
-        ),        
+            'value'=>'$data->RutCompleto'            
+        ),      
         //'dv',
         'nombre',
         'apellido_paterno',
         'apellido_materno',
         'fecha_nacimiento',
         'telefono_particular',
-        'correo_electronico',
-        array(
+        //'correo_electronico',
+        /*array(
                 'name'=>'apoderado_rut',
                 'value'=>'GxHtml::valueEx($data->apoderadoRut)',
                 'filter'=>GxHtml::listDataEx(Encargados::model()->findAllAttributes(null, true)),
-        ),
+        ),*/
         /*
         'lugar_nacimiento',
         'vive_con',
@@ -114,6 +115,7 @@ $this->widget('zii.widgets.CMenu', array(
                     'options'=>array(
                         'class'=>'btn-small update'
                     )
+                    ,'visible'=>'Yii::app()->user->checkAccessChangeData("update")',
                 ),
                 'view' => array(                    
                     'options'=>array(
@@ -124,6 +126,7 @@ $this->widget('zii.widgets.CMenu', array(
                     'options'=>array(
                         'class'=>'btn-small delete'
                     )
+                    ,'visible'=>'Yii::app()->user->checkAccessChangeData("delete")',
                 )
             ),
             'htmlOptions'=>array('style'=>'width: 80px'),

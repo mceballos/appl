@@ -89,7 +89,7 @@ $('.search-form form').submit(function(){
                 'update' => array(                    
                     'options'=>array(
                         'class'=>'btn-small update'
-                    ),                  
+                    ),'visible'=>'Yii::app()->user->checkAccessChangeData("update")',                 
                 )
             ),
             'htmlOptions'=>array('style'=>'width: 80px'),

@@ -3,7 +3,7 @@
 ?>
 
 <div class="content">
-<div class="form">
+<div id="formAlumnos" class="form">
 <h3> <?php echo $titulo; ?></h3>
 <?php $form = $this->beginWidget('GxActiveForm', array(
 	'id' => 'alumnos-form',
@@ -257,30 +257,39 @@
 
 		<div class="fieldset2">
 		<div class="legend">Responsables</div>
+		<label style="color: #888888;font-size: 11px;"> * Para poder validar el Rut de un responsable y posteriormente almacenarlo, es necesario presionar el icono de lupa que se encuentra a un costado del digito verificador</label>
 		<table width="100%" border="0" cellspacing="5" cellpadding="5">
 		<tr>
 			<td align="left" style="width: 130px;">	
 				<?php echo $form->labelEx($model,'apoderado_rut'); ?>
 			</td>
 			<td>	
-				<?php 
-					//echo $form->dropDownList($model, 'apoderado_rut', GxHtml::listDataEx(Encargados::model()->findAll(array('condition'=>'estado=1')))); 
-					echo $form->textField($model, 'apoderado_rut',array('maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeypress'=>'validarRutEnter(event,this.value,"nombreApoderado")'));
+				<?php					 
+					//echo $form->textField($model, 'apoderado_rut',array('maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeypress'=>'validarRutEnter(event,this.value,"nombreApoderado")'));
+				    if($model->isNewRecord){                  
+                        echo '<input id="AlumnosApoderadoRut" name="Alumnos[apoderado_rut]" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosApoderadoDv" name="Alumnos[apoderado_dv]" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosApoderadoRut\',\'AlumnosApoderadoDv\',\'nombreApoderado\'); return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
+                    }else{
+                        if(isset($model->apoderadoRut)){
+                            echo '<input id="AlumnosApoderadoRut" name="Alumnos[apoderado_rut]" value="'.$model->apoderadoRut->rut.'" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosApoderadoDv" name="Alumnos[apoderado_dv]" value="'.$model->apoderadoRut->dv.'" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosApoderadoRut\',\'AlumnosApoderadoDv\',\'nombreApoderado\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
+                        }else{                            
+                            echo '<input id="AlumnosApoderadoRut" name="Alumnos[apoderado_rut]" value="" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosApoderadoDv" name="Alumnos[apoderado_dv]" value="" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosApoderadoRut\',\'AlumnosApoderadoDv\',\'nombreApoderado\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';    
+                        }
+                        
+                    }
 				?>
 				
-				<strong id='nombreApoderado'>Ej:10341341</strong>
+				<strong id='nombreApoderado'>Ej:10341341-1</strong>
 				<?php 
-					if ($model->apoderado_rut){
-						$rut_ = $model->apoderado_rut;
-						
-						//EncargadosController::obtenerNombreUsuario($userID)
-						echo "<script>$('#nombreApoderado').html('".EncargadosController::obtenerNombreEncargadoTexto($rut_)."');</script>";
+					if (isset($model->apoderado_rut)){
+						$rut_ = $model->apoderado_rut;						
+						$nombre=EncargadosController::obtenerNombreEncargadoTexto($rut_);
+                        if($nombre!="null")
+						  echo "<script>$('#nombreApoderado').html('".$nombre."');</script>";
 					}
-				?>
-				<!-- Obtener por medio de un json el nombre del rut asociado -->
-				<div id="nombreApoderado"></div>
+				?>				
+				
 					<?php echo $form->error($model,'apoderado_rut'); ?>
-				</div><!-- row -->
+				
 			</td>
 		</tr>
 		<tr>	
@@ -289,15 +298,25 @@
 			</td>
 			<td>					
 				<?php 
-					echo $form->textField($model, 'padre_rut',array('maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeypress'=>'validarRutEnter(event,this.value,"nombrePadre")'));
-
+					//echo $form->textField($model, 'padre_rut',array('maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeypress'=>'validarRutEnter(event,this.value,"nombrePadre")'));
+                    if($model->isNewRecord){                  
+                        echo '<input id="AlumnosPadreRut" name="Alumnos[padre_rut]" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosPadreDv" name="Alumnos[padre_dv]" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosPadreRut\',\'AlumnosPadreDv\',\'nombrePadre\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
+                    }else{
+                        if(isset($model->padreRut)){
+                            echo '<input id="AlumnosPadreRut" name="Alumnos[padre_rut]" value="'.$model->padreRut->rut.'" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosPadreDv" name="Alumnos[padre_dv]" value="'.$model->padreRut->dv.'" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosPadreRut\',\'AlumnosPadreDv\',\'nombrePadre\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';    
+                        }else{
+                            echo '<input id="AlumnosPadreRut" name="Alumnos[padre_rut]" value="" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosPadreDv" name="Alumnos[padre_dv]" value="" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosPadreRut\',\'AlumnosPadreDv\',\'nombrePadre\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
+                        }                        
+                    }
 					?>
-				<strong id='nombrePadre'>Ej:10341341</strong>
+				<strong id='nombrePadre'>Ej:10341341-1</strong>
 				<?php 
-					if ($model->padre_rut){
+					if (isset($model->padre_rut)){
 						$rut_ = $model->padre_rut;
-						//EncargadosController::obtenerNombreUsuario($userID)
-						echo "<script>$('#nombrePadre').html('".EncargadosController::obtenerNombreEncargadoTexto($rut_)."');</script>";
+						$nombre=EncargadosController::obtenerNombreEncargadoTexto($rut_);
+                        if($nombre!="null")
+                          echo "<script>$('#nombrePadre').html('".$nombre."');</script>";
+						
 					}
 					
 				echo $form->error($model,'padre_rut'); ?>
@@ -309,13 +328,28 @@
 				<?php echo $form->labelEx($model,'madre_rut'); ?>
 			</td>
 			<td>					
-				<?php echo $form->textField($model, 'madre_rut',array('maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeypress'=>'validarRutEnter(event,this.value,"nombreMadre")'));?>
-				<strong id='nombreMadre'>Ej:10341341</strong>
 				<?php 
-					if ($model->madre_rut){
+				    //echo $form->textField($model, 'madre_rut',array('maxlength' => 8,'size'=>10,'onkeydown'=>'validarNumeros(event)','onkeypress'=>'validarRutEnter(event,this.value,"nombreMadre")'));
+				    if($model->isNewRecord){                  
+                        echo '<input id="AlumnosMadreRut" name="Alumnos[madre_rut]" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosMadreDv" name="Alumnos[madre_dv]" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosMadreRut\',\'AlumnosMadreDv\',\'nombreMadre\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
+                    }else{
+                        if(isset($model->madreRut)){
+                            echo '<input id="AlumnosMadreRut" name="Alumnos[madre_rut]" value="'.$model->madreRut->rut.'" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosMadreDv" name="Alumnos[madre_dv]" value="'.$model->madreRut->dv.'" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosMadreRut\',\'AlumnosMadreDv\',\'nombreMadre\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';
+                        }else{
+                            echo '<input id="AlumnosMadreRut" name="Alumnos[madre_rut]" value="" type="text"  onkeydown="validarNumeros(event)" size="10" maxlength="8" style="width: 135px;">- <input id="AlumnosMadreDv" name="Alumnos[madre_dv]" value="" type="text" size="2" maxlength="1"/><a href="#" onclick="buscarApoderado(\'AlumnosMadreRut\',\'AlumnosMadreDv\',\'nombreMadre\');return false;" rel="tooltip" class="btn-small find" data-original-title="Buscar"><i class="icon-search"></i></a>';    
+                        }
+                        
+                    }
+				    
+				    ?>
+				<strong id='nombreMadre'>Ej:10341341-1</strong>
+				<?php 
+					if(isset($model->madre_rut)){
 						$rut_ = $model->madre_rut;
-						//EncargadosController::obtenerNombreUsuario($userID)
-						echo "<script>$('#nombreMadre').html('".EncargadosController::obtenerNombreEncargadoTexto($rut_)."');</script>";
+						$nombre=EncargadosController::obtenerNombreEncargadoTexto($rut_);
+                        if($nombre!="null")
+                          echo "<script>$('#nombreMadre').html('".$nombre."');</script>";
+						
 					}
 					echo $form->error($model,'madre_rut'); 
 				?>
@@ -331,5 +365,10 @@ $this->endWidget();
 ?>
 <div class="limpia"></div>
 </div><!-- form -->
+<div id="iframeModal" style="display:none;height: 461px;">
+    <iframe width="100%" height="100%" frameborder="0" scrolling="no">
+        
+    </iframe>
+</div>
 <div class="limpia"></div>
 </div>

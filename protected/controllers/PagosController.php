@@ -2,6 +2,23 @@
 
 class PagosController extends GxController {
 
+public function filters() {
+    return array(
+            'accessControl', 
+            );
+}
+
+public function accessRules() {
+    return array(
+            array('allow', 
+                'actions'=>array('index','view','update','comprobante'),
+                'roles'=>array('administrativo'),
+                ),          
+            array('deny', 
+                'users'=>array('*'),
+                ),
+            );
+}
 
 	public function actionView($id) {
 	    //El id es del Detalle del compromiso
@@ -77,7 +94,7 @@ class PagosController extends GxController {
 		
 	}
 
-	public function actionDelete($id) {
+	/*public function actionDelete($id) {
 		if (Yii::app()->getRequest()->getIsPostRequest()) {
 			$this->loadModel($id, 'Pagos')->delete();
 
@@ -85,7 +102,7 @@ class PagosController extends GxController {
 				$this->redirect(array('admin'));
 		} else
 			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
-	}
+	}*/
 	
 	
 	public function actionIndex() {

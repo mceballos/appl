@@ -29,15 +29,13 @@
  * @property string $tratamiento_medico
  * @property string $alergico_medicamento
  * @property integer $num_hermanos_en_establecimiento
- * @property string $fecha_actualizacion
- * @property integer $responsable_actualizacion
+ * @property string $fecha_actualizacion 
  * @property integer $estado
  * @property integer $apoderado_rut
  * @property integer $padre_rut
  * @property integer $madre_rut
  * @property string $rut_serie
- *
- * @property Users $responsableActualizacion
+  
  * @property Comuna $comuna
  * @property Encargados $apoderadoRut
  * @property Encargados $madreRut
@@ -64,8 +62,8 @@ abstract class BaseAlumnos extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('rut,dv, nombre, apellido_paterno, apellido_materno, fecha_nacimiento, responsable_actualizacion, apoderado_rut,vive_con,direccion_particular,comuna_id', 'required'),
-			array('rut, comuna_id, num_hermanos_en_establecimiento, responsable_actualizacion, estado, apoderado_rut, padre_rut, madre_rut', 'numerical', 'integerOnly'=>true),
+			array('rut,dv, nombre, apellido_paterno, apellido_materno, fecha_nacimiento, apoderado_rut,vive_con,direccion_particular,comuna_id', 'required'),
+			array('rut, comuna_id, num_hermanos_en_establecimiento, estado, apoderado_rut, padre_rut, madre_rut', 'numerical', 'integerOnly'=>true),
 			array('dv', 'length', 'max'=>1),
 			array('nombre, direccion_particular, villa_poblacion, colegio_proveniente, tratamiento_medico, alergico_medicamento', 'length', 'max'=>200),
 			array('apellido_paterno, apellido_materno, lugar_nacimiento, vive_con, nombre_isapre,ciudad_colegio', 'length', 'max'=>50),
@@ -75,14 +73,20 @@ abstract class BaseAlumnos extends GxActiveRecord {
 			array('fecha_nacimiento', 'type', 'type' => 'date', 'message' => '{attribute}: No es correcto!', 'dateFormat' => 'yyyy-mm-dd'),//yyyy-mm-dd / dd-mm-yyyy
 			array('correo_electronico', 'email','checkMX'=>true), 
 			array('rut, lugar_nacimiento, vive_con, direccion_particular, villa_poblacion, comuna_id, telefono_particular, correo_electronico, colegio_proveniente, ciudad_colegio, nombre_isapre, fonasa_tramo, tratamiento_medico, alergico_medicamento, num_hermanos_en_establecimiento, estado, padre_rut, madre_rut, rut_serie', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('rut, dv, nombre, apellido_paterno, apellido_materno, fecha_nacimiento, lugar_nacimiento, vive_con, direccion_particular, villa_poblacion, comuna_id, telefono_particular, correo_electronico, colegio_proveniente, ciudad_colegio, nombre_isapre, fonasa_tramo, tratamiento_medico, alergico_medicamento, num_hermanos_en_establecimiento, fecha_actualizacion, responsable_actualizacion, estado, apoderado_rut, padre_rut, madre_rut, rut_serie', 'safe', 'on'=>'search'),
-			array('rut','unique','message'=>'{attribute} : {value}  se encuentra registrado en la base de datos !!!'),
+			array('rut, dv, nombre, apellido_paterno, apellido_materno, fecha_nacimiento, lugar_nacimiento, vive_con, direccion_particular, villa_poblacion, comuna_id, telefono_particular, correo_electronico, colegio_proveniente, ciudad_colegio, nombre_isapre, fonasa_tramo, tratamiento_medico, alergico_medicamento, num_hermanos_en_establecimiento, fecha_actualizacion, estado, apoderado_rut, padre_rut, madre_rut, rut_serie', 'safe', 'on'=>'search'),
+			array('rut','unique','message'=>'{attribute} : {value}  ya se encuentra en nuestros registros. Favor ingrese otro Rut'),
+			array('rut', 'checkRut','message'=>'El Rut ingresado no es valido. Ej:123456789-0'),
+			array('apoderado_rut', 'checkRut','message'=>'El Rut ingresado no es valido. Ej:123456789-0'),
+			array('padre_rut', 'checkRut','message'=>'El Rut ingresado no es valido. Ej:123456789-0'),
+			array('madre_rut', 'checkRut','message'=>'El Rut ingresado no es valido. Ej:123456789-0'),
+			array('apoderado_rut', 'checkRutAsEncargado','message'=>'El Rut ingresado no se encuentra almacenado en nuestros registros. Favor ingreselo previamente'),
+            array('padre_rut', 'checkRutAsEncargado','message'=>'El Rut ingresado no se encuentra almacenado en nuestros registros. Favor ingreselo previamente'),
+            array('madre_rut', 'checkRutAsEncargado','message'=>'El Rut ingresado no se encuentra almacenado en nuestros registros. Favor ingreselo previamente'),
 		);
 	}
 
 	public function relations() {
-		return array(
-			//'responsableActualizacion' => array(self::BELONGS_TO, 'Users', 'responsable_actualizacion'),
+		return array(			
 			'comuna' => array(self::BELONGS_TO, 'Comuna', 'comuna_id','condition' => 'comuna.estado = 1'),
 			'apoderadoRut' => array(self::BELONGS_TO, 'Encargados', 'apoderado_rut','condition' => 'apoderadoRut.estado = 1'),
 			'madreRut' => array(self::BELONGS_TO, 'Encargados', 'madre_rut','condition' => 'madreRut.estado = 1'),
@@ -118,14 +122,12 @@ abstract class BaseAlumnos extends GxActiveRecord {
 			'tratamiento_medico' => Yii::t('app', 'Tratamiento Medico'),
 			'alergico_medicamento' => Yii::t('app', 'Alergico Medicamento'),
 			'num_hermanos_en_establecimiento' => Yii::t('app', 'Número De  Hermanos En El Establecimiento'),
-			'fecha_actualizacion' => Yii::t('app', 'Fecha Actualizacion'),
-			'responsable_actualizacion' => null,
+			'fecha_actualizacion' => Yii::t('app', 'Fecha Actualizacion'),			
 			'estado' => Yii::t('app', 'Estado'),
 			'apoderado_rut' => Yii::t('app', 'Rut Apoderado'),
 			'padre_rut' => Yii::t('app', 'Rut Padre'),
 			'madre_rut' => Yii::t('app', 'Rut Madre'),
-			'rut_serie' => Yii::t('app', 'Rut Serie'),
-			//'responsableActualizacion' => null,
+			'rut_serie' => Yii::t('app', 'Rut Serie'),			
 			'comuna' => null,
 			'apoderadoRut' =>  Yii::t('app', 'Rut Apoderado'),
 			'madreRut' => Yii::t('app', 'Rut Madre'),
@@ -157,8 +159,7 @@ abstract class BaseAlumnos extends GxActiveRecord {
 		$criteria->compare('tratamiento_medico', $this->tratamiento_medico, true);
 		$criteria->compare('alergico_medicamento', $this->alergico_medicamento, true);
 		$criteria->compare('num_hermanos_en_establecimiento', $this->num_hermanos_en_establecimiento);
-		$criteria->compare('fecha_actualizacion', $this->fecha_actualizacion, true);
-		$criteria->compare('responsable_actualizacion', $this->responsable_actualizacion);
+		$criteria->compare('fecha_actualizacion', $this->fecha_actualizacion, true);		
 		$criteria->compare('estado', 1);
 		$criteria->compare('apoderado_rut', $this->apoderado_rut);
 		$criteria->compare('padre_rut', $this->padre_rut);
@@ -181,4 +182,95 @@ abstract class BaseAlumnos extends GxActiveRecord {
     public function getRutNombre(){
         return $this->apellido_paterno.' '.$this->apellido_materno.' '.$this->nombre.' ('.$this->rut.'-'.$this->dv.')';           
     }
+    
+    
+    public function checkRutAsEncargado($attribute,$params){
+        $rut=null;
+        if($attribute=="apoderado_rut"){
+            $rut=$this->apoderado_rut;
+        }else if($attribute=="madre_rut"){
+            $rut=$this->madre_rut;
+        }else if($attribute=="padre_rut"){
+            $rut=$this->padre_rut;
+        }else{
+            return false;
+        }
+        if($rut==null || $rut==""){
+            return true;
+        }
+        $validar=Encargados::model()->findAll(array('condition'=>'estado=1 AND rut='.$rut));
+        if(isset($validar[0])){
+            return true;
+        }else{
+            if(!$this->hasErrors($attribute))
+                    $this->addError($attribute, $params['message']);
+            return false;
+        }        
+    }
+    
+    public function checkRut($attribute,$params){        
+        $rut=null;
+        $digito_verificador=null;//$this->DV;
+        if(isset($_POST['Alumnos']) && $attribute=="rut"){
+            if(isset($_POST['Alumnos']['dv'])){
+                $rut=$this->rut;
+                if(!is_null($_POST['Alumnos']['dv'])){
+                    $digito_verificador=$_POST['Alumnos']['dv'];
+                }
+            }
+        }else if(isset($_POST['Alumnos']) && $attribute=="apoderado_rut"){
+            if(isset($_POST['Alumnos']['apoderado_dv'])){
+                $rut=$this->apoderado_rut;
+                if(!is_null($_POST['Alumnos']['apoderado_dv'])){
+                    $digito_verificador=$_POST['Alumnos']['apoderado_dv'];
+                }
+            }
+        }else if(isset($_POST['Alumnos']) && $attribute=="madre_rut"){
+            if(isset($_POST['Alumnos']['madre_dv'])){
+                $rut=$this->madre_rut;
+                if(!is_null($_POST['Alumnos']['madre_dv'])){
+                    $digito_verificador=$_POST['Alumnos']['madre_dv'];
+                }
+            }
+        }else if(isset($_POST['Alumnos']) && $attribute=="padre_rut"){
+            if(isset($_POST['Alumnos']['padre_dv'])){
+                $rut=$this->padre_rut;
+                if(!is_null($_POST['Alumnos']['padre_dv'])){
+                    $digito_verificador=$_POST['Alumnos']['padre_dv'];
+                }
+            }
+        }
+        if($rut==null){
+            return true;
+        }
+        /* Preparar dígito verificador */
+          $digito_ingresado = strtoupper($digito_verificador);
+          $posibles_valores = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'K');         
+          /* Sólo si $rut es natural y $digito_ingresado está en $posibles_valores */
+          if ($rut > 0 && in_array($digito_ingresado, $posibles_valores)){
+            /* Calcular el digito verificador del rut ingresado */
+            $d = 1;
+            for ($x = 0; $rut != 0; $rut /= 10)
+              $d = ($d + $rut % 10 * (9 - $x++ % 6)) % 11;
+            
+            
+            $digito_calculado = chr($d ? $d + 47 : 75);
+            
+            /* Comparar el digito ingresado con el digito calculado */
+            if ($digito_calculado == $digito_ingresado){
+                //return true;
+            } else{
+              /* el digito ingresado es incorrecto */
+              //return false;
+              if(!$this->hasErrors($attribute))
+                    $this->addError($attribute, $params['message']);
+            }
+          } else{
+            /* $rut no es natural o bien $digito_ingresado no está en $posibles_valores */
+            //return false;
+            if(!$this->hasErrors($attribute))
+                    $this->addError($attribute, $params['message']);
+          }
+    }
+    
 }

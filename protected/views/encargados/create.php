@@ -14,10 +14,18 @@ $this->menu = array(
 
 <?php
 $titulo= Yii::t('app', 'Create') . ' ' . GxHtml::encode($model->label());
+if(isset($rutDesdeAlumno)){
+    $this->renderPartial('_form', array(
+        'model' => $model,
+        'buttons' => 'create',
+        'titulo'=>$titulo,'rutDesdeAlumno'=>$rutDesdeAlumno
+        ));
+}else{
+    $this->renderPartial('_form', array(
+        'model' => $model,
+        'buttons' => 'create',
+        'titulo'=>$titulo
+        ));
+}
 
-$this->renderPartial('_form', array(
-		'model' => $model,
-		'buttons' => 'create',
-		'titulo'=>$titulo
-		));
 ?>

@@ -7,30 +7,24 @@ class ReportesController extends GxController
 	
 
 public function filters() {
-	return array(
-			'accessControl', 
-			);
+    return array(
+            'accessControl', 
+            );
 }
 
-	public function accessRules() {
-		return array(
-				array('allow',
-					'actions'=>array('index,alumnosCurso'),
-					'users'=>array('*'),
-					),
-				array('allow', 
-					'actions'=>array(),
-					'users'=>array('@'),
-					),
-				array('allow', 
-					'actions'=>array(),
-					'users'=>array('admin'),
-					),
-				array('deny', 
-					'users'=>array('*'),
-					),
-				);
-	}	
+public function accessRules() {
+    return array(
+            array('allow', 
+                'actions'=>array('index','alumnosCurso'),
+                'roles'=>array('administrativo'),
+                ),          
+            array('deny', 
+                'users'=>array('*'),
+                ),
+            );
+}
+
+
 
 	/**
 	 * This is the default 'index' action that is invoked

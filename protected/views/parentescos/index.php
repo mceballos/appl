@@ -31,6 +31,7 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php
+if(Yii::app()->user->checkAccessChangeData("create"))
 $this->widget('zii.widgets.CMenu', array(
                     'items'=>array(array('label'=>'Agregar', 'url'=>array('create'))),
                     'htmlOptions'=>array('class'=>'MenuOperations'),
@@ -64,12 +65,12 @@ $this->widget('zii.widgets.CMenu', array(
                 'update' => array(                    
                     'options'=>array(
                         'class'=>'btn-small update'
-                    )
+                    ),'visible'=>'Yii::app()->user->checkAccessChangeData("update")',
                 ),
                 'delete' => array(                    
                     'options'=>array(
                         'class'=>'btn-small delete'
-                    )
+                    ),'visible'=>'Yii::app()->user->checkAccessChangeData("delete")',
                 )
             ),
             'htmlOptions'=>array('style'=>'width: 80px'),

@@ -10,18 +10,14 @@ public function filters() {
 
 public function accessRules() {
 	return array(
-			array('allow',
-				'actions'=>array('index','view','ver','obtenerNombreEncargadoTexto'),
-				'users'=>array('*'),
-				),
+	       array('allow', 
+                'actions'=>array('delete','create','update'),
+                'roles'=>array('administrativo'),
+                ),
 			array('allow', 
-				'actions'=>array('minicreate', 'create','update','obtenerNombreEncargado','obtenerNombreAlumno'),
-				'users'=>array('@'),
-				),
-			array('allow', 
-				'actions'=>array('admin','delete','deleteIndex'),
-				'users'=>array('admin'),
-				),
+				'actions'=>array('index','view', 'obtenerNombreEncargado','obtenerNombreAlumno'),
+				'roles'=>array('administrativo'),
+				),			
 			array('deny', 
 				'users'=>array('*'),
 				),
@@ -65,8 +61,7 @@ public function accessRules() {
 
 			if ($model->save()) {
 				//Cierra la venta Modal
-				//echo CHtml::script("parent.cerrarModal();");
-				echo CHtml::script("parent.location.reload();");
+				echo CHtml::script("parent.cerrarModal();");
 				//$this->redirect(array('view', 'id' => $model->rut));
 			}
 		}

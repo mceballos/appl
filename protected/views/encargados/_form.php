@@ -1,5 +1,17 @@
 <?php 
 $userID = Yii::app()->user->id;
+
+//En caso de utilizar la creación desde el mantenedor de alumnos
+if(isset($rutDesdeAlumno)){
+    Yii::app()->clientScript->registerScript('habilitar', "
+        //cambiando alto del iframe
+        parent.$('#iframeModal').height($('body').outerHeight(true)+20); 
+    ");    
+}
+
+
+
+
 ?>
 <div class="content">
 <div class="form">
@@ -24,7 +36,23 @@ $userID = Yii::app()->user->id;
             </td>
                 
             <td align="left" style="width: 116px;"><?php echo $form->labelEx($model,'rut'); ?></td>
-            <td><?php echo $form->textField($model, 'rut',array('maxlength' => 8,'size'=>11)).'-'.$form->textField($model, 'dv', array('maxlength' => 1,'size'=>2)) ?>
+            <td><?php 
+                    if(isset($rutDesdeAlumno)){
+                        $rutADividir=explode('-',$rutDesdeAlumno);
+                        $rut="";
+                        $dv="";
+                        if(isset($rutADividir[1])){
+                            $rut=$rutADividir[0];
+                            $dv=$rutADividir[1];
+                            echo $form->textField($model,'rut',array('maxlength' => 8,'size'=>11,'readonly'=>true,'value'=>$rut)).'-'.$form->textField($model, 'dv', array('maxlength' => 1,'size'=>2,'readonly'=>true,'value'=>$dv));
+                        }else{
+                            echo $form->textField($model,'rut',array('maxlength' => 8,'size'=>11)).'-'.$form->textField($model, 'dv', array('maxlength' => 1,'size'=>2));
+                        }                        
+                    }else{
+                        echo $form->textField($model, 'rut',array('maxlength' => 8,'size'=>11)).'-'.$form->textField($model, 'dv', array('maxlength' => 1,'size'=>2));    
+                    }                     
+                        
+                ?>
         		<?php echo $form->error($model,'rut'); ?>
        		 	<?php echo $form->error($model,'dv'); ?>
         	</td>    
@@ -82,7 +110,12 @@ $userID = Yii::app()->user->id;
 		
 		
 <?php
-echo GxHtml::submitButton(Yii::t('app', 'Save'));
+if(isset($rutDesdeAlumno)){
+    echo CHtml::submitButton($model->isNewRecord ? 'Guardar' : 'Guardar');
+    echo CHtml::button('Cancelar',array('onclick'=>"window.parent.cerrarIframeDesdeEncargado();"));
+}else{
+    echo GxHtml::submitButton(Yii::t('app', 'Save'));
+}
 $this->endWidget();
 ?>
 <div class="limpia"></div>
