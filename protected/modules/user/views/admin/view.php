@@ -15,7 +15,8 @@ $this->menu=array(
 );
 */
 ?>
-<h1><?php echo UserModule::t('View User').' "'.$model->username.'"'; ?></h1>
+<div class="form">
+<h3><?php echo UserModule::t('View User').' "'.$model->username.'"'; ?></h3>
 
 <?php
  
@@ -46,3 +47,4 @@ $this->menu=array(
 	
 
 ?>
+</div>

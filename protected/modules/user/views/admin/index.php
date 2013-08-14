@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 
 <?php 
  $this->widget('zii.widgets.CMenu', array(
-                'items'=>array(array('label'=>'Agregar', 'url'=>array('create'))),
+                'items'=>array(array('label'=>'Agregar', 'url'=>array('admin/create/user'))),
                 'htmlOptions'=>array('class'=>'MenuOperations'),
             ));
 $this->widget('zii.widgets.grid.CGridView', array(

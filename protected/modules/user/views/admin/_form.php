@@ -9,7 +9,7 @@
     <?php 
         if(isset($titulo)) echo "<h3>".$titulo."</h3>";
     ?>
-	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> Requerido.'); ?></p>
 
 	<?php 
 	   //RCP echo $form->errorSummary(array($model,$profile));
@@ -28,7 +28,7 @@
 
         <tr>
             <td align="right" width="150px"><?php echo $form->labelEx($model,'email'); ?></td>
-         <td><?php echo $form->textField($model,'email',array('style'=>'width: 250px;','maxlength'=>20)); ?>
+         <td><?php echo $form->textField($model,'email',array('style'=>'width: 250px;','maxlength'=>40)); ?>
                 <?php echo $form->error($model,'email'); ?>
           </td>
             
@@ -59,9 +59,7 @@
             <?php echo $form->error($model,'rut'); ?></td>
         </tr>        
     </table>   
-    
- </div><!-- form -->   
-
+    </div><!-- form --> 
 	<div class="box rowright47">
               <h3><?php echo $form->labelEx($model,'authItems'); ?></h3>
               <?php echo $form->error($model,'authItems'); ?>
@@ -95,7 +93,7 @@
             </table>
         </div>
     </div>
-    
+
     <div class="limpia"></div>
     
 <?php 

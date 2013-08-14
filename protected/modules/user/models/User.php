@@ -65,7 +65,7 @@ class User extends CActiveRecord
 			array('username, email, superuser, status,nombres, ape_paterno, authItems,password', 'required'),
 			array('rut', 'length', 'max'=>10),
 			array('nombres, ape_paterno, ape_materno', 'length', 'max'=>200),
-			array('superuser, status','numerical', 'integerOnly'=>true),
+			array('superuser, status,estado','numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
 			array('username, email,nombres, ape_paterno, authItems,password', 'required'),
@@ -87,8 +87,7 @@ class User extends CActiveRecord
         $relations = Yii::app()->getModule('user')->relations;
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');        
-        
-        $relations['authItems'] = array(self::MANY_MANY, 'AuthItem', 'AuthAssignment(userid, itemname)');
+        	$relations['authItems'] = array(self::MANY_MANY, 'AuthItem', 'AuthAssignment(userid, itemname)');
         
         /*
          $relations['indicadores'] = array(self::HAS_MANY, 'Indicadores', 'responsable_id');
@@ -130,11 +129,7 @@ class User extends CActiveRecord
             'nombres' => "Nombres",
             'ape_paterno' => "Ap. Paterno",
             'ape_materno' => 'Ap. Materno',
-            'cierresInternoses' => null,
-            'indicadores' => null,
-            'lineasAccions' => null,
-            'lineasAccions1' => null,
-            'lineasAccions2' => null,
+			'estado'=>'Estado',
 		);
 	}
 	
@@ -205,6 +200,7 @@ class User extends CActiveRecord
         $criteria->compare('lastvisit_at',$this->lastvisit_at);
         $criteria->compare('superuser',$this->superuser);
         $criteria->compare('status',$this->status);
+        $criteria->compare('estado', 1);
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,

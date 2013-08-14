@@ -7,7 +7,6 @@ class AdminController extends Controller
        
         private $_model;
         
-        
         /**
          * @return array action filters
          */
@@ -25,9 +24,9 @@ class AdminController extends Controller
         public function accessRules()
         {
                 return array(
-                    array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                            'actions'=>array('admin','delete','create','update','view'),
-                            'roles'=>array('director'),
+                    array('allow', 
+                        'actions'=>array('admin','delete','create','update','view'),
+                        'roles'=>array('director'),
                     ),
                     array('deny',  // deny all users
                             'users'=>array('*'),
@@ -39,23 +38,14 @@ class AdminController extends Controller
          */
         public function actionAdmin()
         {
-                $model=new User('search');
-        $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['User']))
-            $model->attributes=$_GET['User'];
-
-        $this->render('index',array(
-            'model'=>$model,
-        ));
-                /*$dataProvider=new CActiveDataProvider('User', array(
-                        'pagination'=>array(
-                                'pageSize'=>Yii::app()->controller->module->user_page_size,
-                        ),
-                ));
-
-                $this->render('index',array(
-                        'dataProvider'=>$dataProvider,
-                ));//*/
+        	$model=new User('search');
+       	 	$model->unsetAttributes();  // clear any default values
+        	if(isset($_GET['User']))
+            	$model->attributes=$_GET['User'];
+		 	
+            $this->render('index',array(
+            	'model'=>$model
+        	));     
         }
 
 
@@ -78,17 +68,15 @@ class AdminController extends Controller
         public function actionCreate()
         {
                 $model=new User;
-               // $profile=new Profile;
-                
-                //RCP $this->performAjaxValidation(array($model,$profile));
-                $this->performAjaxValidation(array($model));
+               
+               $this->performAjaxValidation(array($model));
                 if(isset($_POST['User']))
                 {
                         $model->attributes=$_POST['User'];
                         $model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
                        // $profile->attributes=$_POST['Profile'];
                        // $profile->user_id=0;
-                        if($model->validate()/*&&$profile->validate()*/) {
+                        if($model->validate()) {
                                 $model->password=Yii::app()->controller->module->encrypting($model->password);                                
                                 if($model->save()) {                                                                        
                                     //.. add checked materia to the alumno
@@ -100,8 +88,7 @@ class AdminController extends Controller
                                             $userperfiles->save(false);
                                         }         
                                     }
-                                    
-  
+                                   
                                 }
                                 echo CHtml::script("parent.cerrarModal();");
                                 Yii::app()->end();
@@ -110,7 +97,6 @@ class AdminController extends Controller
                 $this->layout = '//layouts/iframe';
                 $this->render('create',array(
                         'model'=>$model,
-                       // 'profile'=>$profile,
                 ));
         }
 
@@ -188,7 +174,7 @@ class AdminController extends Controller
                             //Validando el tipo de relación
                             if($v[0]=='CHasManyRelation'){
                                 foreach($this->$k as $relRecord) {
-                                        if($relRecord->ESTADO=='1'){
+                                        if($relRecord->estado=='1'){
                                             $actualizarEstado=false;    
                                             $campoYtabla.="<li>Existe una dependencia asociada al registro: '".$relRecord."'</li>";
                                         }              
@@ -199,7 +185,7 @@ class AdminController extends Controller
                        if(!$actualizarEstado){
                             echo "<div class='alert alert-block'><button type='button' class='close' data-dismiss='alert'>×</button> <h3>Atención!</h3>".$campoYtabla."</div>";
                         }else{
-                            $tabla->ESTADO=0;
+                            $tabla->estado=0;
                             $tabla->save(false);
                        }
                         return true;

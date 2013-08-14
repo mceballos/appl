@@ -134,7 +134,7 @@ table.tabla-basica tr.clara td{ background-color:#f7f9fb;}
 .rowleft47{float: left;   margin: 5px;  width: 47%;}
 .rowright47{float: right;   margin: 5px; width: 47%;}
 
-.grid-view.overflow{height: 200px;overflow: auto;}
+.grid-view.overflow{height: 110px;overflow: auto;}
 
 .rowleft52{float: left;   margin-left: 2px;  width: 52%;}
 .grid-view input{text-align: center;}
