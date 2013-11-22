@@ -46,6 +46,7 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 			array('estado, pago_pendiente, promovido', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('alumno_rut, periodo_id, seccion_grado_id, estado, pago_pendiente, promovido,dv', 'safe', 'on'=>'search'),
 			array('alumno_rut', 'checkRut','message'=>'El Rut ingresado no es valido. Ej:123456789-0'),
+			array('alumno_rut', 'checkAlumno','message'=>'El Rut ingresado no se encuentra registrado como postulante.'),
 			array('alumno_rut', 'UniqueAttributesValidator', 'with'=>'periodo_id','message'=>'{attribute} "{value}" Se ecuentra matriculado en esté periodo.'),
             
         );		
@@ -136,7 +137,22 @@ abstract class BaseProcesosPeriodos extends GxActiveRecord {
 			));
 	}
 
-
+	public function checkAlumno($attribute,$params){
+	 
+    	$rut=$this->alumno_rut;
+        
+        $validar=Alumnos::model()->findAll(array('condition'=>'estado=1 AND rut='.$rut));
+        if(isset($validar[0])){
+            return true;
+        }else{
+            if(!$this->hasErrors($attribute))
+                    $this->addError($attribute, $params['message']);
+            return false;
+        }   
+		
+     	
+		
+	}
     public function checkRut($attribute,$params){
         $rut=$this->alumno_rut;
         $digito_verificador=null;//$this->DV;
