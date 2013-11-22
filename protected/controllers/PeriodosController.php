@@ -15,7 +15,7 @@ public function accessRules() {
                 'roles'=>array('director'),
                 ),
             array('allow', 
-                'actions'=>array('index','view'),
+                'actions'=>array('view'),
                 'roles'=>array('administrativo'),
                 ),          
             array('deny', 

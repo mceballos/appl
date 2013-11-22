@@ -126,7 +126,7 @@ array(
 			'tablePrefix' => '',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'root',		
+			'password' => '',		
 			'charset' => 'utf8',
 		),
 		'authManager'=>array(

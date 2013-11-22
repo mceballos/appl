@@ -52,6 +52,9 @@
             <?php if(!Yii::app()->user->isGuest){?>
             <div id="MenuPrincipal">  
                 <?php
+                
+                if(Yii::app()->user->checkAccess("director")){
+                
                 $this->widget('bootstrap.widgets.TbNavbar', array(
                                 'type'=>'null', // null or 'inverse'
                                 'brand'=>'',
@@ -101,6 +104,60 @@
                                     ),
                                 ),
                             )); 
+							
+					}
+
+					 if(Yii::app()->user->checkAccess("administrativo")){
+                
+                $this->widget('bootstrap.widgets.TbNavbar', array(
+                                'type'=>'null', // null or 'inverse'
+                                'brand'=>'',
+                                'brandUrl'=>'#',
+                                'collapse'=>false, // requires bootstrap-responsive.css
+                                'items'=>array(
+                                    array(
+                                        'class'=>'bootstrap.widgets.TbMenu',
+                                        'items'=>array(
+                                            array('label'=>'INICIO', 'url'=>Yii::app()->request->baseUrl),
+                                            array('label'=>'REPORTES', 'url'=>'#', 'items'=>array(
+                                                array('label'=>'Alumnos por curso', 'url'=>Yii::app()->request->baseUrl.'/reportes/alumnosCurso'),                                    
+                                            )),
+                                            array('label'=>'ADMINISTRACIÓN', 'url'=>'#', 'items'=>array(
+                                                array('label'=>'Gestión'),
+                                                array('label'=>'Matrícula', 'url'=>Yii::app()->request->baseUrl.'/procesosPeriodos'),
+                                                '---',
+                                                array('label'=>'Gestión de Postulantes'),
+                                                array('label'=>'Parentescos', 'url'=>Yii::app()->request->baseUrl.'/parentescos/'),                                               
+                                                array('label'=>'Padres y Apoderados', 'url'=>Yii::app()->request->baseUrl.'/encargados/'),
+                                                array('label'=>'Postulantes', 'url'=>Yii::app()->request->baseUrl.'/alumnos/'),
+                                                '---',
+                                                array('label'=>'Mantenedor de Cursos'),
+                                                array('label'=>'Secciones', 'url'=>Yii::app()->request->baseUrl.'/secciones/'),
+                                                array('label'=>'Grados Para Secciones', 'url'=>Yii::app()->request->baseUrl.'/grados/'),
+                                                array('label'=>'Gestor de Cursos', 'url'=>Yii::app()->request->baseUrl.'/seccionesGrados'),
+                                                '---',
+                                                array('label'=>'Otras Preferencias'),
+                                                //array('label'=>'Tipos de Compromisos', 'url'=>Yii::app()->request->baseUrl.'/tiposcompromisos'),
+                                                //array('label'=>'Medios de Pago', 'url'=>Yii::app()->request->baseUrl.'/mediospagos/'),
+                                                array('label'=>'Tasa de Interes Anual', 'url'=>Yii::app()->request->baseUrl.'/tasasinteres/'),
+                                                //array('label'=>'Comunas', 'url'=>Yii::app()->request->baseUrl.'/comuna/'),
+                                                
+                                                //array('label'=>'LIST HEADER'),
+                                                '---',                 
+                                            )),
+                                        ),
+                                    ),        
+                                    array(
+                                        'class'=>'bootstrap.widgets.TbMenu',
+                                        'htmlOptions'=>array('class'=>'pull-right'),
+                                        'items'=>array(
+                                            '---',
+                                        ),
+                                    ),
+                                ),
+                            )); 
+							
+					}	
                 
                 ?>
 
