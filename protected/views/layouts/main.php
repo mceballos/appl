@@ -52,8 +52,7 @@
             <?php if(!Yii::app()->user->isGuest){?>
             <div id="MenuPrincipal">  
                 <?php
-                
-                echo Yii::app()->user->id;
+             
 				
                 if(Yii::app()->user->checkAccess("director")){
                 
@@ -107,9 +106,7 @@
                                 ),
                             )); 
 							
-					}
-
-				if(Yii::app()->user->checkAccess("administrativo")){
+					}else if(Yii::app()->user->checkAccess("administrativo")){
                 
                 $this->widget('bootstrap.widgets.TbNavbar', array(
                                 'type'=>'null', // null or 'inverse'
