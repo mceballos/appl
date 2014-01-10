@@ -122,11 +122,11 @@ array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=trotws_aplibre',
+			'connectionString' => 'mysql:host=190.98.231.79;dbname=mceballos',
 			'tablePrefix' => '',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',		
+			'username' => 'mceballos',
+			'password' => 'porvenir746',		
 			'charset' => 'utf8',
 		),
 		'authManager'=>array(

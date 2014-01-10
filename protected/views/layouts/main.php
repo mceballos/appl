@@ -53,6 +53,8 @@
             <div id="MenuPrincipal">  
                 <?php
                 
+                echo Yii::app()->user->id;
+				
                 if(Yii::app()->user->checkAccess("director")){
                 
                 $this->widget('bootstrap.widgets.TbNavbar', array(
@@ -107,7 +109,7 @@
 							
 					}
 
-					 if(Yii::app()->user->checkAccess("administrativo")){
+				if(Yii::app()->user->checkAccess("administrativo")){
                 
                 $this->widget('bootstrap.widgets.TbNavbar', array(
                                 'type'=>'null', // null or 'inverse'
@@ -123,7 +125,7 @@
                                                 array('label'=>'Alumnos por curso', 'url'=>Yii::app()->request->baseUrl.'/reportes/alumnosCurso'),                                    
                                             )),
                                             array('label'=>'ADMINISTRACIÓN', 'url'=>'#', 'items'=>array(
-                                                array('label'=>'Gestión'),
+                                                array('label'=>'Gestión'),	
                                                 array('label'=>'Matrícula', 'url'=>Yii::app()->request->baseUrl.'/procesosPeriodos'),
                                                 '---',
                                                 array('label'=>'Gestión de Postulantes'),
@@ -137,12 +139,7 @@
                                                 array('label'=>'Gestor de Cursos', 'url'=>Yii::app()->request->baseUrl.'/seccionesGrados'),
                                                 '---',
                                                 array('label'=>'Otras Preferencias'),
-                                                //array('label'=>'Tipos de Compromisos', 'url'=>Yii::app()->request->baseUrl.'/tiposcompromisos'),
-                                                //array('label'=>'Medios de Pago', 'url'=>Yii::app()->request->baseUrl.'/mediospagos/'),
                                                 array('label'=>'Tasa de Interes Anual', 'url'=>Yii::app()->request->baseUrl.'/tasasinteres/'),
-                                                //array('label'=>'Comunas', 'url'=>Yii::app()->request->baseUrl.'/comuna/'),
-                                                
-                                                //array('label'=>'LIST HEADER'),
                                                 '---',                 
                                             )),
                                         ),
