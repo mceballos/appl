@@ -77,10 +77,12 @@ public function accessRules() {
 
 	public function actionDelete($id) {
 		if (Yii::app()->getRequest()->getIsPostRequest()) {
+			//$models
 			$this->loadModel($id, 'Secciones')->delete();
 
 			if (!Yii::app()->getRequest()->getIsAjaxRequest())
 				$this->redirect(array('admin'));
+		
 		} else
 			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
 	}
