@@ -11,7 +11,7 @@ public function filters() {
 public function accessRules() {
     return array(
            array('allow', 
-                'actions'=>array('delete','create','update'),
+                'actions'=>array('delete','create','update','index'),
                 'roles'=>array('director'),
                 ),
             array('allow', 
