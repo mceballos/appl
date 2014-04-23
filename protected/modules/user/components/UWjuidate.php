@@ -73,7 +73,6 @@ class UWjuidate {
 			$cs->registerScriptFile($baseUrl.'/js/jquery-ui-i18n.min.js');
 		} else $js = "jQuery('#{$id}').datepicker({$options});";
 
-		$cs->registerScript('ProfileFieldController'.'#'.$id, $js);
 		
 		return CHtml::activeTextField($model,$field->varname,$htmlOptions);
 	}

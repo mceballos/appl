@@ -19,7 +19,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/FusionChar
                 <?php echo Yii::app()->user->getFlash('loginMessage'); ?>
             <?php endif; ?>
             <div class="form2">
-            <?php echo CHtml::beginForm(); ?>    
+            <?php echo CHtml::beginForm(); ?>  
+            	<?php echo CHtml::errorSummary($model); ?>  
                 <table class="login">
                     <tr><td><?php echo CHtml::activeLabelEx($model,'username'); ?></td><td><?php echo CHtml::activeTextField($model,'username') ?></td></tr>
                     <tr><td><?php echo CHtml::activeLabelEx($model,'password'); ?></td><td><?php echo CHtml::activePasswordField($model,'password') ?></td></tr>

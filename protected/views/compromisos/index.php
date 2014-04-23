@@ -91,11 +91,6 @@ $('.search-form form').submit(function(){
         'fecha_primera_cuota',
         'monto_total',
         array(
-                'name'=>'medio_pago_id',
-                'value'=>'GxHtml::valueEx($data->medioPago)',
-                'filter'=>GxHtml::listDataEx(MediosPagos::model()->findAllAttributes(null, true)),
-                ),
-        array(
                 'name'=>'proceso_periodo_id',
                 'value'=>'GxHtml::valueEx($data->procesoPeriodo)',
                 'filter'=>GxHtml::listDataEx(ProcesosPeriodos::model()->findAllAttributes(null, true)),

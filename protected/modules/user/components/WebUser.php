@@ -35,20 +35,12 @@ class WebUser extends CWebUser
 
     public function updateSession() {
         $user = Yii::app()->getModule('user')->user($this->id);
-        //Rceballos:: El controller de profile del usuario no se está ocupoando, no es necesario realizar un merge de un array.
-        /*$userAttributes = CMap::mergeArray(array(
+         $userAttributes = array(
                                                 'email'=>$user->email,
                                                 'username'=>$user->username,
                                                 'create_at'=>$user->create_at,
                                                 'lastvisit_at'=>$user->lastvisit_at,
-                                           ),$user->profile->getAttributes());*/
-        
-        $userAttributes = array(
-                                                'email'=>$user->email,
-                                                'username'=>$user->username,
-                                                'create_at'=>$user->create_at,
-                                                'lastvisit_at'=>$user->lastvisit_at,
-                                           );                              
+                                           );                                
         foreach ($userAttributes as $attrName=>$attrValue) {
             $this->setState($attrName,$attrValue);
         }

@@ -27,7 +27,7 @@ class UWjuiAutoComplete {
 				'optionName'=>UserModule::t('Lable field name',array(),__CLASS__),
 				'emptyFieldLabel'=>UserModule::t('Empty item name',array(),__CLASS__),
 				'emptyFieldValue'=>UserModule::t('Empty item value',array(),__CLASS__),
-				'relationName'=>UserModule::t('Profile model relation name',array(),__CLASS__),
+				
 				'minLength'=>UserModule::t('minimal start research length',array(),__CLASS__),
 			),
 		);

@@ -56,8 +56,8 @@ class UserModule extends CWebModule
 	public $recoveryUrl = array("/user/recovery/recovery");
 	public $loginUrl = array("/user/login");
 	public $logoutUrl = array("/user/logout");
-	public $profileUrl = array("/user/profile");
-	public $returnUrl = array("/user/profile");
+	//public $profileUrl = array();
+	public $returnUrl = array();
 	public $returnLogoutUrl = array("/user/login");
 	
 	
@@ -93,11 +93,11 @@ class UserModule extends CWebModule
 	//public $cacheEnable = false;
 	
 	public $tableUsers = '{{users}}';
-	public $tableProfiles = '{{profiles}}';
-	public $tableProfileFields = '{{profiles_fields}}';
+	//public $tableProfiles = '{{profiles}}';
+	//public $tableProfileFields = '{{profiles_fields}}';
 
     public $defaultScope = array(
-            'with'=>array('profile'),
+            //'with'=>array('profile'),
     );
 	
 	static private $_user;
@@ -236,7 +236,7 @@ class UserModule extends CWebModule
             $id = Yii::app()->user->id;
 		if ($id) {
             if (!isset(self::$_users[$id])||$clearCache)
-                self::$_users[$id] = User::model()->with(array('profile'))->findbyPk($id);
+                self::$_users[$id] = User::model()->findbyPk($id);
 			return self::$_users[$id];
         } else return false;
 	}

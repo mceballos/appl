@@ -23,7 +23,6 @@ class UWrelBelongsTo {
 				'modelName'=>UserModule::t('Model Name',array(),__CLASS__),
 				'optionName'=>UserModule::t('Lable field name',array(),__CLASS__),
 				'emptyField'=>UserModule::t('Empty item name',array(),__CLASS__),
-				'relationName'=>UserModule::t('Profile model relation name',array(),__CLASS__),
 			),
 		);
 	}
