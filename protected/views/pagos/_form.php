@@ -124,7 +124,7 @@ Yii::app()->clientScript->registerScript('habilitar', "
         <td><?php echo $form->labelEx($model,'cheque_banco_id'); ?></td>
         <td>
             
-            <?php echo $form->dropDownList($model, 'cheque_banco_id', GxHtml::listDataEx(Bancos::model()->findAllAttributes(null, true))); ?>
+            <?php echo $form->dropDownList($model, 'cheque_banco_id', GxHtml::listDataEx(Bancos::model()->findAll(),'id','nombre'),array('prompt' => Yii::t('app', 'Seleccionar'))); ?>
             <?php echo $form->error($model,'cheque_banco_id'); ?>
         </td>
     </tr>

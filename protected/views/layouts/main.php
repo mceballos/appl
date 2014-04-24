@@ -86,8 +86,6 @@
                                                 array('label'=>'Gestor de Cursos', 'url'=>Yii::app()->request->baseUrl.'/seccionesGrados'),
                                                 '---',
                                                 array('label'=>'Otras Preferencias'),
-                                                //array('label'=>'Tipos de Compromisos', 'url'=>Yii::app()->request->baseUrl.'/tiposcompromisos'),
-                                                //array('label'=>'Medios de Pago', 'url'=>Yii::app()->request->baseUrl.'/mediospagos/'),
                                                 array('label'=>'Tasa de Interes Anual', 'url'=>Yii::app()->request->baseUrl.'/tasasinteres/'),
                                                 //array('label'=>'Comunas', 'url'=>Yii::app()->request->baseUrl.'/comuna/'),
                                                 

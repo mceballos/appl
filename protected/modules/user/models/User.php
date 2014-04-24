@@ -230,10 +230,10 @@ class User extends CActiveRecord
         return $this->ape_paterno.' '.$this->ape_materno.' '.$this->nombres.' - '.$this->rut;   
     }
     
-    public function getNombreycargo(){
+  /*  public function getNombreycargo(){
         return array($this->ape_paterno.' '.$this->ape_materno.' '.$this->nombres,$this->cargo);   
     }
-    
+   */    
 	public function getRutcompleto(){
         return $this->nombres.' '.$this->ape_paterno.' '.$this->ape_materno.' - '.$this->rut;   
     }
