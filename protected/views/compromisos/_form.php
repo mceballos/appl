@@ -41,7 +41,7 @@
          <tr>
             <td align="left" style="width: 150px;"><?php echo $form->labelEx($model,'tipo_compromiso_id'); ?></td>
             <td style="width: 290px;">Colegiatura<?php 
-                    //echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))));   
+                    
                     echo $form->hiddenField($model, 'tipo_compromiso_id',array('value'=>'1'));  
                     ?>        
                 <?php echo $form->error($model,'tipo_compromiso_id'); ?></td>

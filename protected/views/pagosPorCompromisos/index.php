@@ -56,12 +56,7 @@ $('.search-form form').submit(function(){
             'value'=>'Yii::app()->dateFormatter->format("y-MM-d",strtotime($data->fecha_actual))',
         ),
         
-        /* array(
-                'name'=>'tipo_compromiso_id',
-                'value'=>'GxHtml::valueEx($data->tipoCompromiso)',
-                'filter'=>GxHtml::listDataEx(TiposCompromisos::model()->findAllAttributes(null, true)),
-                ),
-        */
+   
          array(
             'name'=>'fecha_primera_cuota',
             'header'=>'Primera Cuota',

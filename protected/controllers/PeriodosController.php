@@ -76,13 +76,25 @@ public function accessRules() {
 	}
 
 	public function actionDelete($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$this->loadModel($id, 'Periodos')->delete();
-
-			if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				$this->redirect(array('admin'));
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
+		$Item=FALSE;	
+		$modelProcesosPeriodos = ProcesosPeriodos::model()->findAll(array('condition'=>'periodo_id='.$id));
+		$contador= count($modelProcesosPeriodos ); 
+		if($contador==0){
+			$Item=TRUE;	
+		}	
+		
+		if($Item){
+			if (Yii::app()->getRequest()->getIsPostRequest()) {
+				$this->loadModel($id, 'Periodos')->delete();
+	
+				if (!Yii::app()->getRequest()->getIsAjaxRequest())
+					$this->redirect(array('admin'));
+			} else
+				throw new CHttpException(400, Yii::t('app', 'Requerimiento inválido.'));
+		}else{
+			echo CHtml::script("alert('El periodo se encuentra con datos asociados.')");
+			Yii::app()->end();
+		}
 	}
 	
 		

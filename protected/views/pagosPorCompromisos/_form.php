@@ -1,6 +1,5 @@
 <div class="content">
 
-
 <?php 
 	if(isset($model->proceso_periodo_id)){
 			Yii::app()->clientScript->registerScript('ready', "
@@ -39,9 +38,7 @@
             </td>
          </tr>
          <tr>
-            <td align="left" style="width: 150px;"><?php echo $form->labelEx($model,'tipo_compromiso_id'); ?></td>
-            <td style="width: 290px;"><?php echo $form->dropDownList($model, 'tipo_compromiso_id', GxHtml::listDataEx(TiposCompromisos::model()->findAll(array('condition'=>'estado=1'))));   ?>        
-                <?php echo $form->error($model,'tipo_compromiso_id'); ?></td>
+           
             <td align="left" style="width: 150px;"><label class="required" for="Compromisos_proceso_periodo_id"><span class="required"> * </span>Rut Alumno Matriculado</label></td>
             <td><?php echo $form->hiddenField($model, 'proceso_periodo_id');  
             

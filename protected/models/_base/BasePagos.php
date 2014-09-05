@@ -91,7 +91,7 @@ abstract class BasePagos extends GxActiveRecord {
             'cheque_fecha' => Yii::t('app', 'Cheque Fecha'),
             'pago_total' => Yii::t('app', 'Pago total'),            
             'cheque_serie' => Yii::t('app', 'Cheque Serie'),
-            'cheque_rut_serie' => Yii::t('app', 'Cheque Rut Serie'),
+            'cheque_rut_serie' => Yii::t('app', 'Cheque Nº Cta.'),
             'descuento' => Yii::t('app', 'Descuento'),
             'estado' => Yii::t('app', 'Estado'),
             'chequeBanco' => null,
